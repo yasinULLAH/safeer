@@ -475,7 +475,7 @@
         }
         function downloadCV() {
             const cvNode = document.getElementById('cvToExport');
-            const btns = document.querySelectorAll('.control-btn');
+            const btns = document.querySelectorAll('.control-btn, li[onclick*="addBullet"]');
             btns.forEach(b => b.classList.add('hide-on-export'));
             html2canvas(cvNode, {
                 scale: 4,

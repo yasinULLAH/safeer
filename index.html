@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=1024">
+    <meta charset="utf-8" />
+    <meta content="width=1024" name="viewport" />
     <title>Interactive CV Builder - Safeer Ullah</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -24,7 +25,6 @@
             padding: 40px;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
 
         .toolbar {
@@ -67,6 +67,7 @@
             display: grid;
             grid-template-columns: 320px 1fr;
             position: relative;
+            margin: 0 auto;
         }
 
         [contenteditable="true"]:hover {
@@ -301,6 +302,8 @@
             display: none !important;
         }
     </style>
+    <link href="manifest.json" rel="manifest" />
+    <link href="favicon.ico" rel="icon" type="image/x-icon" />
 </head>
 
 <body>
@@ -309,9 +312,9 @@
     </div>
     <div class="cv-container" id="cvToExport">
         <div class="sidebar">
-            <input type="file" id="photoInput" accept="image/*" onchange="loadPhoto(event)">
+            <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file" />
             <div class="profile-photo-container" onclick="document.getElementById('photoInput').click()">
-                <img id="profileImg" src="safeer.PNG" alt="Profile">
+                <img alt="Profile" id="profileImg" src="safeer.PNG" />
                 <div class="profile-photo-placeholder" id="photoPlaceholder" style="display: none;">Click to Upload
                     Photo</div>
             </div>
@@ -437,9 +440,9 @@
                         <div class="job-title" contenteditable="true">B.E in Software Engineering</div>
                         <span class="btn-delete control-btn" onclick="deleteItem(this)">Delete Block</span>
                     </div>
-                    <div class="company-name" contenteditable="true">University of Science & Technology, Bannu</div>
+                    <div class="company-name" contenteditable="true">University of Science &amp; Technology, Bannu</div>
                     <span class="date-location" contenteditable="true">2012 – 2016 | CGPA: 2.73/4.00</span>
-                    <p class="summary-text" style="margin-top:5px; font-size:14px;" contenteditable="true">Major
+                    <p class="summary-text" contenteditable="true" style="margin-top:5px; font-size:14px;">Major
                         Subjects: Networking, Database, Programming</p>
                 </div>
                 <div class="entry-block list-item-wrapper">
@@ -449,7 +452,7 @@
                     </div>
                     <div class="company-name" contenteditable="true">BISE Bannu</div>
                     <span class="date-location" contenteditable="true">2012 | Marks: 761/1100</span>
-                    <p class="summary-text" style="margin-top:5px; font-size:14px;" contenteditable="true">Major
+                    <p class="summary-text" contenteditable="true" style="margin-top:5px; font-size:14px;">Major
                         Subjects: Maths, Physics, Chemistry</p>
                 </div>
                 <div class="entry-block list-item-wrapper">
@@ -459,7 +462,7 @@
                     </div>
                     <div class="company-name" contenteditable="true">BISE Bannu</div>
                     <span class="date-location" contenteditable="true">2008 – 2010 | Marks: 836/1050</span>
-                    <p class="summary-text" style="margin-top:5px; font-size:14px;" contenteditable="true">Major
+                    <p class="summary-text" contenteditable="true" style="margin-top:5px; font-size:14px;">Major
                         Subjects: Maths, Physics, Chemistry, Biology</p>
                 </div>
             </div>
@@ -543,6 +546,24 @@
             `;
             section.appendChild(div);
         }
+    </script>
+    <script type="module">
+        import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
+
+        const swUrl = './sw.js';
+        const wb = new Workbox(swUrl);
+
+        wb.addEventListener('waiting', () => {
+            console.log('A new service worker is waiting to activate.');
+            wb.messageSW({ type: 'SKIP_WAITING' });
+        });
+
+        wb.addEventListener('controlling', () => {
+            console.log('The new service worker is now in control. Reloading page for updates...');
+            window.location.reload();
+        });
+
+        wb.register();
     </script>
 </body>
 

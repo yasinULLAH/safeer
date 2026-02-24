@@ -58,7 +58,7 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "cd09aebe47f974e0a2f2c24f11179af6"
+        "revision": "d57bbf6b19c28563a3e4c6dceee2d62d"
     },
     {
         "url": "manifest.json",
@@ -66,7 +66,7 @@ if (workbox) {
     },
     {
         "url": "offline.html",
-        "revision": "93dd8135f88165fc1bbc0acf525cd1d3"
+        "revision": "8987c4b748db7cbdf5e4c6165507121b"
     },
     {
         "url": "safeer.PNG",
@@ -74,7 +74,7 @@ if (workbox) {
     },
     {
         "url": "sw.js",
-        "revision": "7ec37003f05790e68373c3fde30a2a7c"
+        "revision": "7ecbdfdb060bd1b39e0e7f9878298810"
     }
 ]);
 

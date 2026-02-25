@@ -58,7 +58,7 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "a7b06bd76d4662ee269a7b95bf3965c0"
+        "revision": "c1bbb9ec80cc5b7cfed7c52df0e06e50"
     },
     {
         "url": "manifest.json",
@@ -69,12 +69,16 @@ if (workbox) {
         "revision": "8987c4b748db7cbdf5e4c6165507121b"
     },
     {
+        "url": "readme.md",
+        "revision": "06157c2ad610b40ed48802008ccfd4e4"
+    },
+    {
         "url": "safeer.PNG",
         "revision": "add12a579844df24591c805f484f737a"
     },
     {
         "url": "sw.js",
-        "revision": "f1be9b40058efa0ff70d30aded7f94d3"
+        "revision": "00ff35b5578c2fdfa24f11c9d081ae17"
     }
 ]);
 

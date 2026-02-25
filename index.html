@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=1024" name="viewport"/>
-<title>Interactive CV Builder - Safeer Ullah</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<style>
+  <meta charset="utf-8" />
+  <meta content="width=1024" name="viewport" />
+  <title>Interactive CV Builder - Safeer Ullah</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
     :root {
       --primary-color: #2c3e50;
       --accent-color: #2980b9;
@@ -564,37 +565,42 @@
       color: var(--primary-color);
     }
   </style>
-<link href="manifest.json" rel="manifest"/>
-<link href="favicon.ico" rel="icon" type="image/x-icon"/>
-<script src="https://js.puter.com/v2/"></script>
+  <link href="manifest.json" rel="manifest" />
+  <link href="favicon.ico" rel="icon" type="image/x-icon" />
+  <script src="https://js.puter.com/v2/"></script>
 </head>
+
 <body>
-<div class="toolbar" data-html2canvas-ignore="true">
-<button class="btn btn-ai-toolbar" onclick="openAIModal()">
+  <div class="toolbar" data-html2canvas-ignore="true">
+    <button class="btn btn-ai-toolbar" onclick="openAIModal()">
       🤖 AI Auto Build
     </button>
-<button class="btn btn-download" onclick="downloadCV()">
+    <button class="btn btn-download" onclick="downloadCV()">
       Download High-Res Image
     </button>
-<button class="btn btn-download" onclick="downloadWord()" style="background-color: #27ae60;">
-        Download MS Word
-      </button>
-</div>
-<!-- AI Modal -->
-<div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
-<div class="ai-modal">
-<h2><span class="ai-icon">🤖</span> AI Resume Builder</h2>
-<p class="ai-subtitle">
+    <button class="btn btn-download" onclick="downloadWord()" style="background-color: #27ae60;">
+      Download MS Word
+    </button>
+  </div>
+  <!-- AI Modal -->
+  <div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
+    <div class="ai-modal">
+      <h2><span class="ai-icon">🤖</span> AI Resume Builder</h2>
+      <p class="ai-subtitle">
         Paste your information in <strong>any format</strong> — plain text,
         bullet points, paragraphs, even messy notes. Our AI will intelligently
         extract and organize everything into a professional CV.
       </p>
-<div class="ai-hint">
-<strong>💡 Tip:</strong> Include details like your name, contact info,
+      <div class="ai-hint">
+        <strong>💡 Tip:</strong> Include details like your name, contact info,
         education, work experience, skills, and languages. The more you
         provide, the better your CV will be!
       </div>
-<textarea id="aiTextInput" placeholder="Example:
+      <div id="puterStats"
+        style="font-size: 13px; color: #555; margin-bottom: 15px; display: none; background: #eaf6ff; padding: 10px; border-radius: 8px;">
+        <strong>Your Puter Usage:</strong> <span id="puterUsageText">Loading...</span>
+      </div>
+      <textarea id="aiTextInput" placeholder="Example:
 John Smith, Phone: 0300-1234567, Email: john@email.com
 Address: Islamabad, Pakistan
 
@@ -606,110 +612,110 @@ FSc Pre-Engineering from FBISE (2014-2016), 92%
 
 Skills: JavaScript, Python, React, Node.js, SQL
 Languages: English (Fluent), Urdu (Native)"></textarea>
-<div class="ai-status" id="aiStatus"></div>
-<div class="ai-modal-actions">
-<button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
-<button class="btn-ai-generate" id="aiGenerateBtn" onclick="generateCVFromAI()">
-<span id="aiBtnText">✨ Generate CV</span>
-<div class="ai-spinner" id="aiSpinner"></div>
-</button>
-</div>
-</div>
-</div>
-<div class="cv-container" id="cvToExport">
-<div class="sidebar">
-<input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
-<div class="profile-photo-container" onclick="document.getElementById('photoInput').click()">
-<img alt="Profile" id="profileImg" src="safeer.PNG"/>
-<div class="profile-photo-placeholder" id="photoPlaceholder" style="display: none">
+      <div class="ai-status" id="aiStatus"></div>
+      <div class="ai-modal-actions">
+        <button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
+        <button class="btn-ai-generate" id="aiGenerateBtn" onclick="generateCVFromAI()">
+          <span id="aiBtnText">✨ Generate CV</span>
+          <div class="ai-spinner" id="aiSpinner"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="cv-container" id="cvToExport">
+    <div class="sidebar">
+      <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file" />
+      <div class="profile-photo-container" onclick="document.getElementById('photoInput').click()">
+        <img alt="Profile" id="profileImg" src="safeer.PNG" />
+        <div class="profile-photo-placeholder" id="photoPlaceholder" style="display: none">
           Click to Upload Photo
         </div>
-</div>
-<div class="section-hover-target">
-<h2>Contact</h2>
-<div class="contact-info">
-<div class="contact-item">
-<span class="contact-label" contenteditable="true">Phone</span>
-<div contenteditable="true">03083837496</div>
-</div>
-<div class="contact-item">
-<span class="contact-label" contenteditable="true">Email</span>
-<div contenteditable="true">safirwazir711@gmail.com</div>
-</div>
-<div class="contact-item">
-<span class="contact-label" contenteditable="true">Address</span>
-<div contenteditable="true">
+      </div>
+      <div class="section-hover-target">
+        <h2>Contact</h2>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-label" contenteditable="true">Phone</span>
+            <div contenteditable="true">03083837496</div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label" contenteditable="true">Email</span>
+            <div contenteditable="true">safirwazir711@gmail.com</div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label" contenteditable="true">Address</span>
+            <div contenteditable="true">
               Village Therkhoba Kala, Asperka Tarf e Awal, Tehsil Domel,
               District Bannu
             </div>
-</div>
-</div>
-</div>
-<div class="section-hover-target" id="skillsSection">
-<h2>
+          </div>
+        </div>
+      </div>
+      <div class="section-hover-target" id="skillsSection">
+        <h2>
           Skills
           <button class="btn-add control-btn" onclick="addListItem('skillsList')">
             +
           </button>
-</h2>
-<ul id="skillsList">
-<li class="list-item-wrapper">
-<span contenteditable="true"><strong>Data Entry:</strong> Expert</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true"><strong>Networking:</strong> Intermediate</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true"><strong>Database Management</strong></span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true"><strong>Customer Handling</strong></span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true"><strong>Team Leadership</strong></span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true"><strong>Time Management</strong></span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-</ul>
-</div>
-<div class="section-hover-target">
-<h2>
+        </h2>
+        <ul id="skillsList">
+          <li class="list-item-wrapper">
+            <span contenteditable="true"><strong>Data Entry:</strong> Expert</span>
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+          </li>
+          <li class="list-item-wrapper">
+            <span contenteditable="true"><strong>Networking:</strong> Intermediate</span>
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+          </li>
+          <li class="list-item-wrapper">
+            <span contenteditable="true"><strong>Database Management</strong></span>
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+          </li>
+          <li class="list-item-wrapper">
+            <span contenteditable="true"><strong>Customer Handling</strong></span>
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+          </li>
+          <li class="list-item-wrapper">
+            <span contenteditable="true"><strong>Team Leadership</strong></span>
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+          </li>
+          <li class="list-item-wrapper">
+            <span contenteditable="true"><strong>Time Management</strong></span>
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+          </li>
+        </ul>
+      </div>
+      <div class="section-hover-target">
+        <h2>
           Languages
           <button class="btn-add control-btn" onclick="addListItem('langList')">
             +
           </button>
-</h2>
-<ul id="langList">
-<li class="list-item-wrapper">
-<span contenteditable="true"><strong>English:</strong> Fluent</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true"><strong>Urdu:</strong> Native</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-</ul>
-</div>
-</div>
-<div class="main-content">
-<div class="header">
-<h1 contenteditable="true">Safeer Ullah</h1>
-<h3 contenteditable="true">Junior Executive</h3>
-</div>
-<div class="section section-hover-target">
-<div class="section-title">
-<div class="title-text">
-<span class="bar"></span><span contenteditable="true">Professional Summary</span>
-</div>
-</div>
-<p class="summary-text" contenteditable="true">
+        </h2>
+        <ul id="langList">
+          <li class="list-item-wrapper">
+            <span contenteditable="true"><strong>English:</strong> Fluent</span>
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+          </li>
+          <li class="list-item-wrapper">
+            <span contenteditable="true"><strong>Urdu:</strong> Native</span>
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-content">
+      <div class="header">
+        <h1 contenteditable="true">Safeer Ullah</h1>
+        <h3 contenteditable="true">Junior Executive</h3>
+      </div>
+      <div class="section section-hover-target">
+        <div class="section-title">
+          <div class="title-text">
+            <span class="bar"></span><span contenteditable="true">Professional Summary</span>
+          </div>
+        </div>
+        <p class="summary-text" contenteditable="true">
           Results-driven Junior Executive with 4+ years of experience at
           NADRA, demonstrating exceptional leadership and operational skills.
           Proven track record as Office Incharge, managing day-to-day
@@ -719,124 +725,124 @@ Languages: English (Fluent), Urdu (Native)"></textarea>
           challenging role that leverages my skills and experience to drive
           organization.
         </p>
-</div>
-<div class="section section-hover-target" id="expSection">
-<div class="section-title">
-<div class="title-text">
-<span class="bar"></span><span contenteditable="true">Work Experience</span>
-</div>
-<button class="btn-add control-btn" onclick="addExperience()">
+      </div>
+      <div class="section section-hover-target" id="expSection">
+        <div class="section-title">
+          <div class="title-text">
+            <span class="bar"></span><span contenteditable="true">Work Experience</span>
+          </div>
+          <button class="btn-add control-btn" onclick="addExperience()">
             + Add Job
           </button>
-</div>
-<div class="entry-block list-item-wrapper">
-<div style="display: flex; justify-content: space-between">
-<div class="job-title" contenteditable="true">
+        </div>
+        <div class="entry-block list-item-wrapper">
+          <div style="display: flex; justify-content: space-between">
+            <div class="job-title" contenteditable="true">
               Junior Executive
             </div>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">Delete Block</span>
-</div>
-<div class="company-name" contenteditable="true">
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">Delete Block</span>
+          </div>
+          <div class="company-name" contenteditable="true">
             NADRA | Bannu, Pakistan
           </div>
-<span class="date-location" contenteditable="true">July 31, 2021 – Dec 25, 2025</span>
-<div class="job-desc">
-<ul id="job1-list">
-<li class="list-item-wrapper">
-<span contenteditable="true">Served as Office Incharge and District Focal Person,
+          <span class="date-location" contenteditable="true">July 31, 2021 – Dec 25, 2025</span>
+          <div class="job-desc">
+            <ul id="job1-list">
+              <li class="list-item-wrapper">
+                <span contenteditable="true">Served as Office Incharge and District Focal Person,
                   managing daily operations and team coordination.</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true">Enter data accurately and efficiently into systems.</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true">Verify and validate data for errors and maintain
+                <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+              </li>
+              <li class="list-item-wrapper">
+                <span contenteditable="true">Enter data accurately and efficiently into systems.</span>
+                <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+              </li>
+              <li class="list-item-wrapper">
+                <span contenteditable="true">Verify and validate data for errors and maintain
                   databases.</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true">Manage and organize digital files and assist with
+                <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+              </li>
+              <li class="list-item-wrapper">
+                <span contenteditable="true">Manage and organize digital files and assist with
                   data-related queries and reports.</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true">Provide customer service and support, assisting in document
+                <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+              </li>
+              <li class="list-item-wrapper">
+                <span contenteditable="true">Provide customer service and support, assisting in document
                   processing.</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true">Handle confidential information securely.</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper">
-<span contenteditable="true">Consistently meet productivity and accuracy targets.</span>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper" onclick="addBullet(this.parentNode)" style="
+                <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+              </li>
+              <li class="list-item-wrapper">
+                <span contenteditable="true">Handle confidential information securely.</span>
+                <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+              </li>
+              <li class="list-item-wrapper">
+                <span contenteditable="true">Consistently meet productivity and accuracy targets.</span>
+                <span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+              </li>
+              <li class="list-item-wrapper" onclick="addBullet(this.parentNode)" style="
                     cursor: pointer;
                     color: var(--accent-color);
                     list-style: none;
                   ">
                 + Add Bullet
               </li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section section-hover-target" id="eduSection">
-<div class="section-title">
-<div class="title-text">
-<span class="bar"></span><span contenteditable="true">Education</span>
-</div>
-<button class="btn-add control-btn" onclick="addEducation()">
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="section section-hover-target" id="eduSection">
+        <div class="section-title">
+          <div class="title-text">
+            <span class="bar"></span><span contenteditable="true">Education</span>
+          </div>
+          <button class="btn-add control-btn" onclick="addEducation()">
             + Add Edu
           </button>
-</div>
-<div class="entry-block list-item-wrapper">
-<div style="display: flex; justify-content: space-between">
-<div class="job-title" contenteditable="true">
+        </div>
+        <div class="entry-block list-item-wrapper">
+          <div style="display: flex; justify-content: space-between">
+            <div class="job-title" contenteditable="true">
               B.E in Software Engineering
             </div>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">Delete Block</span>
-</div>
-<div class="company-name" contenteditable="true">
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">Delete Block</span>
+          </div>
+          <div class="company-name" contenteditable="true">
             University of Science &amp; Technology, Bannu
           </div>
-<span class="date-location" contenteditable="true">2012 – 2016 | CGPA: 2.73/4.00</span>
-<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">
+          <span class="date-location" contenteditable="true">2012 – 2016 | CGPA: 2.73/4.00</span>
+          <p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">
             Major Subjects: Networking, Database, Programming
           </p>
-</div>
-<div class="entry-block list-item-wrapper">
-<div style="display: flex; justify-content: space-between">
-<div class="job-title" contenteditable="true">
+        </div>
+        <div class="entry-block list-item-wrapper">
+          <div style="display: flex; justify-content: space-between">
+            <div class="job-title" contenteditable="true">
               FSc (Pre-Engineering)
             </div>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">Delete Block</span>
-</div>
-<div class="company-name" contenteditable="true">BISE Bannu</div>
-<span class="date-location" contenteditable="true">2012 | Marks: 761/1100</span>
-<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">Delete Block</span>
+          </div>
+          <div class="company-name" contenteditable="true">BISE Bannu</div>
+          <span class="date-location" contenteditable="true">2012 | Marks: 761/1100</span>
+          <p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">
             Major Subjects: Maths, Physics, Chemistry
           </p>
-</div>
-<div class="entry-block list-item-wrapper">
-<div style="display: flex; justify-content: space-between">
-<div class="job-title" contenteditable="true">Matriculation</div>
-<span class="btn-delete control-btn" onclick="deleteItem(this)">Delete Block</span>
-</div>
-<div class="company-name" contenteditable="true">BISE Bannu</div>
-<span class="date-location" contenteditable="true">2008 – 2010 | Marks: 836/1050</span>
-<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">
+        </div>
+        <div class="entry-block list-item-wrapper">
+          <div style="display: flex; justify-content: space-between">
+            <div class="job-title" contenteditable="true">Matriculation</div>
+            <span class="btn-delete control-btn" onclick="deleteItem(this)">Delete Block</span>
+          </div>
+          <div class="company-name" contenteditable="true">BISE Bannu</div>
+          <span class="date-location" contenteditable="true">2008 – 2010 | Marks: 836/1050</span>
+          <p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">
             Major Subjects: Maths, Physics, Chemistry, Biology
           </p>
-</div>
-</div>
-</div>
-</div>
-<script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
     function loadPhoto(event) {
       const image = document.getElementById("profileImg");
       const placeholder = document.getElementById("photoPlaceholder");
@@ -863,31 +869,31 @@ Languages: English (Fluent), Urdu (Native)"></textarea>
       });
     }
     function downloadWord() {
-        const cvClone = document.getElementById("cvToExport").cloneNode(true);
-        
-        // Remove UI buttons and inputs
-        const btns = cvClone.querySelectorAll('.control-btn, li[onclick*="addBullet"], .profile-photo-placeholder, input');
-        btns.forEach(b => b.remove());
+      const cvClone = document.getElementById("cvToExport").cloneNode(true);
 
-        // Remove the original photo container from the clone so it doesn't show as a broken image link
-        const photoContainer = cvClone.querySelector('.profile-photo-container');
-        if (photoContainer) photoContainer.remove();
+      // Remove UI buttons and inputs
+      const btns = cvClone.querySelectorAll('.control-btn, li[onclick*="addBullet"], .profile-photo-placeholder, input');
+      btns.forEach(b => b.remove());
 
-        // Convert the current profile image from the LIVE DOM to Base64 so Word can embed it
-        const imgElement = document.getElementById("profileImg");
-        const canvas = document.createElement("canvas");
-        canvas.width = imgElement.naturalWidth || 160;
-        canvas.height = imgElement.naturalHeight || 160;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
-        const base64Img = canvas.toDataURL("image/png");
+      // Remove the original photo container from the clone so it doesn't show as a broken image link
+      const photoContainer = cvClone.querySelector('.profile-photo-container');
+      if (photoContainer) photoContainer.remove();
 
-        // Extract sidebar and main content
-        const sidebar = cvClone.querySelector('.sidebar').innerHTML;
-        const mainContent = cvClone.querySelector('.main-content').innerHTML;
+      // Convert the current profile image from the LIVE DOM to Base64 so Word can embed it
+      const imgElement = document.getElementById("profileImg");
+      const canvas = document.createElement("canvas");
+      canvas.width = imgElement.naturalWidth || 160;
+      canvas.height = imgElement.naturalHeight || 160;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
+      const base64Img = canvas.toDataURL("image/png");
 
-        // Build Word-compatible HTML using Office namespaces, Tables for layout, and inline styles
-        const wordHTML = `
+      // Extract sidebar and main content
+      const sidebar = cvClone.querySelector('.sidebar').innerHTML;
+      const mainContent = cvClone.querySelector('.main-content').innerHTML;
+
+      // Build Word-compatible HTML using Office namespaces, Tables for layout, and inline styles
+      const wordHTML = `
         <html xmlns:v="urn:schemas-microsoft-com:vml"
               xmlns:o="urn:schemas-microsoft-com:office:office"
               xmlns:w="urn:schemas-microsoft-com:office:word"
@@ -939,16 +945,16 @@ Languages: English (Fluent), Urdu (Native)"></textarea>
         </html>
         `;
 
-        // Create Blob and trigger download
-        const blob = new Blob(['\ufeff', wordHTML], { type: 'application/msword' });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = (window._cvName || "My") + "_CV.doc";
-        
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
+      // Create Blob and trigger download
+      const blob = new Blob(['\ufeff', wordHTML], { type: 'application/msword' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = (window._cvName || "My") + "_CV.doc";
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
     function deleteItem(btn) {
       if (confirm("Are you sure you want to delete this item?")) {
         const item = btn.closest(".list-item-wrapper");
@@ -1010,10 +1016,27 @@ Languages: English (Fluent), Urdu (Native)"></textarea>
     const AI_API_URL = "https://openrouter.ai/api/v1/chat/completions";
     const AI_MODEL = 'deepseek/deepseek-chat';
 
-    function openAIModal() {
+    async function openAIModal() {
       document.getElementById("aiModalOverlay").classList.add("active");
       document.getElementById("aiTextInput").focus();
       resetAIStatus();
+
+      // Load Puter usage stats
+      document.getElementById("puterStats").style.display = "block";
+      document.getElementById("puterUsageText").textContent = "Loading...";
+      try {
+        if (puter.auth.isSignedIn()) {
+          const usage = await puter.auth.getMonthlyUsage();
+          // Display specific AI requests if available, otherwise show the raw stats object
+          document.getElementById("puterUsageText").textContent = usage.ai_requests !== undefined
+            ? `${usage.ai_requests} requests used this month`
+            : JSON.stringify(usage);
+        } else {
+          document.getElementById("puterUsageText").textContent = "Stats will appear after your first AI request (requires login).";
+        }
+      } catch (e) {
+        document.getElementById("puterUsageText").textContent = "Stats currently unavailable.";
+      }
     }
 
     function closeAIModal() {
@@ -1306,22 +1329,24 @@ Rules:
     }
   </script>
 
-<script type="module">
-  import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
+  <script type="module">
+    import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
 
-  const swUrl = './sw.js';
-  const wb = new Workbox(swUrl);
+    const swUrl = './sw.js';
+    const wb = new Workbox(swUrl);
 
-  wb.addEventListener('waiting', () => {
-    console.log('A new service worker is waiting to activate.');
-    wb.messageSW({ type: 'SKIP_WAITING' });
-  });
+    wb.addEventListener('waiting', () => {
+      console.log('A new service worker is waiting to activate.');
+      wb.messageSW({ type: 'SKIP_WAITING' });
+    });
 
-  wb.addEventListener('controlling', () => {
-    console.log('The new service worker is now in control. Reloading page for updates...');
-    window.location.reload();
-  });
+    wb.addEventListener('controlling', () => {
+      console.log('The new service worker is now in control. Reloading page for updates...');
+      window.location.reload();
+    });
 
-  wb.register();
-</script></body>
+    wb.register();
+  </script>
+</body>
+
 </html>

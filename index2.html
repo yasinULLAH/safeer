@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=1024" name="viewport" />
-  <title>Interactive AI CV Builder</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://js.puter.com/v2/"></script>
-  <link href="https://fonts.googleapis.com" rel="preconnect" />
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=1024" name="viewport"/>
+<title>Interactive AI CV Builder</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://js.puter.com/v2/"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<style>
     /* ========================================================
        BASE UI & UX STYLES
        ======================================================== */
@@ -812,141 +811,134 @@
       }
     }
   </style>
-  <link href="manifest.json" rel="manifest" />
-  <link href="favicon.ico" rel="icon" type="image/x-icon" />
+<link href="manifest.json" rel="manifest"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
 </head>
-
 <body>
-  <div class="toolbar" data-html2canvas-ignore="true">
-    <button class="btn btn-ai-toolbar" onclick="openAIModal()">
+<div class="toolbar" data-html2canvas-ignore="true">
+<button class="btn btn-ai-toolbar" onclick="openAIModal()">
       ✨ AI Design &amp; Build
     </button>
-    <button class="btn btn-download" onclick="downloadCV()">
+<button class="btn btn-download" onclick="downloadCV()">
       📥 Export Image / PDF
     </button>
-    <button class="btn btn-word" onclick="downloadWord()">
+<button class="btn btn-word" onclick="downloadWord()">
       📄 Export MS Word
     </button>
-  </div>
-  <!-- AI Modal -->
-  <div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
-    <div class="ai-modal">
-      <h2>✨ AI Resume &amp; Structural Designer</h2>
-      <p class="ai-subtitle">
+</div>
+<!-- AI Modal -->
+<div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
+<div class="ai-modal">
+<h2>✨ AI Resume &amp; Structural Designer</h2>
+<p class="ai-subtitle">
         The AI will evaluate your profile and guarantee a <b>completely unique structural layout</b>, color palette,
         typography, and content flow on every single click.
       </p>
-      <textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
-      <div class="ai-status" id="aiStatus"></div>
-      <div class="ai-modal-actions">
-        <button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
-        <button class="btn-ai-generate" id="aiGenerateBtn" onclick="generateCVFromAI()">
-          <span id="aiBtnText">Generate Architecture</span>
-          <div class="ai-spinner" id="aiSpinner"></div>
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- THE MASTER CONTAINER -->
-  <div class="cv-container layout-sidebar-left style-clean-text" data-layout="sidebar-left" id="cvToExport">
-    <!-- Initial Default Layout Container structure -->
-    <div class="sidebar primary-area"></div>
-    <div class="main-content"></div>
-  </div>
-  <!-- DOM BUILDING BLOCKS (These move around physically during layout changes) -->
-  <div id="repo" style="display:none;">
-    <div class="profile-photo-container" id="photoBlock" onclick="document.getElementById('photoInput').click()">
-      <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file" />
-      <img alt="Profile" id="profileImg" src="https://via.placeholder.com/200/34495e/ffffff?text=Upload+Photo" />
-      <div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
-    </div>
-    <div class="header" id="headerBlock">
-      <h1 contenteditable="true">Alex Carter</h1>
-      <h3 contenteditable="true">Senior Software Engineer</h3>
-    </div>
-    <div class="section-hover-target" id="contactBlock">
-      <h2>Contact</h2>
-      <div class="contact-info">
-        <div class="contact-item">
-          <span class="contact-label" contenteditable="true">Phone</span>
-          <div contenteditable="true">+1 234 567 890</div>
-        </div>
-        <div class="contact-item">
-          <span class="contact-label" contenteditable="true">Email</span>
-          <div contenteditable="true">hello@professional.com</div>
-        </div>
-        <div class="contact-item">
-          <span class="contact-label" contenteditable="true">Address</span>
-          <div contenteditable="true">Silicon Valley, CA</div>
-        </div>
-      </div>
-    </div>
-    <div class="section section-hover-target" id="summaryBlock">
-      <div class="section-title">
-        <div class="title-text"><span contenteditable="true">Professional Summary</span></div>
-      </div>
-      <p class="summary-text" contenteditable="true">
+<textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
+<div class="ai-status" id="aiStatus"></div>
+<div class="ai-modal-actions">
+<button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
+<button class="btn-ai-generate" id="aiGenerateBtn" onclick="generateCVFromAI()">
+<span id="aiBtnText">Generate Architecture</span>
+<div class="ai-spinner" id="aiSpinner"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- THE MASTER CONTAINER -->
+<div class="cv-container layout-sidebar-left style-clean-text" data-layout="sidebar-left" id="cvToExport">
+<!-- Initial Default Layout Container structure -->
+<div class="sidebar primary-area"></div>
+<div class="main-content"></div>
+</div>
+<!-- DOM BUILDING BLOCKS (These move around physically during layout changes) -->
+<div id="repo" style="display:none;">
+<div class="profile-photo-container" id="photoBlock" onclick="document.getElementById('photoInput').click()">
+<input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
+<img alt="Profile" id="profileImg" src="https://via.placeholder.com/200/34495e/ffffff?text=Upload+Photo"/>
+<div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
+</div>
+<div class="header" id="headerBlock">
+<h1 contenteditable="true">Alex Carter</h1>
+<h3 contenteditable="true">Senior Software Engineer</h3>
+</div>
+<div class="section-hover-target" id="contactBlock">
+<h2>Contact</h2>
+<div class="contact-info">
+<div class="contact-item">
+<span class="contact-label" contenteditable="true">Phone</span>
+<div contenteditable="true">+1 234 567 890</div>
+</div>
+<div class="contact-item">
+<span class="contact-label" contenteditable="true">Email</span>
+<div contenteditable="true">hello@professional.com</div>
+</div>
+<div class="contact-item">
+<span class="contact-label" contenteditable="true">Address</span>
+<div contenteditable="true">Silicon Valley, CA</div>
+</div>
+</div>
+</div>
+<div class="section section-hover-target" id="summaryBlock">
+<div class="section-title">
+<div class="title-text"><span contenteditable="true">Professional Summary</span></div>
+</div>
+<p class="summary-text" contenteditable="true">
         Innovative and results-driven professional with a strong track record of designing and executing robust
         solutions. Passionate about leveraging technology to drive business growth and optimize user experiences.
       </p>
-    </div>
-    <div class="section-hover-target" id="skillsBlock">
-      <h2>Skills <button class="btn-add control-btn" onclick="addListItem('skillsList')">+</button></h2>
-      <ul id="skillsList">
-        <li class="list-item-wrapper"><span contenteditable="true"><strong>Development:</strong> Expert</span><span
-            class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
-        <li class="list-item-wrapper"><span contenteditable="true"><strong>UI/UX Design:</strong> Advanced</span><span
-            class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
-      </ul>
-    </div>
-    <div class="section-hover-target" id="langBlock">
-      <h2>Languages <button class="btn-add control-btn" onclick="addListItem('langList')">+</button></h2>
-      <ul id="langList">
-        <li class="list-item-wrapper"><span contenteditable="true"><strong>English:</strong> Native</span><span
-            class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
-      </ul>
-    </div>
-    <div class="section section-hover-target" id="expBlock">
-      <div class="section-title">
-        <div class="title-text"><span contenteditable="true">Work Experience</span></div>
-        <button class="btn-add control-btn" onclick="addExperience()">+ Add Job</button>
-      </div>
-      <div class="entry-block list-item-wrapper">
-        <div style="display: flex; justify-content: space-between">
-          <div class="job-title" contenteditable="true">Senior Engineer</div><span class="btn-delete control-btn"
-            onclick="deleteItem(this)">Delete</span>
-        </div>
-        <div class="company-name" contenteditable="true">TechCorp Solutions | New York, NY</div>
-        <span class="date-location" contenteditable="true">Jan 2020 – Present</span>
-        <div class="job-desc">
-          <ul>
-            <li class="list-item-wrapper"><span contenteditable="true">Led a team of 10 developers to build scalable
+</div>
+<div class="section-hover-target" id="skillsBlock">
+<h2>Skills <button class="btn-add control-btn" onclick="addListItem('skillsList')">+</button></h2>
+<ul id="skillsList">
+<li class="list-item-wrapper"><span contenteditable="true"><strong>Development:</strong> Expert</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
+<li class="list-item-wrapper"><span contenteditable="true"><strong>UI/UX Design:</strong> Advanced</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
+</ul>
+</div>
+<div class="section-hover-target" id="langBlock">
+<h2>Languages <button class="btn-add control-btn" onclick="addListItem('langList')">+</button></h2>
+<ul id="langList">
+<li class="list-item-wrapper"><span contenteditable="true"><strong>English:</strong> Native</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
+</ul>
+</div>
+<div class="section section-hover-target" id="expBlock">
+<div class="section-title">
+<div class="title-text"><span contenteditable="true">Work Experience</span></div>
+<button class="btn-add control-btn" onclick="addExperience()">+ Add Job</button>
+</div>
+<div class="entry-block list-item-wrapper">
+<div style="display: flex; justify-content: space-between">
+<div class="job-title" contenteditable="true">Senior Engineer</div><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span>
+</div>
+<div class="company-name" contenteditable="true">TechCorp Solutions | New York, NY</div>
+<span class="date-location" contenteditable="true">Jan 2020 – Present</span>
+<div class="job-desc">
+<ul>
+<li class="list-item-wrapper"><span contenteditable="true">Led a team of 10 developers to build scalable
                 enterprise architecture.</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-            </li>
-            <li class="list-item-wrapper" onclick="addBullet(this.parentNode)"
-              style="cursor: pointer; color: var(--accent); list-style: none;">+ Add Bullet</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="section section-hover-target" id="eduBlock">
-      <div class="section-title">
-        <div class="title-text"><span contenteditable="true">Education</span></div>
-        <button class="btn-add control-btn" onclick="addEducation()">+ Add Edu</button>
-      </div>
-      <div class="entry-block list-item-wrapper">
-        <div style="display: flex; justify-content: space-between">
-          <div class="job-title" contenteditable="true">M.S. Computer Science</div><span class="btn-delete control-btn"
-            onclick="deleteItem(this)">Delete</span>
-        </div>
-        <div class="company-name" contenteditable="true">Stanford University</div>
-        <span class="date-location" contenteditable="true">2018 – 2020</span>
-        <p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Artificial
+</li>
+<li class="list-item-wrapper" onclick="addBullet(this.parentNode)" style="cursor: pointer; color: var(--accent); list-style: none;">+ Add Bullet</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section section-hover-target" id="eduBlock">
+<div class="section-title">
+<div class="title-text"><span contenteditable="true">Education</span></div>
+<button class="btn-add control-btn" onclick="addEducation()">+ Add Edu</button>
+</div>
+<div class="entry-block list-item-wrapper">
+<div style="display: flex; justify-content: space-between">
+<div class="job-title" contenteditable="true">M.S. Computer Science</div><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span>
+</div>
+<div class="company-name" contenteditable="true">Stanford University</div>
+<span class="date-location" contenteditable="true">2018 – 2020</span>
+<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Artificial
           Intelligence.</p>
-      </div>
-    </div>
-  </div>
-  <script>
+</div>
+</div>
+</div>
+<script>
     // --- Lifecycle & Initialization ---
     document.addEventListener("DOMContentLoaded", () => {
       // Restore previous prompt
@@ -1357,24 +1349,23 @@ Return a raw JSON object ONLY, NO markdown blocks:
       document.body.appendChild(link); link.click(); document.body.removeChild(link);
     }
   </script>
-  <script type="module">
-    import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
 
-    const swUrl = './sw.js';
-    const wb = new Workbox(swUrl);
+<script type="module">
+  import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
 
-    wb.addEventListener('waiting', () => {
-      console.log('A new service worker is waiting to activate.');
-      wb.messageSW({ type: 'SKIP_WAITING' });
-    });
+  const swUrl = './sw.js';
+  const wb = new Workbox(swUrl);
 
-    wb.addEventListener('controlling', () => {
-      console.log('The new service worker is now in control. Reloading page for updates...');
-      window.location.reload();
-    });
+  wb.addEventListener('waiting', () => {
+    console.log('A new service worker is waiting to activate.');
+    wb.messageSW({ type: 'SKIP_WAITING' });
+  });
 
-    wb.register();
-  </script>
-</body>
+  wb.addEventListener('controlling', () => {
+    console.log('The new service worker is now in control. Reloading page for updates...');
+    window.location.reload();
+  });
 
+  wb.register();
+</script></body>
 </html>

@@ -489,7 +489,7 @@ ${raw}
 Output the HTML now:`;
 
   try {
-    let resp = await puter.ai.chat(systemPrompt, { model: 'claude-sonnet-4-5' });
+    let resp = await puter.ai.chat(systemPrompt, { model: 'google/gemini-2.5-flash' });
 
     // Normalize response to string
     if (typeof resp !== 'string') {

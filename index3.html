@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=1200" name="viewport" />
-  <title>AI CV Builder</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://js.puter.com/v2/"></script>
-  <link href="https://fonts.googleapis.com" rel="preconnect" />
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=1200" name="viewport"/>
+<title>AI CV Builder</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://js.puter.com/v2/"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<style>
     *,
     *::before,
     *::after {
@@ -467,44 +466,43 @@
       }
     }
   </style>
-  <link href="manifest.json" rel="manifest" />
-  <link href="favicon.ico" rel="icon" type="image/x-icon" />
+<link href="manifest.json" rel="manifest"/>
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
 </head>
-
 <body>
-  <div class="topbar">
-    <div class="logo">✦ AI CV Builder</div>
-    <div class="topbar-actions">
-      <button class="tbtn tbtn-ai" onclick="openModal()">✨ Generate New CV Design</button>
-      <button class="tbtn tbtn-ghost" onclick="downloadPNG()">↓ PNG / PDF</button>
-      <button class="tbtn tbtn-green" onclick="downloadWord()">↓ MS Word</button>
-    </div>
-  </div>
-  <div class="workspace">
-    <div class="hint-badge" id="hintBadge">
+<div class="topbar">
+<div class="logo">✦ AI CV Builder</div>
+<div class="topbar-actions">
+<button class="tbtn tbtn-ai" onclick="openModal()">✨ Generate New CV Design</button>
+<button class="tbtn tbtn-ghost" onclick="downloadPNG()">↓ PNG / PDF</button>
+<button class="tbtn tbtn-green" onclick="downloadWord()">↓ MS Word</button>
+</div>
+</div>
+<div class="workspace">
+<div class="hint-badge" id="hintBadge">
       Each generation creates a <span>completely unique layout</span> — try regenerating multiple times!
     </div>
-    <div class="design-tag" id="designTag"></div>
-    <div class="cv-frame" id="cvFrame">
-      <div class="cv-placeholder">
-        <div class="cv-placeholder-icon">✦</div>
-        <h2>No CV Generated Yet</h2>
-        <p>Paste your resume or career info and the AI will build a fully unique CV layout — structure, design, colors,
+<div class="design-tag" id="designTag"></div>
+<div class="cv-frame" id="cvFrame">
+<div class="cv-placeholder">
+<div class="cv-placeholder-icon">✦</div>
+<h2>No CV Generated Yet</h2>
+<p>Paste your resume or career info and the AI will build a fully unique CV layout — structure, design, colors,
           fonts, everything.</p>
-        <button class="cv-placeholder-cta" onclick="openModal()">✨ Generate My CV</button>
-      </div>
-    </div>
-  </div>
-  <!-- MODAL -->
-  <div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
-    <div class="modal">
-      <div class="modal-title">✨ AI CV Generator</div>
-      <p class="modal-sub">
+<button class="cv-placeholder-cta" onclick="openModal()">✨ Generate My CV</button>
+</div>
+</div>
+</div>
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
+<div class="modal">
+<div class="modal-title">✨ AI CV Generator</div>
+<p class="modal-sub">
         Paste your resume info below. The AI generates a <strong>completely new HTML/CSS CV design</strong> — not just
         content, but the entire visual structure, layout, and style.
       </p>
-      <div class="arch-preview" id="archPreview"></div>
-      <textarea id="aiInput" oninput="updateCount()" placeholder="Paste anything here — raw resume, LinkedIn bio, career notes...
+<div class="arch-preview" id="archPreview"></div>
+<textarea id="aiInput" oninput="updateCount()" placeholder="Paste anything here — raw resume, LinkedIn bio, career notes...
 
 Example:
 Sarah Chen, UX Designer with 6 years experience at Airbnb and Spotify.
@@ -513,21 +511,21 @@ Education: RISD Graphic Design 2017
 Led redesign of checkout flow that increased conversion 23%...
 
 The more info you give, the better the result!"></textarea>
-      <div class="char-count" id="charCount">0 characters</div>
-      <div class="modal-status" id="status"></div>
-      <div class="modal-actions">
-        <div class="modal-hint">⌘+Enter to generate</div>
-        <div class="modal-btns">
-          <button class="mbtn-cancel" onclick="closeModal()">Cancel</button>
-          <button class="mbtn-gen" id="genBtn" onclick="generate()">
-            <span id="genTxt">Generate CV + Design</span>
-            <div class="btn-spin" id="genSpin"></div>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
+<div class="char-count" id="charCount">0 characters</div>
+<div class="modal-status" id="status"></div>
+<div class="modal-actions">
+<div class="modal-hint">⌘+Enter to generate</div>
+<div class="modal-btns">
+<button class="mbtn-cancel" onclick="closeModal()">Cancel</button>
+<button class="mbtn-gen" id="genBtn" onclick="generate()">
+<span id="genTxt">Generate CV + Design</span>
+<div class="btn-spin" id="genSpin"></div>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
     // ─── DESIGN ARCHETYPES ────────────────────────────────────────────────────────
     // Each one describes a COMPLETELY different visual structure the AI must produce
     const ARCHETYPES = [
@@ -835,24 +833,23 @@ Output the HTML now:`;
       if (e.key === 'Escape') closeModal();
     });
   </script>
-  <script type="module">
-    import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
 
-    const swUrl = './sw.js';
-    const wb = new Workbox(swUrl);
+<script type="module">
+  import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
 
-    wb.addEventListener('waiting', () => {
-      console.log('A new service worker is waiting to activate.');
-      wb.messageSW({ type: 'SKIP_WAITING' });
-    });
+  const swUrl = './sw.js';
+  const wb = new Workbox(swUrl);
 
-    wb.addEventListener('controlling', () => {
-      console.log('The new service worker is now in control. Reloading page for updates...');
-      window.location.reload();
-    });
+  wb.addEventListener('waiting', () => {
+    console.log('A new service worker is waiting to activate.');
+    wb.messageSW({ type: 'SKIP_WAITING' });
+  });
 
-    wb.register();
-  </script>
-</body>
+  wb.addEventListener('controlling', () => {
+    console.log('The new service worker is now in control. Reloading page for updates...');
+    window.location.reload();
+  });
 
+  wb.register();
+</script></body>
 </html>

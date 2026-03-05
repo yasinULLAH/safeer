@@ -1,254 +1,510 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=1200" name="viewport"/>
-<title>AI CV Builder</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://js.puter.com/v2/"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="utf-8" />
+  <meta content="width=1200" name="viewport" />
+  <title>AI CV Builder</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://js.puter.com/v2/"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-  font-family: -apple-system, 'Segoe UI', sans-serif;
-  background: #0c0c10;
-  color: #e0e0e8;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    body {
+      font-family: -apple-system, 'Segoe UI', sans-serif;
+      background: #0c0c10;
+      color: #e0e0e8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-/* ── TOP BAR ─────────────────────────────────────── */
-.topbar {
-  width: 100%;
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 0 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(20px);
-}
+    /* ── TOP BAR ─────────────────────────────────────── */
+    .topbar {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+    }
 
-.logo {
-  font-size: 14px; font-weight: 700; letter-spacing: 0.3px;
-  background: linear-gradient(120deg, #c084fc, #f472b6);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
+    .logo {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      background: linear-gradient(120deg, #c084fc, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-.topbar-actions { display: flex; gap: 8px; align-items: center; }
+    .topbar-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
 
-.tbtn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 16px; border-radius: 8px; border: none;
-  font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: all 0.2s; font-family: inherit; white-space: nowrap;
-}
-.tbtn:hover { transform: translateY(-1px); }
-.tbtn-ai { background: linear-gradient(135deg, #9333ea, #ec4899); color: white; box-shadow: 0 4px 14px rgba(147,51,234,0.35); }
-.tbtn-ai:hover { box-shadow: 0 6px 20px rgba(147,51,234,0.5); }
-.tbtn-ghost { background: rgba(255,255,255,0.06); color: #ccc; border: 1px solid rgba(255,255,255,0.08); }
-.tbtn-ghost:hover { background: rgba(255,255,255,0.1); }
-.tbtn-green { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
-.tbtn-green:hover { background: rgba(16,185,129,0.2); }
+    .tbtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
 
-/* ── WORKSPACE ──────────────────────────────────── */
-.workspace {
-  width: 100%;
-  max-width: 1100px;
-  padding: 40px 24px 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
+    .tbtn:hover {
+      transform: translateY(-1px);
+    }
 
-/* ── HINT BADGE ─────────────────────────────────── */
-.hint-badge {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 12px; color: #555;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.05);
-  padding: 6px 14px; border-radius: 20px;
-}
-.hint-badge span { color: #9333ea; font-weight: 600; }
+    .tbtn-ai {
+      background: linear-gradient(135deg, #9333ea, #ec4899);
+      color: white;
+      box-shadow: 0 4px 14px rgba(147, 51, 234, 0.35);
+    }
 
-/* ── CV FRAME ───────────────────────────────────── */
-.cv-frame {
-  width: 210mm;
-  min-height: 297mm;
-  position: relative;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
-  border-radius: 3px;
-  overflow: hidden;
-  transition: box-shadow 0.4s;
-}
-.cv-frame:hover {
-  box-shadow: 0 50px 120px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.08);
-}
+    .tbtn-ai:hover {
+      box-shadow: 0 6px 20px rgba(147, 51, 234, 0.5);
+    }
 
-/* Placeholder */
-.cv-placeholder {
-  width: 100%; min-height: 297mm;
-  background: linear-gradient(160deg, #13131a 0%, #1a1a26 100%);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 16px; padding: 60px; text-align: center;
-}
-.cv-placeholder-icon { font-size: 56px; opacity: 0.2; }
-.cv-placeholder h2 { font-size: 22px; font-weight: 700; color: #555; }
-.cv-placeholder p { font-size: 13px; color: #3a3a4a; max-width: 300px; line-height: 1.7; }
-.cv-placeholder-cta {
-  margin-top: 8px; padding: 12px 28px; border-radius: 10px;
-  background: linear-gradient(135deg, #9333ea, #ec4899);
-  color: white; font-size: 14px; font-weight: 700;
-  border: none; cursor: pointer; transition: all 0.2s; font-family: inherit;
-}
-.cv-placeholder-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(147,51,234,0.4); }
+    .tbtn-ghost {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ccc;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
 
-/* Designs gallery showing what was last generated */
-.design-tag {
-  font-size: 11px; color: #9333ea; font-weight: 600;
-  background: rgba(147,51,234,0.1); border: 1px solid rgba(147,51,234,0.2);
-  padding: 3px 10px; border-radius: 20px; display: none;
-}
+    .tbtn-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
 
-/* scan animation */
-.cv-frame.scanning::after {
-  content: '';
-  position: absolute; left: 0; right: 0; top: 0; height: 4px;
-  background: linear-gradient(90deg, transparent 0%, #c084fc 50%, transparent 100%);
-  animation: scan 1.8s ease-in-out infinite; z-index: 50;
-  pointer-events: none;
-}
-@keyframes scan { 0%{top:0} 100%{top:100%} }
+    .tbtn-green {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
 
-/* ── MODAL ──────────────────────────────────────── */
-.modal-bg {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.82);
-  backdrop-filter: blur(14px);
-  z-index: 9999;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; visibility: hidden; transition: all 0.25s;
-}
-.modal-bg.open { opacity: 1; visibility: visible; }
+    .tbtn-green:hover {
+      background: rgba(16, 185, 129, 0.2);
+    }
 
-.modal {
-  background: #13131e;
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 20px;
-  padding: 40px;
-  width: 700px; max-width: 95vw; max-height: 90vh; overflow-y: auto;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.7);
-  transform: translateY(28px) scale(0.97);
-  transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.2);
-}
-.modal-bg.open .modal { transform: translateY(0) scale(1); }
+    /* ── WORKSPACE ──────────────────────────────────── */
+    .workspace {
+      width: 100%;
+      max-width: 1100px;
+      padding: 40px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
 
-.modal-title {
-  font-size: 26px; font-weight: 800; margin-bottom: 8px;
-  background: linear-gradient(120deg, #c084fc, #f472b6);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.modal-sub { color: #555; font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
-.modal-sub strong { color: #999; }
+    /* ── HINT BADGE ─────────────────────────────────── */
+    .hint-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #555;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
 
-/* Archetype preview pills */
-.arch-preview {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px;
-}
-.arch-pill {
-  font-size: 11px; padding: 4px 10px; border-radius: 20px;
-  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
-  color: #666; font-weight: 500; transition: all 0.15s; cursor: default;
-}
-.arch-pill.active { background: rgba(147,51,234,0.15); border-color: rgba(147,51,234,0.3); color: #c084fc; }
+    .hint-badge span {
+      color: #9333ea;
+      font-weight: 600;
+    }
 
-.modal textarea {
-  width: 100%; min-height: 190px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px; padding: 16px;
-  color: #ddd; font-family: inherit;
-  font-size: 13px; line-height: 1.6; resize: vertical; outline: none;
-  transition: border 0.2s, background 0.2s;
-}
-.modal textarea:focus { border-color: #9333ea; background: rgba(255,255,255,0.06); }
+    /* ── CV FRAME ───────────────────────────────────── */
+    .cv-frame {
+      width: 210mm;
+      min-height: 297mm;
+      position: relative;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04);
+      border-radius: 3px;
+      overflow: hidden;
+      transition: box-shadow 0.4s;
+    }
 
-.char-count { font-size: 11px; color: #444; text-align: right; margin-top: 6px; }
+    .cv-frame:hover {
+      box-shadow: 0 50px 120px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
 
-.modal-status {
-  margin-top: 14px; padding: 12px 16px; border-radius: 10px;
-  font-size: 13px; font-weight: 500; display: none;
-}
-.modal-status.loading { display: flex; align-items: center; gap: 12px; background: rgba(147,51,234,0.08); color: #c084fc; border: 1px solid rgba(147,51,234,0.15); }
-.modal-status.success { display: block; background: rgba(16,185,129,0.08); color: #34d399; border: 1px solid rgba(16,185,129,0.15); }
-.modal-status.error   { display: block; background: rgba(239,68,68,0.08); color: #f87171; border: 1px solid rgba(239,68,68,0.15); }
+    /* Placeholder */
+    .cv-placeholder {
+      width: 100%;
+      min-height: 297mm;
+      background: linear-gradient(160deg, #13131a 0%, #1a1a26 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 60px;
+      text-align: center;
+    }
 
-.modal-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; }
-.modal-hint { font-size: 12px; color: #444; }
-.modal-btns { display: flex; gap: 10px; }
-.mbtn-cancel {
-  padding: 10px 20px; border-radius: 10px;
-  background: transparent; border: 1px solid rgba(255,255,255,0.07);
-  color: #555; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;
-}
-.mbtn-cancel:hover { background: rgba(255,255,255,0.05); color: #999; }
-.mbtn-gen {
-  padding: 10px 24px; border-radius: 10px; border: none;
-  background: linear-gradient(135deg, #9333ea, #ec4899);
-  color: white; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 6px 18px rgba(147,51,234,0.3); transition: all 0.2s;
-}
-.mbtn-gen:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(147,51,234,0.45); }
-.mbtn-gen:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .cv-placeholder-icon {
+      font-size: 56px;
+      opacity: 0.2;
+    }
 
-.btn-spin { width: 15px; height: 15px; border: 2.5px solid rgba(255,255,255,0.2); border-top-color: white; border-radius: 50%; animation: rotate 0.7s linear infinite; display: none; }
-@keyframes rotate { to { transform: rotate(360deg); } }
-</style>
-<link href="manifest.json" rel="manifest"/><link href="favicon.ico" rel="icon" type="image/x-icon"/></head>
+    .cv-placeholder h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #555;
+    }
+
+    .cv-placeholder p {
+      font-size: 13px;
+      color: #3a3a4a;
+      max-width: 300px;
+      line-height: 1.7;
+    }
+
+    .cv-placeholder-cta {
+      margin-top: 8px;
+      padding: 12px 28px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #9333ea, #ec4899);
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .cv-placeholder-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(147, 51, 234, 0.4);
+    }
+
+    /* Designs gallery showing what was last generated */
+    .design-tag {
+      font-size: 11px;
+      color: #9333ea;
+      font-weight: 600;
+      background: rgba(147, 51, 234, 0.1);
+      border: 1px solid rgba(147, 51, 234, 0.2);
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: none;
+    }
+
+    /* scan animation */
+    .cv-frame.scanning::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent 0%, #c084fc 50%, transparent 100%);
+      animation: scan 1.8s ease-in-out infinite;
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    @keyframes scan {
+      0% {
+        top: 0
+      }
+
+      100% {
+        top: 100%
+      }
+    }
+
+    /* ── MODAL ──────────────────────────────────────── */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(14px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s;
+    }
+
+    .modal-bg.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: #13131e;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 20px;
+      padding: 40px;
+      width: 700px;
+      max-width: 95vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7);
+      transform: translateY(28px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+    }
+
+    .modal-bg.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-title {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(120deg, #c084fc, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .modal-sub {
+      color: #555;
+      font-size: 13px;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .modal-sub strong {
+      color: #999;
+    }
+
+    /* Archetype preview pills */
+    .arch-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .arch-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      color: #666;
+      font-weight: 500;
+      transition: all 0.15s;
+      cursor: default;
+    }
+
+    .arch-pill.active {
+      background: rgba(147, 51, 234, 0.15);
+      border-color: rgba(147, 51, 234, 0.3);
+      color: #c084fc;
+    }
+
+    .modal textarea {
+      width: 100%;
+      min-height: 190px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      color: #ddd;
+      font-family: inherit;
+      font-size: 13px;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+      transition: border 0.2s, background 0.2s;
+    }
+
+    .modal textarea:focus {
+      border-color: #9333ea;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .char-count {
+      font-size: 11px;
+      color: #444;
+      text-align: right;
+      margin-top: 6px;
+    }
+
+    .modal-status {
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      display: none;
+    }
+
+    .modal-status.loading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(147, 51, 234, 0.08);
+      color: #c084fc;
+      border: 1px solid rgba(147, 51, 234, 0.15);
+    }
+
+    .modal-status.success {
+      display: block;
+      background: rgba(16, 185, 129, 0.08);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.15);
+    }
+
+    .modal-status.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.08);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.15);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .modal-hint {
+      font-size: 12px;
+      color: #444;
+    }
+
+    .modal-btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .mbtn-cancel {
+      padding: 10px 20px;
+      border-radius: 10px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      color: #555;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .mbtn-cancel:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #999;
+    }
+
+    .mbtn-gen {
+      padding: 10px 24px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, #9333ea, #ec4899);
+      color: white;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(147, 51, 234, 0.3);
+      transition: all 0.2s;
+    }
+
+    .mbtn-gen:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 26px rgba(147, 51, 234, 0.45);
+    }
+
+    .mbtn-gen:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-spin {
+      width: 15px;
+      height: 15px;
+      border: 2.5px solid rgba(255, 255, 255, 0.2);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: rotate 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <link href="manifest.json" rel="manifest" />
+  <link href="favicon.ico" rel="icon" type="image/x-icon" />
+</head>
+
 <body>
-<div class="topbar">
-<div class="logo">✦ AI CV Builder</div>
-<div class="topbar-actions">
-<button class="tbtn tbtn-ai" onclick="openModal()">✨ Generate New CV Design</button>
-<button class="tbtn tbtn-ghost" onclick="downloadPNG()">↓ PNG / PDF</button>
-<button class="tbtn tbtn-green" onclick="downloadWord()">↓ MS Word</button>
-</div>
-</div>
-<div class="workspace">
-<div class="hint-badge" id="hintBadge">
-    Each generation creates a <span>completely unique layout</span> — try regenerating multiple times!
+  <div class="topbar">
+    <div class="logo">✦ AI CV Builder</div>
+    <div class="topbar-actions">
+      <button class="tbtn tbtn-ai" onclick="openModal()">✨ Generate New CV Design</button>
+      <button class="tbtn tbtn-ghost" onclick="downloadPNG()">↓ PNG / PDF</button>
+      <button class="tbtn tbtn-green" onclick="downloadWord()">↓ MS Word</button>
+    </div>
   </div>
-<div class="design-tag" id="designTag"></div>
-<div class="cv-frame" id="cvFrame">
-<div class="cv-placeholder">
-<div class="cv-placeholder-icon">✦</div>
-<h2>No CV Generated Yet</h2>
-<p>Paste your resume or career info and the AI will build a fully unique CV layout — structure, design, colors, fonts, everything.</p>
-<button class="cv-placeholder-cta" onclick="openModal()">✨ Generate My CV</button>
-</div>
-</div>
-</div>
-<!-- MODAL -->
-<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
-<div class="modal">
-<div class="modal-title">✨ AI CV Generator</div>
-<p class="modal-sub">
-      Paste your resume info below. The AI generates a <strong>completely new HTML/CSS CV design</strong> — not just content, but the entire visual structure, layout, and style.
-    </p>
-<div class="arch-preview" id="archPreview"></div>
-<textarea id="aiInput" oninput="updateCount()" placeholder="Paste anything here — raw resume, LinkedIn bio, career notes...
+  <div class="workspace">
+    <div class="hint-badge" id="hintBadge">
+      Each generation creates a <span>completely unique layout</span> — try regenerating multiple times!
+    </div>
+    <div class="design-tag" id="designTag"></div>
+    <div class="cv-frame" id="cvFrame">
+      <div class="cv-placeholder">
+        <div class="cv-placeholder-icon">✦</div>
+        <h2>No CV Generated Yet</h2>
+        <p>Paste your resume or career info and the AI will build a fully unique CV layout — structure, design, colors,
+          fonts, everything.</p>
+        <button class="cv-placeholder-cta" onclick="openModal()">✨ Generate My CV</button>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL -->
+  <div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-title">✨ AI CV Generator</div>
+      <p class="modal-sub">
+        Paste your resume info below. The AI generates a <strong>completely new HTML/CSS CV design</strong> — not just
+        content, but the entire visual structure, layout, and style.
+      </p>
+      <div class="arch-preview" id="archPreview"></div>
+      <textarea id="aiInput" oninput="updateCount()" placeholder="Paste anything here — raw resume, LinkedIn bio, career notes...
 
 Example:
 Sarah Chen, UX Designer with 6 years experience at Airbnb and Spotify.
@@ -257,28 +513,28 @@ Education: RISD Graphic Design 2017
 Led redesign of checkout flow that increased conversion 23%...
 
 The more info you give, the better the result!"></textarea>
-<div class="char-count" id="charCount">0 characters</div>
-<div class="modal-status" id="status"></div>
-<div class="modal-actions">
-<div class="modal-hint">⌘+Enter to generate</div>
-<div class="modal-btns">
-<button class="mbtn-cancel" onclick="closeModal()">Cancel</button>
-<button class="mbtn-gen" id="genBtn" onclick="generate()">
-<span id="genTxt">Generate CV + Design</span>
-<div class="btn-spin" id="genSpin"></div>
-</button>
-</div>
-</div>
-</div>
-</div>
-<script>
-// ─── DESIGN ARCHETYPES ────────────────────────────────────────────────────────
-// Each one describes a COMPLETELY different visual structure the AI must produce
-const ARCHETYPES = [
-  {
-    name: "Minimalist Swiss Grid",
-    color: "#e2e8f0",
-    prompt: `Design a minimalist Swiss/International typographic CV. 
+      <div class="char-count" id="charCount">0 characters</div>
+      <div class="modal-status" id="status"></div>
+      <div class="modal-actions">
+        <div class="modal-hint">⌘+Enter to generate</div>
+        <div class="modal-btns">
+          <button class="mbtn-cancel" onclick="closeModal()">Cancel</button>
+          <button class="mbtn-gen" id="genBtn" onclick="generate()">
+            <span id="genTxt">Generate CV + Design</span>
+            <div class="btn-spin" id="genSpin"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // ─── DESIGN ARCHETYPES ────────────────────────────────────────────────────────
+    // Each one describes a COMPLETELY different visual structure the AI must produce
+    const ARCHETYPES = [
+      {
+        name: "Minimalist Swiss Grid",
+        color: "#e2e8f0",
+        prompt: `Design a minimalist Swiss/International typographic CV. 
 LAYOUT: Pure single-column, no sidebar. Full white background (#ffffff or #fefefe). 
 STRUCTURE: Name displayed as massive all-caps condensed type (60-70px) at the very top with a single thick horizontal rule below it. Job title small and gray beneath. Then a simple two-column info row (contact details horizontally). Then sections flow vertically with thin 1px rules and generous padding.
 TYPOGRAPHY: Use 'Barlow Condensed' or 'Oswald' for name/headings (very tight tracking). Use 'IBM Plex Sans' or 'Source Sans 3' for body. 
@@ -286,11 +542,11 @@ COLORS: Pure white bg, near-black text (#111), a single bold accent (choose one:
 SECTION HEADERS: Small caps, letter-spaced, with thin horizontal rule. No boxes or pills.
 EXPERIENCE: Each job has a tight 3-column header line (title | company | date). Bullets with em-dash (—) not standard bullets.
 Feel very Deutsche Grammophon, very grid-system, very intentional whitespace.`
-  },
-  {
-    name: "Dark Executive",
-    color: "#1e293b",
-    prompt: `Design a dark luxury executive CV.
+      },
+      {
+        name: "Dark Executive",
+        color: "#1e293b",
+        prompt: `Design a dark luxury executive CV.
 LAYOUT: Two columns. Left panel 36% width in a very dark color (#0f172a or #111827 or deep navy #0d1b2a). Right panel 64% in slightly lighter dark (#1e293b or #1a2332). NO white anywhere.
 STRUCTURE: Photo (if available) or large initials avatar at top of left column. Left column has contact, skills, languages. Right has name (large, light colored), title, and all sections.
 TYPOGRAPHY: 'Cormorant Garamond' or 'Libre Baskerville' for the name (elegant serif, large). 'DM Sans' or 'Nunito' for body. All body text light (#e2e8f0 or #cbd5e1).
@@ -298,166 +554,166 @@ COLORS: Background is dark (#0f172a). Accent is VIVID — choose one: gold (#f59
 SECTION HEADERS: Small accent-colored label, all-caps, very spaced. A thin colored line beneath.
 EXPERIENCE: Job titles in white/light, company in accent color, dates small and muted.
 Overall feel: premium, sophisticated, high-contrast, like a luxury brand identity.`
-  },
-  {
-    name: "Creative Top Banner",
-    color: "#7c3aed",
-    prompt: `Design a creative CV with a dramatic full-width colored header banner.
+      },
+      {
+        name: "Creative Top Banner",
+        color: "#7c3aed",
+        prompt: `Design a creative CV with a dramatic full-width colored header banner.
 LAYOUT: Top section is a FULL-WIDTH COLOR BLOCK taking up roughly 28-32% of the page height. The candidate name is displayed HUGE inside this block, with their title and a brief tagline. Below the banner: TWO-COLUMN layout (left 38%, right 62%), both white/light.
 STRUCTURE: Banner contains name (massive, 52-64px, white or near-white), job title, and optionally social/contact in small text at the bottom of the banner. Below banner: left column has photo (circular), contact, skills. Right column has summary and experience sections.
 TYPOGRAPHY: 'Raleway' or 'Nunito Sans' ExtraBold for name. 'Lato' or 'Open Sans' for body.
 COLORS: The banner color must be BOLD — choose one that fits the profession: designer (#7c3aed violet), tech (#0f766e teal), marketing (#dc2626 red), finance (#1d4ed8 blue), creative (#ea580c orange). Accent used for section titles in the white area.
 DESIGN DETAIL: The banner could have a subtle diagonal cut at the bottom edge using CSS clip-path. Section headers in the lower area use the same accent color.
 Feel: vibrant, modern, portfolio-style, memorable.`
-  },
-  {
-    name: "Elegant Serif Luxury",
-    color: "#92400e",
-    prompt: `Design an elegant luxury CV with warm tones and serif typography.
+      },
+      {
+        name: "Elegant Serif Luxury",
+        color: "#92400e",
+        prompt: `Design an elegant luxury CV with warm tones and serif typography.
 LAYOUT: Right sidebar 34% in a warm cream/parchment (#fdf6e3 or #fef9f0 or very light warm gray). Left main content 66% in pure white or very slightly warm white.
 STRUCTURE: In the left main area: Name in large elegant serif at top, beneath it a refined divider line, then the professional sections. Right sidebar has contact info, skills, education summary (if short).
 TYPOGRAPHY: 'Cormorant Garamond' or 'Playfair Display' for ALL headings and the name. Body text in 'Libre Baskerville' or 'EB Garamond' — stay in the serif family. Very elegant.
 COLORS: Warm background tones. Accent in gold (#b7791f or #d97706), deep burgundy (#7f1d1d), or forest green (#14532d). Text near-black (#1c1917).
 DESIGN DETAILS: Thin gold/accent horizontal rules for section dividers. The name might have generous letter-spacing. Section titles in small caps. Contact icons replaced with small elegant label text. Experience entries have subtle left-border in the accent color.
 Feel: luxury consultancy, senior executive, arts & culture director — refined and tasteful.`
-  },
-  {
-    name: "Bold Geometric Stripe",
-    color: "#1d4ed8",
-    prompt: `Design a bold graphic-design-inspired CV with a strong geometric color element.
+      },
+      {
+        name: "Bold Geometric Stripe",
+        color: "#1d4ed8",
+        prompt: `Design a bold graphic-design-inspired CV with a strong geometric color element.
 LAYOUT: A SOLID COLOR VERTICAL STRIPE runs the full height on the far left — width about 18-22mm. Then a sidebar content area ~32% wide (white or very light). Then main content ~68% wide (white).
 STRUCTURE: The name is displayed HORIZONTALLY across both the sidebar AND main content at the very top — a large bold typographic statement. Contact and skills in sidebar. Experience and education in main.
 TYPOGRAPHY: 'Bebas Neue' or 'Black Han Sans' for the name (very bold, condensed). 'Jost' or 'Mulish' for headings. 'Source Sans 3' for body.
 COLORS: The vertical stripe is a BOLD solid color — cobalt blue (#1d4ed8), deep red (#b91c1c), forest green (#15803d), or deep violet (#6d28d9). This same color is the accent throughout. Rest is white + near-black text.
 DESIGN DETAILS: The name might overlap or touch the color stripe. Section headers could have the accent color for the text only. Experience blocks have a subtle top border. The geometric stripe is the hero design element.
 Feel: graphic design, bold branding, architecture, product design roles.`
-  },
-  {
-    name: "Magazine Editorial",
-    color: "#374151",
-    prompt: `Design a magazine editorial-inspired CV layout.
+      },
+      {
+        name: "Magazine Editorial",
+        color: "#374151",
+        prompt: `Design a magazine editorial-inspired CV layout.
 LAYOUT: Unconventional. Name is styled like a magazine MASTHEAD — large, possibly split across two lines with a rule between first and last name. Below name/masthead: a full-width horizontal info bar with contact details. Then the content splits into ASYMMETRIC COLUMNS — main content ~65% and a narrower sidebar ~35%.
 STRUCTURE: The hierarchy is more editorial — summary styled as a "lead paragraph" in slightly larger type. Experience entries like editorial feature items. Skills as a styled grid or column list.
 TYPOGRAPHY: 'Playfair Display' for the masthead/name and section headers. 'Crimson Pro' or 'Merriweather' for body — stay editorial/magazine feel. Mix weights dramatically.
 COLORS: Sophisticated muted palette. Could be dark charcoal (#1f2937) + warm white + a single refined accent (deep teal #0f766e, burgundy #9f1239, or dark gold #a16207). 
 DESIGN DETAILS: Think magazine layouts — the name area might have decorative rules above and below, section headings could be italic + small caps, dates might be set in a contrasting lighter font. A thin column rule between the two content areas.
 Feel: creative director, editor, brand strategist, journalist, publisher.`
-  },
-  {
-    name: "Clean Tech Monospace",
-    color: "#064e3b",
-    prompt: `Design a clean tech/developer-inspired CV.
+      },
+      {
+        name: "Clean Tech Monospace",
+        color: "#064e3b",
+        prompt: `Design a clean tech/developer-inspired CV.
 LAYOUT: Left sidebar 30% in a very dark technical color (#0f172a dark slate, #1a1a2e deep navy, or #064e3b dark teal). Right content 70% in a very slightly off-white (#f9fafb or #f1f5f9 — NOT pure white).
 STRUCTURE: Sidebar has a code-inspired feel — contact links styled like terminal output with small '>' prefix or '//'. Skills shown as simple text tags. Main content has name and sections.
 TYPOGRAPHY: The name in a monospace or geometric tech font: 'JetBrains Mono', 'Fira Code', 'IBM Plex Mono', or 'Courier Prime'. Section headings in 'IBM Plex Sans' or 'Rajdhani'. Body in 'Inter' or a clean sans.
 COLORS: Dark sidebar (#0f172a or similar) with light text. Main area light/white. ACCENT: a vivid tech color — neon green (#22c55e), electric cyan (#06b6d4), lime (#84cc16), or orange (#f97316). Used for name in main area, skill highlights, and links.
 DESIGN DETAILS: Section headers could have a monospace label style like [EXPERIENCE] or // EXPERIENCE. Skill items might be styled like code tags with backtick-inspired small backgrounds. Experience bullets clean and tight.
 Feel: software engineer, DevOps, data scientist, backend developer.`
-  },
-  {
-    name: "Scandinavian Minimal",
-    color: "#6b7280",
-    prompt: `Design an ultra-clean Scandinavian-inspired minimal CV.
+      },
+      {
+        name: "Scandinavian Minimal",
+        color: "#6b7280",
+        prompt: `Design an ultra-clean Scandinavian-inspired minimal CV.
 LAYOUT: Single column, or a very subtle two-column where the left is EXTREMELY narrow (just contact info in a small sans at top), with all main content flowing in one wide column. Huge generous margins and whitespace. Almost uncomfortably minimal.
 STRUCTURE: Name is moderate size (not huge), in a light or medium weight — the name is REFINED, not shouted. A thin rule. Then contact details in a single elegant line. Then sections with lots of breathing room.
 TYPOGRAPHY: 'Nunito' Light/Regular, or 'DM Sans' Light, or 'Outfit' — all very humanist and friendly but refined. Name might be in a slightly heavier weight of the same font. NO decorative fonts.
 COLORS: Background white or very pale (#fafafa or very pale gray-green #f7f9f7). Text: warm dark gray (#1f2937 or #374151). ONE muted accent: sage green (#65a30d muted), dusty rose (#be185d muted), slate blue (#3b82f6 muted), or warm terracotta (#c2410c muted).
 DESIGN DETAILS: Section titles as small, widely letter-spaced all-caps in the muted accent. Thin 1px accent-colored rules. Experience entries have the dates right-aligned on the same baseline as the job title. NO bullets — use thin rules or clean hanging indent instead.
 Feel: product designer, UX researcher, consultant, hygge-inspired professional.`
-  },
-  {
-    name: "Brutalist Raw",
-    color: "#dc2626",
-    prompt: `Design a bold brutalist CV with raw graphic impact.
+      },
+      {
+        name: "Brutalist Raw",
+        color: "#dc2626",
+        prompt: `Design a bold brutalist CV with raw graphic impact.
 LAYOUT: Unconventional grid. The name is ENORMOUS — possibly 72-80px, all caps, black, taking up nearly the full width. A thick black horizontal rule separates the name from the rest. Then content in a strong grid — could be 2 columns of equal width, or a very asymmetric split.
 STRUCTURE: Section headers are VERY BOLD, large, uppercase with thick underlines or borders. The whole CV uses heavy borders as design elements. Sidebar might have an INVERTED block (black background, white text) for contact or skills.
 TYPOGRAPHY: 'Archivo Black' or 'Bebas Neue' for the name. 'Arvo' Bold or 'Syne' for section headers. 'DM Mono' or clean sans for body. Bold contrasts in weight.
 COLORS: High-contrast: primary palette is BLACK (#000000) and WHITE (#ffffff) with ONE shocking accent: fire red (#dc2626), electric yellow (#fbbf24), or vivid blue (#1d4ed8). The accent is used SPARINGLY but BOLDLY (one large element or all borders/headers).
 DESIGN DETAILS: Thick 3-4px borders on section areas. Large chunky section headers. Bullet points replaced with bold em-dashes. Dates might be bold and inline. Could have a large decorative geometric shape (circle, rectangle) in accent color as a bg element.
 Feel: graphic designer, art director, creative technologist, brand designer, film director.`
-  },
-  {
-    name: "Soft Pastel Modern",
-    color: "#7c3aed",
-    prompt: `Design a soft, modern, friendly CV with pastel tones.
+      },
+      {
+        name: "Soft Pastel Modern",
+        color: "#7c3aed",
+        prompt: `Design a soft, modern, friendly CV with pastel tones.
 LAYOUT: Left sidebar 33% in a soft pastel color. Right main content 67% in white or very pale. ROUNDED corners on key elements (6-10px). Soft box shadows on experience cards.
 STRUCTURE: Photo at top of sidebar in a CIRCLE with a soft colored border. Contact and skills below in friendly styled list. Main area has name in a welcoming font, then sections as subtle card-like blocks.
 TYPOGRAPHY: 'Nunito' or 'Poppins' for everything — round, friendly, modern. Name in ExtraBold. Section headers in SemiBold. Body in Regular. All very consistent and approachable.
 COLORS: Sidebar in a soft pastel — lavender (#ede9fe), mint (#d1fae5), peach (#fee2e2), or sky blue (#dbeafe). Main white. Accent: the deeper version of the sidebar pastel color (e.g., sidebar lavender → accent #7c3aed). Text dark gray.
 DESIGN DETAILS: Experience blocks as subtle rounded cards with a soft shadow. Section titles have a small colored circle/dot as a prefix. Skills shown as soft pill-shaped tags with a light background. Overall feeling: warm, inviting, accessible, modern.
 Feel: UX designer, teacher, HR professional, social worker, marketer, recent graduate.`
-  }
-];
+      }
+    ];
 
-// ─── INIT ─────────────────────────────────────────────
-let currentArchIdx = -1;
+    // ─── INIT ─────────────────────────────────────────────
+    let currentArchIdx = -1;
 
-// Render archetype pills in modal
-(function initPills() {
-  const container = document.getElementById('archPreview');
-  ARCHETYPES.forEach((a, i) => {
-    const pill = document.createElement('span');
-    pill.className = 'arch-pill';
-    pill.textContent = a.name;
-    pill.style.setProperty('--ac', a.color);
-    pill.id = 'pill-' + i;
-    container.appendChild(pill);
-  });
-})();
+    // Render archetype pills in modal
+    (function initPills() {
+      const container = document.getElementById('archPreview');
+      ARCHETYPES.forEach((a, i) => {
+        const pill = document.createElement('span');
+        pill.className = 'arch-pill';
+        pill.textContent = a.name;
+        pill.style.setProperty('--ac', a.color);
+        pill.id = 'pill-' + i;
+        container.appendChild(pill);
+      });
+    })();
 
-function highlightPill(idx) {
-  document.querySelectorAll('.arch-pill').forEach((p, i) => {
-    p.classList.toggle('active', i === idx);
-  });
-}
+    function highlightPill(idx) {
+      document.querySelectorAll('.arch-pill').forEach((p, i) => {
+        p.classList.toggle('active', i === idx);
+      });
+    }
 
-// ─── MODAL ────────────────────────────────────────────
-function openModal() {
-  document.getElementById('modalBg').classList.add('open');
-  const saved = localStorage.getItem('cv_raw');
-  if (saved) { document.getElementById('aiInput').value = saved; updateCount(); }
-  setTimeout(() => document.getElementById('aiInput').focus(), 100);
-}
-function closeModal() { document.getElementById('modalBg').classList.remove('open'); }
+    // ─── MODAL ────────────────────────────────────────────
+    function openModal() {
+      document.getElementById('modalBg').classList.add('open');
+      const saved = localStorage.getItem('cv_raw');
+      if (saved) { document.getElementById('aiInput').value = saved; updateCount(); }
+      setTimeout(() => document.getElementById('aiInput').focus(), 100);
+    }
+    function closeModal() { document.getElementById('modalBg').classList.remove('open'); }
 
-function updateCount() {
-  const len = document.getElementById('aiInput').value.length;
-  document.getElementById('charCount').textContent = len.toLocaleString() + ' characters';
-}
+    function updateCount() {
+      const len = document.getElementById('aiInput').value.length;
+      document.getElementById('charCount').textContent = len.toLocaleString() + ' characters';
+    }
 
-function setStatus(type, msg) {
-  const el = document.getElementById('status');
-  el.className = 'modal-status ' + type;
-  if (type === 'loading') el.innerHTML = `<div class="btn-spin" style="display:block;width:16px;height:16px;border:2.5px solid rgba(192,132,252,0.2);border-top-color:#c084fc;border-radius:50%;animation:rotate .7s linear infinite;flex-shrink:0;"></div><span>${msg}</span>`;
-  else el.textContent = msg;
-}
+    function setStatus(type, msg) {
+      const el = document.getElementById('status');
+      el.className = 'modal-status ' + type;
+      if (type === 'loading') el.innerHTML = `<div class="btn-spin" style="display:block;width:16px;height:16px;border:2.5px solid rgba(192,132,252,0.2);border-top-color:#c084fc;border-radius:50%;animation:rotate .7s linear infinite;flex-shrink:0;"></div><span>${msg}</span>`;
+      else el.textContent = msg;
+    }
 
-// ─── GENERATE ─────────────────────────────────────────
-async function generate() {
-  const raw = document.getElementById('aiInput').value.trim();
-  if (!raw) return setStatus('error', '⚠ Please paste your resume info first.');
-  localStorage.setItem('cv_raw', raw);
+    // ─── GENERATE ─────────────────────────────────────────
+    async function generate() {
+      const raw = document.getElementById('aiInput').value.trim();
+      if (!raw) return setStatus('error', '⚠ Please paste your resume info first.');
+      localStorage.setItem('cv_raw', raw);
 
-  const btn = document.getElementById('genBtn');
-  const txt = document.getElementById('genTxt');
-  const spin = document.getElementById('genSpin');
-  const frame = document.getElementById('cvFrame');
+      const btn = document.getElementById('genBtn');
+      const txt = document.getElementById('genTxt');
+      const spin = document.getElementById('genSpin');
+      const frame = document.getElementById('cvFrame');
 
-  btn.disabled = true;
-  txt.textContent = 'Designing…';
-  spin.style.display = 'block';
-  frame.classList.add('scanning');
+      btn.disabled = true;
+      txt.textContent = 'Designing…';
+      spin.style.display = 'block';
+      frame.classList.add('scanning');
 
-  // Pick random archetype (different from last one)
-  let idx;
-  do { idx = Math.floor(Math.random() * ARCHETYPES.length); } while (idx === currentArchIdx && ARCHETYPES.length > 1);
-  currentArchIdx = idx;
-  const arch = ARCHETYPES[idx];
+      // Pick random archetype (different from last one)
+      let idx;
+      do { idx = Math.floor(Math.random() * ARCHETYPES.length); } while (idx === currentArchIdx && ARCHETYPES.length > 1);
+      currentArchIdx = idx;
+      const arch = ARCHETYPES[idx];
 
-  highlightPill(idx);
-  setStatus('loading', `Generating "${arch.name}" design for your CV…`);
+      highlightPill(idx);
+      setStatus('loading', `Generating "${arch.name}" design for your CV…`);
 
-  const systemPrompt = `You are an elite CV designer who writes complete, beautiful, production-quality HTML/CSS CV documents.
+      const systemPrompt = `You are an elite CV designer who writes complete, beautiful, production-quality HTML/CSS CV documents.
 
 ASSIGNMENT: Create a complete CV for the candidate below using this specific design archetype.
 
@@ -488,112 +744,115 @@ ${raw}
 
 Output the HTML now:`;
 
-  try {
-    let resp = await puter.ai.chat(systemPrompt, { model: 'google/gemini-2.5-flash' });
+      try {
+        let resp = await puter.ai.chat(systemPrompt, { model: 'google/gemini-2.5-flash' });
 
-    // Normalize response to string
-    if (typeof resp !== 'string') {
-      resp = resp?.message?.content?.[0]?.text
-          || resp?.content?.[0]?.text
-          || resp?.text
-          || JSON.stringify(resp);
+        // Normalize response to string (Supports Gemini, Claude, and OpenAI formats)
+        if (typeof resp !== 'string') {
+          resp = (typeof resp?.message?.content === 'string' ? resp.message.content : resp?.message?.content?.[0]?.text)
+            || resp?.choices?.[0]?.message?.content
+            || resp?.content?.[0]?.text
+            || resp?.text
+            || JSON.stringify(resp);
+        }
+
+        // Strip any markdown fences
+        resp = resp.replace(/^```html\s*/im, '').replace(/^```\s*/im, '').replace(/```\s*$/im, '').trim();
+
+        // Ensure it starts with something useful
+        if (!resp.startsWith('<')) {
+          const firstTag = resp.indexOf('<');
+          if (firstTag > -1) resp = resp.substring(firstTag);
+        }
+
+        // Inject into frame
+        frame.innerHTML = resp;
+
+        // Update UI
+        window._lastCV = resp;
+        const nameMatch = raw.match(/^([A-Z][a-z]+ [A-Z][a-z]+)/m);
+        window._cvName = (nameMatch?.[1] || 'Resume').replace(/\s+/g, '_');
+        window._archName = arch.name;
+
+        const tag = document.getElementById('designTag');
+        tag.textContent = `Current design: ${arch.name}`;
+        tag.style.display = 'block';
+
+        const badge = document.getElementById('hintBadge');
+        badge.innerHTML = `Design applied: <span>${arch.name}</span> — Click "Generate" again for a completely different layout!`;
+
+        setStatus('success', `✅ "${arch.name}" CV generated! Click Generate again for a totally different design.`);
+        setTimeout(() => closeModal(), 2000);
+
+      } catch (err) {
+        console.error('Generation error:', err);
+        setStatus('error', '❌ Generation failed. Please try again.');
+        frame.innerHTML = `<div style="width:210mm;min-height:297mm;background:#13131a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:#f87171;text-align:center;padding:40px;"><div style="font-size:40px">⚠</div><div style="font-size:15px;font-weight:600;">Generation failed</div><div style="font-size:13px;color:#666;">Please check your connection and try again</div></div>`;
+      } finally {
+        btn.disabled = false;
+        txt.textContent = 'Generate CV + Design';
+        spin.style.display = 'none';
+        frame.classList.remove('scanning');
+      }
     }
 
-    // Strip any markdown fences
-    resp = resp.replace(/^```html\s*/im, '').replace(/^```\s*/im, '').replace(/```\s*$/im, '').trim();
-
-    // Ensure it starts with something useful
-    if (!resp.startsWith('<')) {
-      const firstTag = resp.indexOf('<');
-      if (firstTag > -1) resp = resp.substring(firstTag);
+    // ─── EXPORTS ──────────────────────────────────────────
+    function downloadPNG() {
+      if (!window._lastCV) return alert('Please generate your CV first!');
+      const frame = document.getElementById('cvFrame');
+      const orig = frame.style.cssText;
+      frame.style.boxShadow = 'none';
+      html2canvas(frame, {
+        scale: 3, useCORS: true, allowTaint: true, logging: false,
+        backgroundColor: null
+      }).then(canvas => {
+        frame.style.cssText = orig;
+        const a = document.createElement('a');
+        a.download = (window._cvName || 'Resume') + '.png';
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+      }).catch(e => { frame.style.cssText = orig; alert('Export failed: ' + e.message); });
     }
 
-    // Inject into frame
-    frame.innerHTML = resp;
-
-    // Update UI
-    window._lastCV = resp;
-    const nameMatch = raw.match(/^([A-Z][a-z]+ [A-Z][a-z]+)/m);
-    window._cvName = (nameMatch?.[1] || 'Resume').replace(/\s+/g, '_');
-    window._archName = arch.name;
-
-    const tag = document.getElementById('designTag');
-    tag.textContent = `Current design: ${arch.name}`;
-    tag.style.display = 'block';
-
-    const badge = document.getElementById('hintBadge');
-    badge.innerHTML = `Design applied: <span>${arch.name}</span> — Click "Generate" again for a completely different layout!`;
-
-    setStatus('success', `✅ "${arch.name}" CV generated! Click Generate again for a totally different design.`);
-    setTimeout(() => closeModal(), 2000);
-
-  } catch(err) {
-    console.error('Generation error:', err);
-    setStatus('error', '❌ Generation failed. Please try again.');
-    frame.innerHTML = `<div style="width:210mm;min-height:297mm;background:#13131a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:#f87171;text-align:center;padding:40px;"><div style="font-size:40px">⚠</div><div style="font-size:15px;font-weight:600;">Generation failed</div><div style="font-size:13px;color:#666;">Please check your connection and try again</div></div>`;
-  } finally {
-    btn.disabled = false;
-    txt.textContent = 'Generate CV + Design';
-    spin.style.display = 'none';
-    frame.classList.remove('scanning');
-  }
-}
-
-// ─── EXPORTS ──────────────────────────────────────────
-function downloadPNG() {
-  if (!window._lastCV) return alert('Please generate your CV first!');
-  const frame = document.getElementById('cvFrame');
-  const orig = frame.style.cssText;
-  frame.style.boxShadow = 'none';
-  html2canvas(frame, {
-    scale: 3, useCORS: true, allowTaint: true, logging: false,
-    backgroundColor: null
-  }).then(canvas => {
-    frame.style.cssText = orig;
-    const a = document.createElement('a');
-    a.download = (window._cvName || 'Resume') + '.png';
-    a.href = canvas.toDataURL('image/png');
-    a.click();
-  }).catch(e => { frame.style.cssText = orig; alert('Export failed: ' + e.message); });
-}
-
-function downloadWord() {
-  if (!window._lastCV) return alert('Please generate your CV first!');
-  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+    function downloadWord() {
+      if (!window._lastCV) return alert('Please generate your CV first!');
+      const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
 <head><meta charset="utf-8"><title>CV</title>
 <style>@page WordSection1{size:8.5in 11in;margin:.4in;}div.WordSection1{page:WordSection1;}</style>
 </head><body><div class="WordSection1">${window._lastCV}</div></body></html>`;
-  const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = (window._cvName || 'Resume') + '.doc';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-}
+      const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = (window._cvName || 'Resume') + '.doc';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    }
 
-// ─── KEYBOARD ─────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-    if (document.getElementById('modalBg').classList.contains('open')) generate();
-  }
-  if (e.key === 'Escape') closeModal();
-});
-</script>
-<script type="module">
-  import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
+    // ─── KEYBOARD ─────────────────────────────────────────
+    document.addEventListener('keydown', e => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        if (document.getElementById('modalBg').classList.contains('open')) generate();
+      }
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+  <script type="module">
+    import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
 
-  const swUrl = './sw.js';
-  const wb = new Workbox(swUrl);
+    const swUrl = './sw.js';
+    const wb = new Workbox(swUrl);
 
-  wb.addEventListener('waiting', () => {
-    console.log('A new service worker is waiting to activate.');
-    wb.messageSW({ type: 'SKIP_WAITING' });
-  });
+    wb.addEventListener('waiting', () => {
+      console.log('A new service worker is waiting to activate.');
+      wb.messageSW({ type: 'SKIP_WAITING' });
+    });
 
-  wb.addEventListener('controlling', () => {
-    console.log('The new service worker is now in control. Reloading page for updates...');
-    window.location.reload();
-  });
+    wb.addEventListener('controlling', () => {
+      console.log('The new service worker is now in control. Reloading page for updates...');
+      window.location.reload();
+    });
 
-  wb.register();
-</script></body>
+    wb.register();
+  </script>
+</body>
+
 </html>

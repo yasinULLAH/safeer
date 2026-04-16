@@ -53,12 +53,12 @@ if (workbox) {
         "revision": "05bdb783ee6514c8c072e47680af8ff7"
     },
     {
-        "url": "build pwa make html app offline and installable yasin best working re-run this for updates best for html only.py",
+        "url": "build pwa make html app offline and installable yasin best working re-run this for updates best for html only.pyw",
         "revision": "912a9d55d74613b8f4f07180d0df1fd3"
     },
     {
         "url": "index.html",
-        "revision": "3b24029ceb7c6cbb32aaf6dc0eca0ec4"
+        "revision": "c7455ca39e89b8d8450ecb23d3d0fb39"
     },
     {
         "url": "index2.html",
@@ -66,7 +66,7 @@ if (workbox) {
     },
     {
         "url": "index3.html",
-        "revision": "ff828f321b6ad10a65003dbfbc33d827"
+        "revision": "4f699166abe9192c9c531a88dc0c6d85"
     },
     {
         "url": "manifest.json",
@@ -86,7 +86,7 @@ if (workbox) {
     },
     {
         "url": "sw.js",
-        "revision": "389da80ae0197c0cff8656f163c9f88d"
+        "revision": "c8f649dffe2a7e47353fa37a3b88ed96"
     },
     {
         "url": "test.html",

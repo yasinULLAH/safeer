@@ -843,9 +843,17 @@ Languages: English (Fluent), Urdu (Native)"></textarea>
     function loadPhoto(event) {
       const image = document.getElementById("profileImg");
       const placeholder = document.getElementById("photoPlaceholder");
-      image.src = URL.createObjectURL(event.target.files[0]);
-      image.style.display = "block";
-      placeholder.style.display = "none";
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          image.src = e.target.result;
+          image.style.display = "block";
+          placeholder.style.display = "none";
+          localStorage.setItem('cvProfilePhoto', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
     }
     function downloadCV() {
       const cvNode = document.getElementById("cvToExport");
@@ -1323,7 +1331,29 @@ Rules:
       if (data.name) {
         window._cvName = data.name.replace(/\s+/g, "_");
       }
+      
+      localStorage.setItem('cvData', JSON.stringify(data));
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedData = localStorage.getItem('cvData');
+      if (savedData) {
+        try {
+          populateCV(JSON.parse(savedData));
+        } catch (e) {
+          console.error("Error loading saved CV:", e);
+        }
+      }
+      
+      const savedPhoto = localStorage.getItem('cvProfilePhoto');
+      if (savedPhoto) {
+        const image = document.getElementById("profileImg");
+        const placeholder = document.getElementById("photoPlaceholder");
+        image.src = savedPhoto;
+        image.style.display = "block";
+        placeholder.style.display = "none";
+      }
+    });
   </script>
 <script type="module">
   import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';

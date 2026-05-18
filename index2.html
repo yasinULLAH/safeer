@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport"/>
-<title>Interactive AI CV Builder</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://js.puter.com/v2/"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<style>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport" />
+  <title>Interactive AI CV Builder</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://js.puter.com/v2/"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <style>
     body {
       font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: #e2e8f0;
@@ -69,7 +69,7 @@
       border-color: #3b82f6;
       color: #2563eb;
     }
-    
+
     .btn-download:hover {
       background: #eff6ff;
       border-color: #2563eb;
@@ -89,7 +89,7 @@
       border-color: #10b981;
       color: #059669;
     }
-    
+
     .btn-word:hover {
       background: #ecfdf5;
       border-color: #059669;
@@ -863,210 +863,370 @@
       }
 
       .cv-container {
-        /* Let the browser's native zoom handle the scaling of the 210mm container */
         zoom: normal !important;
         transform: none !important;
         margin: 0 auto !important;
       }
 
+      .ai-modal-overlay {
+        position: fixed !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
       .ai-modal {
-        width: 100vw !important;
-        height: 100vh !important;
-        height: 100dvh !important;
+        width: 100% !important;
+        height: 100% !important;
         max-width: none !important;
         max-height: none !important;
         border-radius: 0 !important;
-        padding: 24px 20px !important;
+        padding: 40px !important;
         margin: 0 !important;
+        box-sizing: border-box;
       }
 
       .ai-modal h2 {
-        font-size: 20px;
+        font-size: 40px !important;
+        margin-bottom: 20px !important;
+      }
+
+      .ai-subtitle {
+        font-size: 26px !important;
+        margin-bottom: 30px !important;
+        line-height: 1.5 !important;
+      }
+
+      .ai-modal textarea {
+        font-size: 26px !important;
+        min-height: 250px !important;
+        padding: 20px !important;
+        border-radius: 16px !important;
+        border-width: 3px !important;
+      }
+
+      #aiQuotaDisplay {
+        font-size: 22px !important;
+        padding: 10px 20px !important;
+        border-radius: 30px !important;
+        border-width: 2px !important;
+      }
+
+      #aiQuotaIndicator {
+        width: 16px !important;
+        height: 16px !important;
+      }
+
+      #aiOptionalDetails summary {
+        font-size: 26px !important;
+        padding: 20px 0 !important;
+      }
+
+      #aiOptionalDetails>div {
+        padding: 20px !important;
+        gap: 20px !important;
+        border-radius: 16px !important;
+      }
+
+      .ai-modal label {
+        font-size: 20px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .ai-modal input[type="text"] {
+        font-size: 26px !important;
+        padding: 20px !important;
+        border-radius: 12px !important;
+        border-width: 3px !important;
+        height: auto !important;
+      }
+
+      .ai-modal input[type="color"] {
+        width: 80px !important;
+        height: 70px !important;
+        border-radius: 12px !important;
+        padding: 4px !important;
+      }
+
+      #aiPrimaryColorHex,
+      #aiSecondaryColorHex {
+        font-size: 24px !important;
+      }
+
+      .ai-modal-actions {
+        margin-top: 40px !important;
+        gap: 20px !important;
+      }
+
+      .btn-ai-generate,
+      .btn-ai-cancel {
+        font-size: 28px !important;
+        padding: 20px 40px !important;
+        border-radius: 16px !important;
+      }
+
+      .ai-spinner,
+      .status-spinner {
+        width: 36px !important;
+        height: 36px !important;
+        border-width: 5px !important;
+      }
+
+      .ai-status {
+        font-size: 26px !important;
+        padding: 24px !important;
+        border-radius: 16px !important;
+        margin-top: 30px !important;
+      }
+
+      #historyModalOverlay .ai-modal h2 {
+        font-size: 40px !important;
+        margin-bottom: 30px !important;
+      }
+
+      #historyModalOverlay p {
+        font-size: 24px !important;
+      }
+
+      #historyModalOverlay .btn {
+        font-size: 22px !important;
+        padding: 16px 24px !important;
+        border-radius: 12px !important;
+        border-width: 2px !important;
+      }
+
+      #historyList {
+        gap: 20px !important;
+        max-height: none !important;
+      }
+
+      #historyList>div {
+        padding: 24px !important;
+        border-radius: 16px !important;
+        border-width: 2px !important;
+      }
+
+      #historyList h4 {
+        font-size: 30px !important;
+        margin-bottom: 10px !important;
+      }
+
+      #historyList div>div {
+        font-size: 22px !important;
       }
     }
   </style>
-<link href="manifest.json" rel="manifest"/>
-<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="manifest.json" rel="manifest" />
+  <link href="favicon.ico" rel="icon" type="image/x-icon" />
 </head>
+
 <body>
-<div class="toolbar" data-html2canvas-ignore="true">
-<button class="btn btn-ai-toolbar" onclick="openAIModal()">✨ AI Design &amp; Build</button>
-<button class="btn btn-save" onclick="saveCurrentCV()">💾 Save CV</button>
-<button class="btn btn-history" onclick="openHistoryModal()">📚 History</button>
-<button class="btn btn-download" onclick="downloadHighResImage()">🖼️ Export Image</button>
-<button class="btn btn-pdf" onclick="downloadPDF()">📄 Export PDF</button>
-<button class="btn btn-word" onclick="downloadWord()">📝 Export Word</button>
-</div>
-<div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
-<div class="ai-modal">
-<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-<h2>✨ AI Resume &amp; Structural Designer</h2>
-<div id="aiQuotaDisplay" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: nowrap;">
-<span id="aiQuotaIndicator" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
-<span id="aiQuotaText">Loading Quota...</span>
-</div>
-</div>
-<p class="ai-subtitle">The AI will evaluate your profile and guarantee a <b>completely unique structural
+  <div class="toolbar" data-html2canvas-ignore="true">
+    <button class="btn btn-ai-toolbar" onclick="openAIModal()">✨ AI Design &amp; Build</button>
+    <button class="btn btn-save" onclick="saveCurrentCV()">💾 Save CV</button>
+    <button class="btn btn-history" onclick="openHistoryModal()">📚 History</button>
+    <button class="btn btn-download" onclick="downloadHighResImage()">🖼️ Export Image</button>
+    <button class="btn btn-pdf" onclick="downloadPDF()">📄 Export PDF</button>
+    <button class="btn btn-word" onclick="downloadWord()">📝 Export Word</button>
+  </div>
+  <div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
+    <div class="ai-modal">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <h2>✨ AI Resume &amp; Structural Designer</h2>
+        <div id="aiQuotaDisplay"
+          style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: nowrap;">
+          <span id="aiQuotaIndicator"
+            style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
+          <span id="aiQuotaText">Loading Quota...</span>
+        </div>
+      </div>
+      <p class="ai-subtitle">The AI will evaluate your profile and guarantee a <b>completely unique structural
           layout</b>, color palette, typography, and content flow on every single click.</p>
-<textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
-<details id="aiOptionalDetails" style="margin-top:18px;">
-<summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">⚙️
+      <textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
+      <details id="aiOptionalDetails" style="margin-top:18px;">
+        <summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">⚙️
           Optional Details (click to expand)</summary>
-<div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;padding:18px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
-<div>
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">What
+        <div
+          style="display:flex;flex-direction:column;gap:12px;margin-top:14px;padding:18px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
+          <div>
+            <label
+              style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">What
               is this CV for?</label>
-<input id="aiPurpose" placeholder="e.g. Job application, Academic admission, Freelance portfolio..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
-</div>
-<div>
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Applying
+            <input id="aiPurpose" placeholder="e.g. Job application, Academic admission, Freelance portfolio..."
+              style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;"
+              type="text" />
+          </div>
+          <div>
+            <label
+              style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Applying
               for / Target Role</label>
-<input id="aiTargetRole" placeholder="e.g. Senior Frontend Developer at Google, Medical School..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
-</div>
-<div>
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Look
+            <input id="aiTargetRole" placeholder="e.g. Senior Frontend Developer at Google, Medical School..."
+              style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;"
+              type="text" />
+          </div>
+          <div>
+            <label
+              style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Look
               &amp; Feel / Style Preferences</label>
-<input id="aiStylePref" placeholder="e.g. Modern dark sidebar, minimalist, bold &amp; colorful, corporate..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
-</div>
-<div style="display:flex;gap:16px;flex-wrap:wrap;">
-<div style="flex:1;min-width:120px;">
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Primary
+            <input id="aiStylePref"
+              placeholder="e.g. Modern dark sidebar, minimalist, bold &amp; colorful, corporate..."
+              style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;"
+              type="text" />
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:120px;">
+              <label
+                style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Primary
                 Color</label>
-<div style="display:flex;align-items:center;gap:8px;">
-<input id="aiPrimaryColor" style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color" value="#3b82f6"/>
-<span id="aiPrimaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#3b82f6</span>
-</div>
-</div>
-<div style="flex:1;min-width:120px;">
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Secondary
+              <div style="display:flex;align-items:center;gap:8px;">
+                <input id="aiPrimaryColor"
+                  style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color"
+                  value="#3b82f6" />
+                <span id="aiPrimaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#3b82f6</span>
+              </div>
+            </div>
+            <div style="flex:1;min-width:120px;">
+              <label
+                style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Secondary
                 / Sidebar Color</label>
-<div style="display:flex;align-items:center;gap:8px;">
-<input id="aiSecondaryColor" style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color" value="#1e293b"/>
-<span id="aiSecondaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#1e293b</span>
-</div>
-</div>
-</div>
-</div>
-</details>
-<div class="ai-status" id="aiStatus"></div>
-<div class="ai-modal-actions">
-<button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
-<button class="btn-ai-generate" id="aiGenerateBtn" onclick="generateCVFromAI()">
-<span id="aiBtnText">Generate Architecture</span>
-<div class="ai-spinner" id="aiSpinner"></div>
-</button>
-</div>
-</div>
-</div>
-<div class="ai-modal-overlay" id="historyModalOverlay" onclick="if (event.target === this) closeHistoryModal();">
-<div class="ai-modal" style="width: 800px; max-width: 95vw;">
-<h2>📚 Saved CVs &amp; Backup</h2>
-<div style="display:flex; justify-content:space-between; margin-bottom: 20px;">
-<p style="margin:0; color:#64748b; font-size:14px;">Click a CV below to load it.</p>
-<div>
-<button class="btn" onclick="exportBackup()" style="display:inline-flex; border-color:#3b82f6; color:#2563eb;">📦 Backup All</button>
-<button class="btn" onclick="document.getElementById('importBackupInput').click()" style="display:inline-flex; border-color:#10b981; color:#059669;">📥 Restore Backup</button>
-<input accept=".json" id="importBackupInput" onchange="importBackup(event)" style="display:none" type="file"/>
-</div>
-</div>
-<div id="historyList" style="display:grid; gap:12px; max-height:400px; overflow-y:auto; padding-right:10px;">
-</div>
-<div class="ai-modal-actions">
-<button class="btn-ai-cancel" onclick="closeHistoryModal()">Close</button>
-</div>
-</div>
-</div>
-<div class="cv-container layout-sidebar-left style-clean-text" data-layout="sidebar-left" id="cvToExport">
-<div class="sidebar primary-area"></div>
-<div class="main-content"></div>
-</div>
-<div id="repo" style="display:none;">
-<div class="profile-photo-container" id="photoBlock" onclick="document.getElementById('photoInput').click()">
-<input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
-<img alt="Profile" id="profileImg" onerror="this.src='safeer.png';" src="safeer.png"/>
-<div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
-</div>
-<div class="header" id="headerBlock">
-<h1 contenteditable="true">Alex Carter</h1>
-<h3 contenteditable="true">Senior Software Engineer</h3>
-</div>
-<div class="section-hover-target" id="contactBlock">
-<h2>Contact</h2>
-<div class="contact-info">
-<div class="contact-item">
-<span class="contact-label" contenteditable="true">Phone</span>
-<div contenteditable="true">+1 234 567 890</div>
-</div>
-<div class="contact-item">
-<span class="contact-label" contenteditable="true">Email</span>
-<div contenteditable="true">hello@professional.com</div>
-</div>
-<div class="contact-item">
-<span class="contact-label" contenteditable="true">Address</span>
-<div contenteditable="true">Silicon Valley, CA</div>
-</div>
-</div>
-</div>
-<div class="section section-hover-target" id="summaryBlock">
-<div class="section-title">
-<div class="title-text"><span contenteditable="true">Professional Summary</span></div>
-</div>
-<p class="summary-text" contenteditable="true">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <input id="aiSecondaryColor"
+                  style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color"
+                  value="#1e293b" />
+                <span id="aiSecondaryColorHex"
+                  style="font-size:13px;color:#475569;font-family:monospace;">#1e293b</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <div class="ai-status" id="aiStatus"></div>
+      <div class="ai-modal-actions">
+        <button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
+        <button class="btn-ai-generate" id="aiGenerateBtn" onclick="generateCVFromAI()">
+          <span id="aiBtnText">Generate Architecture</span>
+          <div class="ai-spinner" id="aiSpinner"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="ai-modal-overlay" id="historyModalOverlay" onclick="if (event.target === this) closeHistoryModal();">
+    <div class="ai-modal" style="width: 800px; max-width: 95vw;">
+      <h2>📚 Saved CVs &amp; Backup</h2>
+      <div style="display:flex; justify-content:space-between; margin-bottom: 20px;">
+        <p style="margin:0; color:#64748b; font-size:14px;">Click a CV below to load it.</p>
+        <div>
+          <button class="btn" onclick="exportBackup()"
+            style="display:inline-flex; border-color:#3b82f6; color:#2563eb;">📦 Backup All</button>
+          <button class="btn" onclick="document.getElementById('importBackupInput').click()"
+            style="display:inline-flex; border-color:#10b981; color:#059669;">📥 Restore Backup</button>
+          <input accept=".json" id="importBackupInput" onchange="importBackup(event)" style="display:none"
+            type="file" />
+        </div>
+      </div>
+      <div id="historyList" style="display:grid; gap:12px; max-height:400px; overflow-y:auto; padding-right:10px;">
+      </div>
+      <div class="ai-modal-actions">
+        <button class="btn-ai-cancel" onclick="closeHistoryModal()">Close</button>
+      </div>
+    </div>
+  </div>
+  <div class="cv-container layout-sidebar-left style-clean-text" data-layout="sidebar-left" id="cvToExport">
+    <div class="sidebar primary-area"></div>
+    <div class="main-content"></div>
+  </div>
+  <div id="repo" style="display:none;">
+    <div class="profile-photo-container" id="photoBlock" onclick="document.getElementById('photoInput').click()">
+      <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file" />
+      <img alt="Profile" id="profileImg" onerror="this.src='safeer.png';" src="safeer.png" />
+      <div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
+    </div>
+    <div class="header" id="headerBlock">
+      <h1 contenteditable="true">Alex Carter</h1>
+      <h3 contenteditable="true">Senior Software Engineer</h3>
+    </div>
+    <div class="section-hover-target" id="contactBlock">
+      <h2>Contact</h2>
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="contact-label" contenteditable="true">Phone</span>
+          <div contenteditable="true">+1 234 567 890</div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label" contenteditable="true">Email</span>
+          <div contenteditable="true">hello@professional.com</div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label" contenteditable="true">Address</span>
+          <div contenteditable="true">Silicon Valley, CA</div>
+        </div>
+      </div>
+    </div>
+    <div class="section section-hover-target" id="summaryBlock">
+      <div class="section-title">
+        <div class="title-text"><span contenteditable="true">Professional Summary</span></div>
+      </div>
+      <p class="summary-text" contenteditable="true">
         Innovative and results-driven professional with a strong track record of designing and executing robust
         solutions. Passionate about leveraging technology to drive business growth and optimize user experiences.
       </p>
-</div>
-<div class="section-hover-target" id="skillsBlock">
-<h2>Skills <button class="btn-add control-btn" onclick="addListItem('skillsList')">+</button></h2>
-<ul id="skillsList">
-<li class="list-item-wrapper"><span contenteditable="true"><strong>Development:</strong> Expert</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
-<li class="list-item-wrapper"><span contenteditable="true"><strong>UI/UX Design:</strong> Advanced</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
-</ul>
-</div>
-<div class="section-hover-target" id="langBlock">
-<h2>Languages <button class="btn-add control-btn" onclick="addListItem('langList')">+</button></h2>
-<ul id="langList">
-<li class="list-item-wrapper"><span contenteditable="true"><strong>English:</strong> Native</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
-</ul>
-</div>
-<div class="section section-hover-target" id="expBlock">
-<div class="section-title">
-<div class="title-text"><span contenteditable="true">Work Experience</span></div>
-<button class="btn-add control-btn" onclick="addExperience()">+ Add Job</button>
-</div>
-<div class="entry-block list-item-wrapper">
-<div style="display: flex; justify-content: space-between">
-<div class="job-title" contenteditable="true">Senior Engineer</div><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span>
-</div>
-<div class="company-name" contenteditable="true">TechCorp Solutions | New York, NY</div>
-<span class="date-location" contenteditable="true">Jan 2020 – Present</span>
-<div class="job-desc">
-<ul>
-<li class="list-item-wrapper"><span contenteditable="true">Led a team of 10 developers to build scalable
+    </div>
+    <div class="section-hover-target" id="skillsBlock">
+      <h2>Skills <button class="btn-add control-btn" onclick="addListItem('skillsList')">+</button></h2>
+      <ul id="skillsList">
+        <li class="list-item-wrapper"><span contenteditable="true"><strong>Development:</strong> Expert</span><span
+            class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
+        <li class="list-item-wrapper"><span contenteditable="true"><strong>UI/UX Design:</strong> Advanced</span><span
+            class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
+      </ul>
+    </div>
+    <div class="section-hover-target" id="langBlock">
+      <h2>Languages <button class="btn-add control-btn" onclick="addListItem('langList')">+</button></h2>
+      <ul id="langList">
+        <li class="list-item-wrapper"><span contenteditable="true"><strong>English:</strong> Native</span><span
+            class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
+      </ul>
+    </div>
+    <div class="section section-hover-target" id="expBlock">
+      <div class="section-title">
+        <div class="title-text"><span contenteditable="true">Work Experience</span></div>
+        <button class="btn-add control-btn" onclick="addExperience()">+ Add Job</button>
+      </div>
+      <div class="entry-block list-item-wrapper">
+        <div style="display: flex; justify-content: space-between">
+          <div class="job-title" contenteditable="true">Senior Engineer</div><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">Delete</span>
+        </div>
+        <div class="company-name" contenteditable="true">TechCorp Solutions | New York, NY</div>
+        <span class="date-location" contenteditable="true">Jan 2020 – Present</span>
+        <div class="job-desc">
+          <ul>
+            <li class="list-item-wrapper"><span contenteditable="true">Led a team of 10 developers to build scalable
                 enterprise architecture.</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper" onclick="addBullet(this.parentNode)" style="cursor: pointer; color: var(--accent); list-style: none;">+ Add Bullet</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section section-hover-target" id="eduBlock">
-<div class="section-title">
-<div class="title-text"><span contenteditable="true">Education</span></div>
-<button class="btn-add control-btn" onclick="addEducation()">+ Add Edu</button>
-</div>
-<div class="entry-block list-item-wrapper">
-<div style="display: flex; justify-content: space-between">
-<div class="job-title" contenteditable="true">M.S. Computer Science</div><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span>
-</div>
-<div class="company-name" contenteditable="true">Stanford University</div>
-<span class="date-location" contenteditable="true">2018 – 2020</span>
-<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Artificial
+            </li>
+            <li class="list-item-wrapper" onclick="addBullet(this.parentNode)"
+              style="cursor: pointer; color: var(--accent); list-style: none;">+ Add Bullet</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="section section-hover-target" id="eduBlock">
+      <div class="section-title">
+        <div class="title-text"><span contenteditable="true">Education</span></div>
+        <button class="btn-add control-btn" onclick="addEducation()">+ Add Edu</button>
+      </div>
+      <div class="entry-block list-item-wrapper">
+        <div style="display: flex; justify-content: space-between">
+          <div class="job-title" contenteditable="true">M.S. Computer Science</div><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">Delete</span>
+        </div>
+        <div class="company-name" contenteditable="true">Stanford University</div>
+        <span class="date-location" contenteditable="true">2018 – 2020</span>
+        <p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Artificial
           Intelligence.</p>
-</div>
-</div>
-</div>
-<script>
+      </div>
+    </div>
+  </div>
+  <script>
     document.addEventListener("DOMContentLoaded", () => {
       const savedText = localStorage.getItem("cv_raw_text");
       if (savedText) document.getElementById("aiTextInput").value = savedText;
@@ -1083,7 +1243,7 @@
       const placeholder = document.getElementById("photoPlaceholder");
       if (event.target.files && event.target.files[0]) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           image.src = e.target.result;
           placeholder.style.display = "none";
         };
@@ -1205,23 +1365,18 @@
       document.getElementById("aiModalOverlay").classList.add("active");
       document.getElementById("aiTextInput").focus();
       document.getElementById("aiStatus").style.display = 'none';
-      
       try {
         const qText = document.getElementById("aiQuotaText");
         const qInd = document.getElementById("aiQuotaIndicator");
         const usage = await puter.auth.getMonthlyUsage();
-        
         if (usage && usage.allowanceInfo && usage.allowanceInfo.monthUsageAllowance) {
           const { monthUsageAllowance, remaining } = usage.allowanceInfo;
           const percent = Math.round((remaining / monthUsageAllowance) * 100);
-          
           qText.textContent = `Premium Quota: ${percent}% Remaining`;
-          
           if (percent > 50) qInd.style.background = "#10b981";
           else if (percent > 10) qInd.style.background = "#f59e0b";
           else qInd.style.background = "#ef4444";
         } else {
-          // If Puter returns no strict numeric allowance, show a professional premium status
           qText.textContent = "Premium Quota: Active";
           qInd.style.background = "#10b981";
         }
@@ -1231,10 +1386,9 @@
         console.log("Could not fetch Puter quota:", e);
       }
     }
-
-    function closeAIModal() { 
+    function closeAIModal() {
       document.body.style.overflow = "";
-      document.getElementById("aiModalOverlay").classList.remove("active"); 
+      document.getElementById("aiModalOverlay").classList.remove("active");
     }
     function setAIStatus(type, msg) {
       const st = document.getElementById("aiStatus"); st.className = "ai-status " + type; st.style.display = 'block';
@@ -1489,11 +1643,9 @@ Return a raw JSON object ONLY, NO markdown:
       const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = (window._cvName || "Resume") + ".doc";
       document.body.appendChild(link); link.click(); document.body.removeChild(link);
     }
-
     const DB_NAME = 'SafeerCVDB';
     const DB_VERSION = 1;
     const STORE_NAME = 'saved_cvs';
-
     function initDB() {
       return new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -1504,7 +1656,6 @@ Return a raw JSON object ONLY, NO markdown:
         };
       });
     }
-
     async function saveToDB(cv) {
       const db = await initDB();
       return new Promise((resolve, reject) => {
@@ -1514,17 +1665,15 @@ Return a raw JSON object ONLY, NO markdown:
         tx.onerror = () => reject();
       });
     }
-
     async function getAllFromDB() {
       const db = await initDB();
       return new Promise((resolve, reject) => {
         const tx = db.transaction(STORE_NAME, 'readonly');
         const req = tx.objectStore(STORE_NAME).getAll();
-        req.onsuccess = () => resolve(req.result.sort((a,b) => b.id - a.id));
+        req.onsuccess = () => resolve(req.result.sort((a, b) => b.id - a.id));
         req.onerror = () => reject();
       });
     }
-
     async function deleteFromDB(id) {
       const db = await initDB();
       return new Promise((resolve, reject) => {
@@ -1534,14 +1683,12 @@ Return a raw JSON object ONLY, NO markdown:
         tx.onerror = () => reject();
       });
     }
-
     async function saveCurrentCV() {
       const cvNode = document.getElementById("cvToExport");
       const nameNode = document.querySelector("#headerBlock h1");
       const titleNode = document.querySelector("#headerBlock h3");
       const name = nameNode ? nameNode.textContent.trim() : "Untitled";
       const title = titleNode ? titleNode.textContent.trim() : "";
-      
       const cvData = {
         id: Date.now(),
         name: name,
@@ -1552,25 +1699,20 @@ Return a raw JSON object ONLY, NO markdown:
         cssText: cvNode.style.cssText,
         layout: cvNode.getAttribute("data-layout")
       };
-      
       await saveToDB(cvData);
       alert("CV Saved to History!");
     }
-
     async function loadCV(id) {
       const cvs = await getAllFromDB();
       const cvData = cvs.find(c => c.id === id);
       if (!cvData) return;
-      
       const cvNode = document.getElementById("cvToExport");
       cvNode.innerHTML = cvData.html;
       cvNode.className = cvData.className;
       cvNode.style.cssText = cvData.cssText;
       cvNode.setAttribute("data-layout", cvData.layout || "sidebar-left");
-      
       closeHistoryModal();
     }
-
     async function renderHistory() {
       const list = document.getElementById("historyList");
       const cvs = await getAllFromDB();
@@ -1578,7 +1720,6 @@ Return a raw JSON object ONLY, NO markdown:
         list.innerHTML = "<p style='text-align:center; color:#94a3b8; padding: 20px;'>No saved CVs yet.</p>";
         return;
       }
-      
       list.innerHTML = cvs.map(cv => `
         <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; background:#fff; border:1px solid #e2e8f0; border-radius:8px;">
           <div style="cursor:pointer; flex:1;" onclick="loadCV(${cv.id})">
@@ -1589,28 +1730,24 @@ Return a raw JSON object ONLY, NO markdown:
         </div>
       `).join('');
     }
-
     async function deleteCV(id) {
       if (confirm("Are you sure you want to delete this saved CV?")) {
         await deleteFromDB(id);
         renderHistory();
       }
     }
-
     function openHistoryModal() {
       document.body.style.overflow = "hidden";
       renderHistory();
       document.getElementById("historyModalOverlay").classList.add("active");
     }
-
     function closeHistoryModal() {
       document.body.style.overflow = "";
       document.getElementById("historyModalOverlay").classList.remove("active");
     }
-
     async function exportBackup() {
       const cvs = await getAllFromDB();
-      const blob = new Blob([JSON.stringify(cvs)], {type: "application/json"});
+      const blob = new Blob([JSON.stringify(cvs)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -1618,12 +1755,11 @@ Return a raw JSON object ONLY, NO markdown:
       a.click();
       URL.revokeObjectURL(url);
     }
-
     async function importBackup(event) {
       const file = event.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = async function(e) {
+      reader.onload = async function (e) {
         try {
           const data = JSON.parse(e.target.result);
           if (Array.isArray(data)) {
@@ -1633,12 +1769,14 @@ Return a raw JSON object ONLY, NO markdown:
             alert("Backup restored successfully!");
             renderHistory();
           }
-        } catch(err) {
+        } catch (err) {
           alert("Invalid backup file.");
         }
       };
       reader.readAsText(file);
     }
   </script>
-<script src="./pwa-register.js" type="module"></script></body>
+  <script src="./pwa-register.js" type="module"></script>
+</body>
+
 </html>

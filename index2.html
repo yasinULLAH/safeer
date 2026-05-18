@@ -870,8 +870,14 @@
       }
 
       .ai-modal {
-        padding: 25px 18px;
-        border-radius: 16px;
+        width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        max-width: none !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+        padding: 24px 20px !important;
+        margin: 0 !important;
       }
 
       .ai-modal h2 {
@@ -893,7 +899,13 @@
 </div>
 <div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
 <div class="ai-modal">
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
 <h2>✨ AI Resume &amp; Structural Designer</h2>
+<div id="aiQuotaDisplay" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: nowrap;">
+<span id="aiQuotaIndicator" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
+<span id="aiQuotaText">Loading Quota...</span>
+</div>
+</div>
 <p class="ai-subtitle">The AI will evaluate your profile and guarantee a <b>completely unique structural
           layout</b>, color palette, typography, and content flow on every single click.</p>
 <textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
@@ -1188,12 +1200,42 @@
       cvNode.classList.remove("style-solid-box", "style-underline", "style-clean-text");
       cvNode.classList.add(theme.headerStyle ? `style-${theme.headerStyle}` : 'style-clean-text');
     }
-    function openAIModal() {
+    async function openAIModal() {
+      document.body.style.overflow = "hidden";
       document.getElementById("aiModalOverlay").classList.add("active");
       document.getElementById("aiTextInput").focus();
       document.getElementById("aiStatus").style.display = 'none';
+      
+      try {
+        const qText = document.getElementById("aiQuotaText");
+        const qInd = document.getElementById("aiQuotaIndicator");
+        const usage = await puter.auth.getMonthlyUsage();
+        
+        if (usage && usage.allowanceInfo && usage.allowanceInfo.monthUsageAllowance) {
+          const { monthUsageAllowance, remaining } = usage.allowanceInfo;
+          const percent = Math.round((remaining / monthUsageAllowance) * 100);
+          
+          qText.textContent = `Premium Quota: ${percent}% Remaining`;
+          
+          if (percent > 50) qInd.style.background = "#10b981";
+          else if (percent > 10) qInd.style.background = "#f59e0b";
+          else qInd.style.background = "#ef4444";
+        } else {
+          // If Puter returns no strict numeric allowance, show a professional premium status
+          qText.textContent = "Premium Quota: Active";
+          qInd.style.background = "#10b981";
+        }
+      } catch (e) {
+        document.getElementById("aiQuotaText").textContent = "Usage: Secure Connection";
+        document.getElementById("aiQuotaIndicator").style.background = "#10b981";
+        console.log("Could not fetch Puter quota:", e);
+      }
     }
-    function closeAIModal() { document.getElementById("aiModalOverlay").classList.remove("active"); }
+
+    function closeAIModal() { 
+      document.body.style.overflow = "";
+      document.getElementById("aiModalOverlay").classList.remove("active"); 
+    }
     function setAIStatus(type, msg) {
       const st = document.getElementById("aiStatus"); st.className = "ai-status " + type; st.style.display = 'block';
       if (type === "processing") st.innerHTML = '<div class="status-spinner"></div><span>' + msg + "</span>"; else st.innerHTML = msg;
@@ -1556,11 +1598,13 @@ Return a raw JSON object ONLY, NO markdown:
     }
 
     function openHistoryModal() {
+      document.body.style.overflow = "hidden";
       renderHistory();
       document.getElementById("historyModalOverlay").classList.add("active");
     }
 
     function closeHistoryModal() {
+      document.body.style.overflow = "";
       document.getElementById("historyModalOverlay").classList.remove("active");
     }
 

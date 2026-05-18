@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport"/>
-<title>Interactive AI CV Builder</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://js.puter.com/v2/"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<style>
-    /* ========================================================
-       BASE UI & UX STYLES
-       ======================================================== */
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport" />
+  <title>Interactive AI CV Builder</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://js.puter.com/v2/"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <style>
     body {
       font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: #e2e8f0;
@@ -26,7 +23,6 @@
       color: #333;
     }
 
-    /* Floating Toolbar */
     .toolbar {
       position: fixed;
       top: 25px;
@@ -97,9 +93,6 @@
       background-color: #c53030;
     }
 
-    /* ========================================================
-       DYNAMIC CV CONTAINER & CSS VARIABLES
-       ======================================================== */
     .cv-container {
       --bg: #ffffff;
       --primary-area-bg: #1e293b;
@@ -110,7 +103,6 @@
       --font-heading: 'Helvetica Neue', sans-serif;
       --font-body: 'Arial', sans-serif;
       --photo-radius: 50%;
-
       background-color: var(--bg);
       width: 210mm;
       min-height: 297mm;
@@ -123,7 +115,6 @@
       transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* Common typography styling */
     h1,
     h2,
     h3,
@@ -198,7 +189,6 @@
       color: white;
     }
 
-    /* Structural Blocks Styling */
     .profile-photo-container {
       width: 170px;
       height: 170px;
@@ -346,7 +336,6 @@
       color: var(--text-main);
     }
 
-    /* DYNAMIC HEADER STYLES */
     .section-title {
       display: flex;
       align-items: center;
@@ -355,7 +344,6 @@
       transition: all 0.4s;
     }
 
-    /* Style: Solid Box */
     .style-solid-box .section-title .title-text {
       background: var(--accent);
       color: #fff;
@@ -367,7 +355,6 @@
       font-weight: bold;
     }
 
-    /* Style: Underline */
     .style-underline .section-title .title-text {
       font-size: 22px;
       color: var(--text-main);
@@ -379,7 +366,6 @@
       display: block;
     }
 
-    /* Style: Clean Text */
     .style-clean-text .section-title .title-text {
       font-size: 20px;
       color: var(--accent);
@@ -400,11 +386,6 @@
       border-radius: 2px;
     }
 
-    /* ========================================================
-       AI GENERATED STRUCTURAL LAYOUTS
-       ======================================================== */
-
-    /* Generic Sidebar Styles (Shared for Left & Right) */
     .cv-container.layout-sidebar-left,
     .cv-container.layout-sidebar-right {
       flex-direction: row;
@@ -449,7 +430,6 @@
       color: var(--primary-area-text);
     }
 
-    /* Header Top Layout */
     .cv-container.layout-header-top {
       flex-direction: column;
     }
@@ -525,7 +505,6 @@
       box-sizing: border-box;
     }
 
-    /* Single Column Layout */
     .cv-container.layout-single-column {
       flex-direction: column;
     }
@@ -581,14 +560,10 @@
       width: 100%;
     }
 
-
     .hide-on-export {
       display: none !important;
     }
 
-    /* ========================================================
-       AI MODAL UX
-       ======================================================== */
     .ai-modal-overlay {
       position: fixed;
       top: 0;
@@ -812,19 +787,22 @@
     }
 
     @keyframes scanline {
-      0% { top: 0; }
-      100% { top: 100%; }
+      0% {
+        top: 0;
+      }
+
+      100% {
+        top: 100%;
+      }
     }
 
-    /* ========================================================
-       MOBILE FIRST RESPONSIVE STYLES
-       ======================================================== */
     @media (max-width: 768px) {
       body {
         padding: 80px 0 60px 0;
         background-image: none;
         background-color: #e2e8f0;
       }
+
       .toolbar {
         top: 0;
         left: 0;
@@ -838,6 +816,7 @@
         width: 100%;
         box-sizing: border-box;
       }
+
       .btn {
         padding: 9px 14px;
         font-size: 12px;
@@ -846,6 +825,7 @@
         min-width: 0;
         justify-content: center;
       }
+
       .cv-container {
         width: 100% !important;
         min-height: auto;
@@ -853,211 +833,258 @@
         box-shadow: none;
         flex-direction: column !important;
       }
+
       .layout-sidebar-left .sidebar,
       .layout-sidebar-right .sidebar {
         width: 100% !important;
         padding: 30px 20px !important;
       }
+
       .layout-sidebar-left .main-content,
       .layout-sidebar-right .main-content {
         padding: 25px 20px !important;
       }
+
       .layout-header-top .top-banner {
         flex-direction: column;
         padding: 25px 20px;
         gap: 20px;
       }
+
       .layout-header-top .bottom-body {
         flex-direction: column;
       }
+
       .layout-header-top .body-left,
       .layout-header-top .body-right {
         width: 100% !important;
         padding: 20px !important;
       }
+
       .layout-single-column .top-banner {
         padding: 30px 20px;
       }
+
       .layout-single-column .main-content {
         padding: 25px 20px !important;
         max-width: 100%;
       }
-      .header h1 { font-size: 30px; }
-      .header h3 { font-size: 16px; }
-      .profile-photo-container { width: 120px; height: 120px; }
-      .ai-modal { padding: 25px 18px; border-radius: 16px; }
-      .ai-modal h2 { font-size: 20px; }
+
+      .header h1 {
+        font-size: 30px;
+      }
+
+      .header h3 {
+        font-size: 16px;
+      }
+
+      .profile-photo-container {
+        width: 120px;
+        height: 120px;
+      }
+
+      .ai-modal {
+        padding: 25px 18px;
+        border-radius: 16px;
+      }
+
+      .ai-modal h2 {
+        font-size: 20px;
+      }
     }
   </style>
-<link href="manifest.json" rel="manifest"/>
-<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="manifest.json" rel="manifest" />
+  <link href="favicon.ico" rel="icon" type="image/x-icon" />
 </head>
+
 <body>
-<div class="toolbar" data-html2canvas-ignore="true">
-<button class="btn btn-ai-toolbar" onclick="openAIModal()">✨ AI Design &amp; Build</button>
-<button class="btn btn-download" onclick="downloadHighResImage()">🖼️ Export Image</button>
-<button class="btn btn-pdf" onclick="downloadPDF()">📄 Export PDF</button>
-<button class="btn btn-word" onclick="downloadWord()">📝 Export Word</button>
-</div>
-<!-- AI Modal -->
-<div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
-<div class="ai-modal">
-<h2>✨ AI Resume &amp; Structural Designer</h2>
-<p class="ai-subtitle">The AI will evaluate your profile and guarantee a <b>completely unique structural layout</b>, color palette, typography, and content flow on every single click.</p>
-<textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
-<details id="aiOptionalDetails" style="margin-top:18px;">
-<summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">⚙️ Optional Details (click to expand)</summary>
-<div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;padding:18px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
-<div>
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">What is this CV for?</label>
-<input id="aiPurpose" placeholder="e.g. Job application, Academic admission, Freelance portfolio..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
-</div>
-<div>
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Applying for / Target Role</label>
-<input id="aiTargetRole" placeholder="e.g. Senior Frontend Developer at Google, Medical School..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
-</div>
-<div>
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Look &amp; Feel / Style Preferences</label>
-<input id="aiStylePref" placeholder="e.g. Modern dark sidebar, minimalist, bold &amp; colorful, corporate..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
-</div>
-<div style="display:flex;gap:16px;flex-wrap:wrap;">
-<div style="flex:1;min-width:120px;">
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Primary Color</label>
-<div style="display:flex;align-items:center;gap:8px;">
-<input id="aiPrimaryColor" style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color" value="#3b82f6"/>
-<span id="aiPrimaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#3b82f6</span>
-</div>
-</div>
-<div style="flex:1;min-width:120px;">
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Secondary / Sidebar Color</label>
-<div style="display:flex;align-items:center;gap:8px;">
-<input id="aiSecondaryColor" style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color" value="#1e293b"/>
-<span id="aiSecondaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#1e293b</span>
-</div>
-</div>
-</div>
-</div>
-</details>
-<div class="ai-status" id="aiStatus"></div>
-<div class="ai-modal-actions">
-<button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
-<button class="btn-ai-generate" id="aiGenerateBtn" onclick="generateCVFromAI()">
-<span id="aiBtnText">Generate Architecture</span>
-<div class="ai-spinner" id="aiSpinner"></div>
-</button>
-</div>
-</div>
-</div>
-<!-- THE MASTER CONTAINER -->
-<div class="cv-container layout-sidebar-left style-clean-text" data-layout="sidebar-left" id="cvToExport">
-<!-- Initial Default Layout Container structure -->
-<div class="sidebar primary-area"></div>
-<div class="main-content"></div>
-</div>
-<!-- DOM BUILDING BLOCKS (These move around physically during layout changes) -->
-<div id="repo" style="display:none;">
-<div class="profile-photo-container" id="photoBlock" onclick="document.getElementById('photoInput').click()">
-<input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
-<img alt="Profile" id="profileImg" onerror="this.src='safeer.png';" src="safeer.png"/>
-<div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
-</div>
-<div class="header" id="headerBlock">
-<h1 contenteditable="true">Alex Carter</h1>
-<h3 contenteditable="true">Senior Software Engineer</h3>
-</div>
-<div class="section-hover-target" id="contactBlock">
-<h2>Contact</h2>
-<div class="contact-info">
-<div class="contact-item">
-<span class="contact-label" contenteditable="true">Phone</span>
-<div contenteditable="true">+1 234 567 890</div>
-</div>
-<div class="contact-item">
-<span class="contact-label" contenteditable="true">Email</span>
-<div contenteditable="true">hello@professional.com</div>
-</div>
-<div class="contact-item">
-<span class="contact-label" contenteditable="true">Address</span>
-<div contenteditable="true">Silicon Valley, CA</div>
-</div>
-</div>
-</div>
-<div class="section section-hover-target" id="summaryBlock">
-<div class="section-title">
-<div class="title-text"><span contenteditable="true">Professional Summary</span></div>
-</div>
-<p class="summary-text" contenteditable="true">
+  <div class="toolbar" data-html2canvas-ignore="true">
+    <button class="btn btn-ai-toolbar" onclick="openAIModal()">✨ AI Design &amp; Build</button>
+    <button class="btn btn-download" onclick="downloadHighResImage()">🖼️ Export Image</button>
+    <button class="btn btn-pdf" onclick="downloadPDF()">📄 Export PDF</button>
+    <button class="btn btn-word" onclick="downloadWord()">📝 Export Word</button>
+  </div>
+  <div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
+    <div class="ai-modal">
+      <h2>✨ AI Resume &amp; Structural Designer</h2>
+      <p class="ai-subtitle">The AI will evaluate your profile and guarantee a <b>completely unique structural
+          layout</b>, color palette, typography, and content flow on every single click.</p>
+      <textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
+      <details id="aiOptionalDetails" style="margin-top:18px;">
+        <summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">⚙️
+          Optional Details (click to expand)</summary>
+        <div
+          style="display:flex;flex-direction:column;gap:12px;margin-top:14px;padding:18px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
+          <div>
+            <label
+              style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">What
+              is this CV for?</label>
+            <input id="aiPurpose" placeholder="e.g. Job application, Academic admission, Freelance portfolio..."
+              style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;"
+              type="text" />
+          </div>
+          <div>
+            <label
+              style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Applying
+              for / Target Role</label>
+            <input id="aiTargetRole" placeholder="e.g. Senior Frontend Developer at Google, Medical School..."
+              style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;"
+              type="text" />
+          </div>
+          <div>
+            <label
+              style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Look
+              &amp; Feel / Style Preferences</label>
+            <input id="aiStylePref"
+              placeholder="e.g. Modern dark sidebar, minimalist, bold &amp; colorful, corporate..."
+              style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;"
+              type="text" />
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:120px;">
+              <label
+                style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Primary
+                Color</label>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <input id="aiPrimaryColor"
+                  style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color"
+                  value="#3b82f6" />
+                <span id="aiPrimaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#3b82f6</span>
+              </div>
+            </div>
+            <div style="flex:1;min-width:120px;">
+              <label
+                style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Secondary
+                / Sidebar Color</label>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <input id="aiSecondaryColor"
+                  style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color"
+                  value="#1e293b" />
+                <span id="aiSecondaryColorHex"
+                  style="font-size:13px;color:#475569;font-family:monospace;">#1e293b</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <div class="ai-status" id="aiStatus"></div>
+      <div class="ai-modal-actions">
+        <button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
+        <button class="btn-ai-generate" id="aiGenerateBtn" onclick="generateCVFromAI()">
+          <span id="aiBtnText">Generate Architecture</span>
+          <div class="ai-spinner" id="aiSpinner"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="cv-container layout-sidebar-left style-clean-text" data-layout="sidebar-left" id="cvToExport">
+    <div class="sidebar primary-area"></div>
+    <div class="main-content"></div>
+  </div>
+  <div id="repo" style="display:none;">
+    <div class="profile-photo-container" id="photoBlock" onclick="document.getElementById('photoInput').click()">
+      <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file" />
+      <img alt="Profile" id="profileImg" onerror="this.src='safeer.png';" src="safeer.png" />
+      <div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
+    </div>
+    <div class="header" id="headerBlock">
+      <h1 contenteditable="true">Alex Carter</h1>
+      <h3 contenteditable="true">Senior Software Engineer</h3>
+    </div>
+    <div class="section-hover-target" id="contactBlock">
+      <h2>Contact</h2>
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="contact-label" contenteditable="true">Phone</span>
+          <div contenteditable="true">+1 234 567 890</div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label" contenteditable="true">Email</span>
+          <div contenteditable="true">hello@professional.com</div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label" contenteditable="true">Address</span>
+          <div contenteditable="true">Silicon Valley, CA</div>
+        </div>
+      </div>
+    </div>
+    <div class="section section-hover-target" id="summaryBlock">
+      <div class="section-title">
+        <div class="title-text"><span contenteditable="true">Professional Summary</span></div>
+      </div>
+      <p class="summary-text" contenteditable="true">
         Innovative and results-driven professional with a strong track record of designing and executing robust
         solutions. Passionate about leveraging technology to drive business growth and optimize user experiences.
       </p>
-</div>
-<div class="section-hover-target" id="skillsBlock">
-<h2>Skills <button class="btn-add control-btn" onclick="addListItem('skillsList')">+</button></h2>
-<ul id="skillsList">
-<li class="list-item-wrapper"><span contenteditable="true"><strong>Development:</strong> Expert</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
-<li class="list-item-wrapper"><span contenteditable="true"><strong>UI/UX Design:</strong> Advanced</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
-</ul>
-</div>
-<div class="section-hover-target" id="langBlock">
-<h2>Languages <button class="btn-add control-btn" onclick="addListItem('langList')">+</button></h2>
-<ul id="langList">
-<li class="list-item-wrapper"><span contenteditable="true"><strong>English:</strong> Native</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
-</ul>
-</div>
-<div class="section section-hover-target" id="expBlock">
-<div class="section-title">
-<div class="title-text"><span contenteditable="true">Work Experience</span></div>
-<button class="btn-add control-btn" onclick="addExperience()">+ Add Job</button>
-</div>
-<div class="entry-block list-item-wrapper">
-<div style="display: flex; justify-content: space-between">
-<div class="job-title" contenteditable="true">Senior Engineer</div><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span>
-</div>
-<div class="company-name" contenteditable="true">TechCorp Solutions | New York, NY</div>
-<span class="date-location" contenteditable="true">Jan 2020 – Present</span>
-<div class="job-desc">
-<ul>
-<li class="list-item-wrapper"><span contenteditable="true">Led a team of 10 developers to build scalable
+    </div>
+    <div class="section-hover-target" id="skillsBlock">
+      <h2>Skills <button class="btn-add control-btn" onclick="addListItem('skillsList')">+</button></h2>
+      <ul id="skillsList">
+        <li class="list-item-wrapper"><span contenteditable="true"><strong>Development:</strong> Expert</span><span
+            class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
+        <li class="list-item-wrapper"><span contenteditable="true"><strong>UI/UX Design:</strong> Advanced</span><span
+            class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
+      </ul>
+    </div>
+    <div class="section-hover-target" id="langBlock">
+      <h2>Languages <button class="btn-add control-btn" onclick="addListItem('langList')">+</button></h2>
+      <ul id="langList">
+        <li class="list-item-wrapper"><span contenteditable="true"><strong>English:</strong> Native</span><span
+            class="btn-delete control-btn" onclick="deleteItem(this)">×</span></li>
+      </ul>
+    </div>
+    <div class="section section-hover-target" id="expBlock">
+      <div class="section-title">
+        <div class="title-text"><span contenteditable="true">Work Experience</span></div>
+        <button class="btn-add control-btn" onclick="addExperience()">+ Add Job</button>
+      </div>
+      <div class="entry-block list-item-wrapper">
+        <div style="display: flex; justify-content: space-between">
+          <div class="job-title" contenteditable="true">Senior Engineer</div><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">Delete</span>
+        </div>
+        <div class="company-name" contenteditable="true">TechCorp Solutions | New York, NY</div>
+        <span class="date-location" contenteditable="true">Jan 2020 – Present</span>
+        <div class="job-desc">
+          <ul>
+            <li class="list-item-wrapper"><span contenteditable="true">Led a team of 10 developers to build scalable
                 enterprise architecture.</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</li>
-<li class="list-item-wrapper" onclick="addBullet(this.parentNode)" style="cursor: pointer; color: var(--accent); list-style: none;">+ Add Bullet</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section section-hover-target" id="eduBlock">
-<div class="section-title">
-<div class="title-text"><span contenteditable="true">Education</span></div>
-<button class="btn-add control-btn" onclick="addEducation()">+ Add Edu</button>
-</div>
-<div class="entry-block list-item-wrapper">
-<div style="display: flex; justify-content: space-between">
-<div class="job-title" contenteditable="true">M.S. Computer Science</div><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span>
-</div>
-<div class="company-name" contenteditable="true">Stanford University</div>
-<span class="date-location" contenteditable="true">2018 – 2020</span>
-<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Artificial
+            </li>
+            <li class="list-item-wrapper" onclick="addBullet(this.parentNode)"
+              style="cursor: pointer; color: var(--accent); list-style: none;">+ Add Bullet</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="section section-hover-target" id="eduBlock">
+      <div class="section-title">
+        <div class="title-text"><span contenteditable="true">Education</span></div>
+        <button class="btn-add control-btn" onclick="addEducation()">+ Add Edu</button>
+      </div>
+      <div class="entry-block list-item-wrapper">
+        <div style="display: flex; justify-content: space-between">
+          <div class="job-title" contenteditable="true">M.S. Computer Science</div><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">Delete</span>
+        </div>
+        <div class="company-name" contenteditable="true">Stanford University</div>
+        <span class="date-location" contenteditable="true">2018 – 2020</span>
+        <p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Artificial
           Intelligence.</p>
-</div>
-</div>
-</div>
-<script>
-    // --- Lifecycle & Initialization ---
+      </div>
+    </div>
+  </div>
+  <script>
     document.addEventListener("DOMContentLoaded", () => {
       const savedText = localStorage.getItem("cv_raw_text");
       if (savedText) document.getElementById("aiTextInput").value = savedText;
       applyLayoutStructure("sidebar-left");
-
       const pc = document.getElementById("aiPrimaryColor");
       const sc = document.getElementById("aiSecondaryColor");
       pc.addEventListener("input", () => document.getElementById("aiPrimaryColorHex").textContent = pc.value);
       sc.addEventListener("input", () => document.getElementById("aiSecondaryColorHex").textContent = sc.value);
-
       const img = document.getElementById("profileImg");
       img.onerror = () => { img.onerror = null; img.src = "safeer.png"; };
     });
-
-    // --- UI Interactions ---
     function loadPhoto(event) {
       const image = document.getElementById("profileImg");
       const placeholder = document.getElementById("photoPlaceholder");
@@ -1101,12 +1128,8 @@
         <p class="summary-text" style="margin-top:5px; font-size:14px;" contenteditable="true">Details/Majors...</p>`;
       section.appendChild(div);
     }
-
-    // --- Core Layout Engine (Physically moves DOM Elements) ---
     function applyLayoutStructure(layoutName) {
       const cvNode = document.getElementById("cvToExport");
-
-      // Grab all structural blocks safely from anywhere they currently are
       const blocks = {
         photo: document.getElementById("photoBlock"),
         contact: document.getElementById("contactBlock"),
@@ -1117,26 +1140,16 @@
         exp: document.getElementById("expBlock"),
         edu: document.getElementById("eduBlock")
       };
-
-      // Detach them to prevent cloning issues & maintain editable state
       Object.values(blocks).forEach(b => { if (b && b.parentNode) b.parentNode.removeChild(b); });
-
-      // Clean container
       cvNode.innerHTML = "";
       cvNode.setAttribute("data-layout", layoutName);
-
-      // Strip old layout classes, add new
       cvNode.classList.remove("layout-sidebar-left", "layout-sidebar-right", "layout-header-top", "layout-single-column");
       cvNode.classList.add("layout-" + layoutName);
-
-      // Re-assemble DOM based on Layout Architecture
       if (layoutName === 'sidebar-left' || layoutName === 'sidebar-right') {
         const sidebar = document.createElement("div"); sidebar.className = "sidebar primary-area";
         sidebar.append(blocks.photo, blocks.contact, blocks.skills, blocks.lang);
-
         const main = document.createElement("div"); main.className = "main-content";
         main.append(blocks.header, blocks.summary, blocks.exp, blocks.edu);
-
         if (layoutName === 'sidebar-left') cvNode.append(sidebar, main);
         else cvNode.append(main, sidebar);
       }
@@ -1145,27 +1158,22 @@
         const headerInfo = document.createElement("div"); headerInfo.className = "header-info";
         headerInfo.append(blocks.header, blocks.contact);
         topBanner.append(blocks.photo, headerInfo);
-
         const bottomBody = document.createElement("div"); bottomBody.className = "bottom-body";
         const leftCol = document.createElement("div"); leftCol.className = "body-left";
         leftCol.append(blocks.skills, blocks.lang);
         const rightCol = document.createElement("div"); rightCol.className = "body-right";
         rightCol.append(blocks.summary, blocks.exp, blocks.edu);
-
         bottomBody.append(leftCol, rightCol);
         cvNode.append(topBanner, bottomBody);
       }
       else if (layoutName === 'single-column') {
         const topBanner = document.createElement("div"); topBanner.className = "top-banner primary-area";
         topBanner.append(blocks.photo, blocks.header, blocks.contact);
-
         const main = document.createElement("div"); main.className = "main-content";
         main.append(blocks.summary, blocks.skills, blocks.exp, blocks.edu, blocks.lang);
-
         cvNode.append(topBanner, main);
       }
     }
-
     function loadGoogleFonts(heading, body) {
       const cleanFont = (f) => f.replace(/ /g, '+');
       const fontUrl = `https://fonts.googleapis.com/css2?family=${cleanFont(heading)}:wght@400;600;700;800&family=${cleanFont(body)}:wght@400;500;600&display=swap`;
@@ -1173,14 +1181,9 @@
       if (!link) { link = document.createElement('link'); link.id = 'ai-fonts-stylesheet'; link.rel = 'stylesheet'; document.head.appendChild(link); }
       link.href = fontUrl;
     }
-
     function applyAITheme(theme) {
       if (!theme) return;
-
-      // 1. Physically rebuild DOM layout
       if (theme.layoutDirection) applyLayoutStructure(theme.layoutDirection);
-
-      // 2. Inject Colors & Styles
       const cvNode = document.getElementById("cvToExport");
       cvNode.style.setProperty('--bg', theme.backgroundColor || '#ffffff');
       cvNode.style.setProperty('--primary-area-bg', theme.primaryAreaColor || '#1e293b');
@@ -1188,23 +1191,18 @@
       cvNode.style.setProperty('--text-main', theme.mainTextColor || '#334155');
       cvNode.style.setProperty('--text-muted', theme.secondaryTextColor || '#64748b');
       cvNode.style.setProperty('--accent', theme.accentColor || '#3b82f6');
-
       let radius = "50%";
       if (theme.photoShape === "square") radius = "0px";
       if (theme.photoShape === "rounded") radius = "15px";
       cvNode.style.setProperty('--photo-radius', radius);
-
       if (theme.headingFont && theme.bodyFont) {
         loadGoogleFonts(theme.headingFont, theme.bodyFont);
         cvNode.style.setProperty('--font-heading', `"${theme.headingFont}", sans-serif`);
         cvNode.style.setProperty('--font-body', `"${theme.bodyFont}", sans-serif`);
       }
-
       cvNode.classList.remove("style-solid-box", "style-underline", "style-clean-text");
       cvNode.classList.add(theme.headerStyle ? `style-${theme.headerStyle}` : 'style-clean-text');
     }
-
-    // --- AI Brain ---
     function openAIModal() {
       document.getElementById("aiModalOverlay").classList.add("active");
       document.getElementById("aiTextInput").focus();
@@ -1215,40 +1213,32 @@
       const st = document.getElementById("aiStatus"); st.className = "ai-status " + type; st.style.display = 'block';
       if (type === "processing") st.innerHTML = '<div class="status-spinner"></div><span>' + msg + "</span>"; else st.innerHTML = msg;
     }
-
     async function generateCVFromAI() {
       const rawText = document.getElementById("aiTextInput").value.trim();
       if (!rawText) return setAIStatus("error", "⚠️ Please paste your resume info first.");
       localStorage.setItem("cv_raw_text", rawText);
-
       const purpose = document.getElementById("aiPurpose").value.trim();
       const targetRole = document.getElementById("aiTargetRole").value.trim();
       const stylePref = document.getElementById("aiStylePref").value.trim();
       const primaryColor = document.getElementById("aiPrimaryColor").value;
       const secondaryColor = document.getElementById("aiSecondaryColor").value;
-
       const btn = document.getElementById("aiGenerateBtn");
       const btnText = document.getElementById("aiBtnText");
       const spinner = document.getElementById("aiSpinner");
       const cvNode = document.getElementById("cvToExport");
-
       btn.disabled = true; btnText.textContent = "Architecting Layout..."; spinner.style.display = "block";
       cvNode.classList.add("cv-scanning");
       setAIStatus("processing", "AI is writing your content & building a dynamic CSS/DOM Architecture...");
-
       const allLayouts = ["sidebar-left", "sidebar-right", "header-top", "single-column"];
       const allHeaders = ["solid-box", "underline", "clean-text"];
       const allShapes = ["circle", "square", "rounded"];
-
       const lastLayout = localStorage.getItem("last_cv_layout");
       let availableLayouts = allLayouts.filter(l => l !== lastLayout);
       if (availableLayouts.length === 0) availableLayouts = allLayouts;
-
       const forcedLayout = availableLayouts[Math.floor(Math.random() * availableLayouts.length)];
       const forcedHeader = allHeaders[Math.floor(Math.random() * allHeaders.length)];
       const forcedShape = allShapes[Math.floor(Math.random() * allShapes.length)];
       localStorage.setItem("last_cv_layout", forcedLayout);
-
       const optionalContext = [
         purpose ? `CV Purpose: ${purpose}` : '',
         targetRole ? `Target Role/Position: ${targetRole}` : '',
@@ -1256,19 +1246,15 @@
         `User-chosen Primary/Accent Color: ${primaryColor}`,
         `User-chosen Secondary/Sidebar Color: ${secondaryColor}`
       ].filter(Boolean).join('\n');
-
       const systemPrompt = `You are a world-class Resume parser AND an Expert UI/UX Architect.
 Do TWO things:
 1. Extract the CV data efficiently.
 2. Generate a thematic design payload.
-
 CRITICAL REQUIREMENT: Use these exact values in your JSON output:
 - "layoutDirection": "${forcedLayout}"
 - "headerStyle": "${forcedHeader}"
 - "photoShape": "${forcedShape}"
-
 ${optionalContext ? `OPTIONAL CONTEXT FROM USER (use to tailor content and design):\n${optionalContext}\nIf the user specified colors, use them as accentColor and primaryAreaColor. If style preference given, match it.` : 'Generate a COMPLETELY NEW unique color palette. Be creative.'}
-
 Return a raw JSON object ONLY, NO markdown:
 {
   "theme": {
@@ -1293,7 +1279,6 @@ Return a raw JSON object ONLY, NO markdown:
     "education": [{"degree": "Degree", "institution": "School", "dates": "Dates", "details": "Info"}]
   }
 }`;
-
       try {
         let content = await puter.ai.chat(systemPrompt + "\n\nUSER TEXT:\n" + rawText, { model: 'gemini-2.5-flash-lite' });
         if (typeof content !== 'string') content = content?.text || content?.message?.content || "";
@@ -1312,19 +1297,14 @@ Return a raw JSON object ONLY, NO markdown:
         cvNode.classList.remove("cv-scanning");
       }
     }
-
-
     function populateCV(data) {
       if (data.name) { document.querySelector("#headerBlock h1").textContent = data.name; window._cvName = data.name.replace(/\s+/g, "_"); }
       if (data.title) document.querySelector("#headerBlock h3").textContent = data.title;
-
       const contacts = document.querySelectorAll("#contactBlock .contact-item");
       if (data.phone && contacts[0]) contacts[0].querySelector("div[contenteditable]").textContent = data.phone;
       if (data.email && contacts[1]) contacts[1].querySelector("div[contenteditable]").textContent = data.email;
       if (data.address && contacts[2]) contacts[2].querySelector("div[contenteditable]").textContent = data.address;
-
       if (data.summary) document.querySelector("#summaryBlock .summary-text").textContent = data.summary;
-
       const buildList = (listId, items) => {
         if (!items || !items.length) return;
         const ul = document.getElementById(listId); ul.innerHTML = "";
@@ -1336,7 +1316,6 @@ Return a raw JSON object ONLY, NO markdown:
         });
       };
       buildList("skillsList", data.skills); buildList("langList", data.languages);
-
       if (data.experience && data.experience.length) {
         const expSec = document.getElementById("expBlock");
         expSec.querySelectorAll(".entry-block").forEach(b => b.remove());
@@ -1353,7 +1332,6 @@ Return a raw JSON object ONLY, NO markdown:
           expSec.appendChild(div);
         });
       }
-
       if (data.education && data.education.length) {
         const eduSec = document.getElementById("eduBlock");
         eduSec.querySelectorAll(".entry-block").forEach(b => b.remove());
@@ -1368,11 +1346,9 @@ Return a raw JSON object ONLY, NO markdown:
         });
       }
     }
-
     function hideEditControls() {
       return document.querySelectorAll('.control-btn, li[onclick*="addBullet"]');
     }
-
     function downloadHighResImage() {
       const cvNode = document.getElementById("cvToExport");
       const btns = hideEditControls();
@@ -1390,7 +1366,6 @@ Return a raw JSON object ONLY, NO markdown:
         });
       }, 300);
     }
-
     function downloadPDF() {
       const cvNode = document.getElementById("cvToExport");
       const btns = hideEditControls();
@@ -1417,15 +1392,12 @@ Return a raw JSON object ONLY, NO markdown:
         });
       }, 300);
     }
-
-
     function downloadWord() {
       const cvClone = document.getElementById("cvToExport").cloneNode(true);
       const btns = cvClone.querySelectorAll('.control-btn, li[onclick*="addBullet"], .profile-photo-placeholder, input');
       btns.forEach(b => b.remove());
       const photoContainer = cvClone.querySelector('.profile-photo-container');
       if (photoContainer) photoContainer.remove();
-
       const cvNode = document.getElementById("cvToExport");
       const styles = cvNode.style;
       const primary = styles.getPropertyValue('--accent').trim() || '#3498db';
@@ -1433,18 +1405,13 @@ Return a raw JSON object ONLY, NO markdown:
       const pAreaText = styles.getPropertyValue('--primary-area-text').trim() || '#ffffff';
       const textMain = styles.getPropertyValue('--text-main').trim() || '#333333';
       const headingFont = (styles.getPropertyValue('--font-heading').trim() || 'Arial').replace(/"/g, "'");
-
       const layout = cvNode.getAttribute('data-layout') || 'sidebar-left';
-
       const imgElement = document.getElementById("profileImg");
       const canvas = document.createElement("canvas"); canvas.width = 140; canvas.height = 140;
       const ctx = canvas.getContext("2d");
       let base64Img = "";
       try { ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height); base64Img = canvas.toDataURL("image/png"); } catch (e) { }
-
-      // Map Word export logic accurately to the current DOM Layout state
       let wordHTMLTable = "";
-
       if (layout === 'sidebar-left' || layout === 'sidebar-right') {
         const sidebarHTML = cvClone.querySelector('.sidebar').innerHTML;
         const mainContentHTML = cvClone.querySelector('.main-content').innerHTML;
@@ -1456,7 +1423,6 @@ Return a raw JSON object ONLY, NO markdown:
         const topBannerHTML = cvClone.querySelector('.top-banner').innerHTML;
         const leftColHTML = cvClone.querySelector('.body-left').innerHTML;
         const rightColHTML = cvClone.querySelector('.body-right').innerHTML;
-
         const topRow = `<tr><td colspan="2" valign="top" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 30px;">${topBannerHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td></tr>`;
         const bottomRow = `<tr><td width="30%" valign="top" style="background-color: #f8fafc; padding: 20px;">${leftColHTML.replace(/<h2.*?>/g, `<div class="sidebar-title" style="color:${primary};">`).replace(/<\/h2>/g, '</div>')}</td><td width="70%" valign="top" style="background-color: white; color: ${textMain}; padding: 20px;">${rightColHTML}</td></tr>`;
         wordHTMLTable = topRow + bottomRow;
@@ -1466,7 +1432,6 @@ Return a raw JSON object ONLY, NO markdown:
         const mainContentHTML = cvClone.querySelector('.main-content').innerHTML;
         wordHTMLTable = `<tr><td valign="top" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 30px; text-align: center;">${topBannerHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td></tr><tr><td valign="top" style="background-color: white; color: ${textMain}; padding: 30px;">${mainContentHTML}</td></tr>`;
       }
-
       const wordHTML = `
         <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
         <head><meta charset='utf-8'><title>CV</title>
@@ -1493,28 +1458,12 @@ Return a raw JSON object ONLY, NO markdown:
             </table>
           </div>
         </body></html>`;
-
       const blob = new Blob(['\ufeff', wordHTML], { type: 'application/msword' });
       const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = (window._cvName || "Resume") + ".doc";
       document.body.appendChild(link); link.click(); document.body.removeChild(link);
     }
   </script>
-<script type="module">
-  import { Workbox } from 'https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-window.prod.mjs';
+  <script src="./pwa-register.js" type="module"></script>
+</body>
 
-  const swUrl = './sw.js';
-  const wb = new Workbox(swUrl);
-
-  wb.addEventListener('waiting', () => {
-    console.log('A new service worker is waiting to activate.');
-    wb.messageSW({ type: 'SKIP_WAITING' });
-  });
-
-  wb.addEventListener('controlling', () => {
-    console.log('The new service worker is now in control. Reloading page for updates...');
-    window.location.reload();
-  });
-
-  wb.register();
-</script></body>
 </html>

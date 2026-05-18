@@ -54,15 +54,15 @@ if (workbox) {
     },
     {
         "url": "build pwa make html app offline and installable yasin best working re-run this for updates best for html only.pyw",
-        "revision": "912a9d55d74613b8f4f07180d0df1fd3"
+        "revision": "d3ceb161cfab9e9c5f40a93e15e5be27"
     },
     {
         "url": "index.html",
-        "revision": "6a29a195404f02efac63fa809d1e24c4"
+        "revision": "4ee2c0801ca0ec8b69616de3a2114dc1"
     },
     {
         "url": "index2.html",
-        "revision": "2c701a47dcd84f4830272abd68b29612"
+        "revision": "33f149135f4b2b92842611184553a504"
     },
     {
         "url": "index3.html",
@@ -90,7 +90,7 @@ if (workbox) {
     },
     {
         "url": "sw.js",
-        "revision": "54e756bfc9f90c3256bd7cffc0e090fa"
+        "revision": "3d7554b967c6aaf65728e30bcf0d14d8"
     },
     {
         "url": "test.html",

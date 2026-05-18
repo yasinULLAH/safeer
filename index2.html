@@ -1678,13 +1678,13 @@ Return a raw JSON object ONLY, NO markdown:
         html2canvas(cvNode, { scale: 3, useCORS: true, allowTaint: true }).then(canvas => {
           const { jsPDF } = window.jspdf;
           const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-          const imgData = canvas.toDataURL('image/png');
+          const imgData = canvas.toDataURL('image/jpeg', 0.95);
           const pdfW = pdf.internal.pageSize.getWidth();
           const pdfH = (canvas.height * pdfW) / canvas.width;
           let yPos = 0;
           const pageH = pdf.internal.pageSize.getHeight();
           while (yPos < pdfH) {
-            pdf.addImage(imgData, 'PNG', 0, -yPos, pdfW, pdfH);
+            pdf.addImage(imgData, 'JPEG', 0, -yPos, pdfW, pdfH);
             yPos += pageH;
             if (yPos < pdfH) pdf.addPage();
           }
@@ -1698,8 +1698,8 @@ Return a raw JSON object ONLY, NO markdown:
       const cvClone = document.getElementById("cvToExport").cloneNode(true);
       const btns = cvClone.querySelectorAll('.control-btn, li[onclick*="addBullet"], .profile-photo-placeholder, input');
       btns.forEach(b => b.remove());
+      const cloneImg = cvClone.querySelector('#profileImg');
       const photoContainer = cvClone.querySelector('.profile-photo-container');
-      if (photoContainer) photoContainer.remove();
       const cvNode = document.getElementById("cvToExport");
       const styles = cvNode.style;
       const primary = styles.getPropertyValue('--accent').trim() || '#3498db';
@@ -1709,25 +1709,65 @@ Return a raw JSON object ONLY, NO markdown:
       const headingFont = (styles.getPropertyValue('--font-heading').trim() || 'Arial').replace(/"/g, "'");
       const layout = cvNode.getAttribute('data-layout') || 'sidebar-left';
       const docDir = window.getComputedStyle(cvNode).direction || 'ltr';
-      const imgElement = document.getElementById("profileImg");
       const canvas = document.createElement("canvas"); canvas.width = 140; canvas.height = 140;
       const ctx = canvas.getContext("2d");
       let base64Img = "";
-      try { ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height); base64Img = canvas.toDataURL("image/png"); } catch (e) { }
+      try {
+          const radiusStr = styles.getPropertyValue('--photo-radius').trim();
+          ctx.beginPath();
+          if (radiusStr === '50%') {
+              ctx.arc(70, 70, 70, 0, Math.PI * 2);
+          } else if (radiusStr === '15px') {
+              const r = 15;
+              ctx.moveTo(r, 0); ctx.lineTo(140-r, 0); ctx.quadraticCurveTo(140, 0, 140, r);
+              ctx.lineTo(140, 140-r); ctx.quadraticCurveTo(140, 140, 140-r, 140);
+              ctx.lineTo(r, 140); ctx.quadraticCurveTo(0, 140, 0, 140-r);
+              ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0);
+          } else {
+              ctx.rect(0, 0, 140, 140);
+          }
+          ctx.clip();
+          ctx.drawImage(document.getElementById("profileImg"), 0, 0, canvas.width, canvas.height); 
+          base64Img = canvas.toDataURL("image/png"); 
+      } catch (e) { console.error(e); }
+
+      if (cloneImg && base64Img) {
+          cloneImg.src = base64Img;
+          cloneImg.setAttribute("width", "130");
+          cloneImg.setAttribute("height", "130");
+          cloneImg.style.display = "block";
+          if (photoContainer) photoContainer.style.textAlign = "center";
+      } else if (photoContainer) {
+          photoContainer.remove();
+      }
+
+      cvClone.querySelectorAll('.contact-item').forEach(el => {
+          el.style.display = "inline-block";
+          el.style.marginRight = "20px";
+          el.style.verticalAlign = "top";
+      });
+
       let wordHTMLTable = "";
       if (layout === 'sidebar-left' || layout === 'sidebar-right') {
         const sidebarHTML = cvClone.querySelector('.sidebar').innerHTML;
         const mainContentHTML = cvClone.querySelector('.main-content').innerHTML;
-        const colSidebar = `<td width="30%" valign="top" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 20px;"><div style="text-align: center; margin-bottom: 20px;">${base64Img ? `<img src="${base64Img}" width="130" height="130" style="border-radius: 65px;">` : ''}</div>${sidebarHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td>`;
-        const colMain = `<td width="70%" valign="top" style="background-color: white; color: ${textMain}; padding: 20px;">${mainContentHTML}</td>`;
+        const colSidebar = `<td width="30%" valign="top" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 25px;">${sidebarHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td>`;
+        const colMain = `<td width="70%" valign="top" style="background-color: white; color: ${textMain}; padding: 25px;">${mainContentHTML}</td>`;
         wordHTMLTable = `<tr>${layout === 'sidebar-left' ? colSidebar + colMain : colMain + colSidebar}</tr>`;
       }
       else if (layout === 'header-top') {
-        const topBannerHTML = cvClone.querySelector('.top-banner').innerHTML;
+        const pBlock = cvClone.querySelector('.top-banner #photoBlock');
+        const hInfo = cvClone.querySelector('.top-banner .header-info');
+        let topBannerHTML = "";
+        if (pBlock && hInfo) {
+            topBannerHTML = `<table width="100%" cellpadding="0" cellspacing="0"><tr><td width="160" valign="middle">${pBlock.outerHTML}</td><td valign="middle">${hInfo.outerHTML}</td></tr></table>`;
+        } else {
+            topBannerHTML = cvClone.querySelector('.top-banner').innerHTML;
+        }
         const leftColHTML = cvClone.querySelector('.body-left').innerHTML;
         const rightColHTML = cvClone.querySelector('.body-right').innerHTML;
         const topRow = `<tr><td colspan="2" valign="top" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 30px;">${topBannerHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td></tr>`;
-        const bottomRow = `<tr><td width="30%" valign="top" style="background-color: #f8fafc; padding: 20px;">${leftColHTML.replace(/<h2.*?>/g, `<div class="sidebar-title" style="color:${primary};">`).replace(/<\/h2>/g, '</div>')}</td><td width="70%" valign="top" style="background-color: white; color: ${textMain}; padding: 20px;">${rightColHTML}</td></tr>`;
+        const bottomRow = `<tr><td width="30%" valign="top" style="background-color: #f8fafc; padding: 25px;">${leftColHTML.replace(/<h2.*?>/g, `<div class="sidebar-title" style="color:${primary};">`).replace(/<\/h2>/g, '</div>')}</td><td width="70%" valign="top" style="background-color: white; color: ${textMain}; padding: 25px;">${rightColHTML}</td></tr>`;
         wordHTMLTable = topRow + bottomRow;
       }
       else if (layout === 'single-column') {

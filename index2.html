@@ -1506,13 +1506,31 @@
       const forcedHeader = allHeaders[Math.floor(Math.random() * allHeaders.length)];
       const forcedShape = allShapes[Math.floor(Math.random() * allShapes.length)];
       localStorage.setItem("last_cv_layout", forcedLayout);
-      const optionalContext = [
-        purpose ? `CV Purpose: ${purpose}` : '',
-        targetRole ? `Target Role/Position: ${targetRole}` : '',
-        stylePref ? `Look & Feel Preference: ${stylePref}` : '',
-        `User-chosen Primary/Accent Color: ${primaryColor}`,
-        `User-chosen Secondary/Sidebar Color: ${secondaryColor}`
-      ].filter(Boolean).join('\n');
+      const isCustomColors = !(primaryColor === "#3b82f6" && secondaryColor === "#1e293b");
+      const hasCustomDetails = purpose || targetRole || stylePref || isCustomColors;
+
+      let optionalContextStr = "";
+      if (hasCustomDetails) {
+          let parts = ["OPTIONAL CONTEXT FROM USER (use this to tailor content and design):"];
+          if (purpose) parts.push(`- CV Purpose: ${purpose}`);
+          if (targetRole) parts.push(`- Target Role: ${targetRole}`);
+          if (stylePref) parts.push(`- Style Preference: ${stylePref}`);
+          if (isCustomColors) {
+              parts.push(`- User-chosen Primary/Accent Color: ${primaryColor}`);
+              parts.push(`- User-chosen Secondary/Sidebar Color: ${secondaryColor}`);
+              parts.push("Make sure to strictly apply the user-chosen colors!");
+          } else {
+              parts.push("- Generate a COMPLETELY NEW, visually striking and professional color palette.");
+          }
+          optionalContextStr = parts.join('\n');
+      } else {
+          optionalContextStr = `NO OPTIONAL DETAILS PROVIDED. You have FULL CREATIVE FREEDOM!
+- Generate a STUNNING, UNIQUE, ADVANCED, AND HIGHLY PROFESSIONAL CV.
+- Create a completely new, visually striking color palette (use rich, modern colors like sleek dark modes, vibrant gradients, or sophisticated corporate tones).
+- Pick modern Google Fonts for headings and body that pair beautifully.
+- Do NOT just use generic blues and grays. Surprise the user with a premium design!`;
+      }
+
       const systemPrompt = `You are a world-class Resume parser AND an Expert UI/UX Architect.
 Do TWO things:
 1. Extract the CV data efficiently.
@@ -1521,7 +1539,7 @@ CRITICAL REQUIREMENT: Use these exact values in your JSON output:
 - "layoutDirection": "${forcedLayout}"
 - "headerStyle": "${forcedHeader}"
 - "photoShape": "${forcedShape}"
-${optionalContext ? `OPTIONAL CONTEXT FROM USER (use to tailor content and design):\n${optionalContext}\nIf the user specified colors, use them as accentColor and primaryAreaColor. If style preference given, match it.` : 'Generate a COMPLETELY NEW unique color palette. Be creative.'}
+${optionalContextStr}
 Return a raw JSON object ONLY, NO markdown:
 {
   "theme": {

@@ -1168,7 +1168,7 @@
 <div class="section-hover-target" data-zone="sidebar" id="contactBlock">
 <div style="position:relative;">
 <h2 style="margin:0; padding-right:70px;">Contact</h2>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><button class="btn-add control-btn" onclick="addContact()">+</button><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addContact()">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <div class="contact-info">
 <div class="contact-item" style="position:relative; padding-right:50px;">
@@ -1201,7 +1201,7 @@
 <div class="section-hover-target" data-zone="sidebar" id="skillsBlock">
 <div style="position:relative;">
 <h2 style="margin:0; padding-right:70px;">Skills</h2>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><button class="btn-add control-btn" onclick="addListItem('skillsList')">+</button><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addListItem('skillsList')">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <ul id="skillsList">
 <li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>Development:</strong> Expert</span><div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div></li>
@@ -1211,7 +1211,7 @@
 <div class="section-hover-target" data-zone="sidebar" id="langBlock">
 <div style="position:relative;">
 <h2 style="margin:0; padding-right:70px;">Languages</h2>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><button class="btn-add control-btn" onclick="addListItem('langList')">+</button><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addListItem('langList')">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <ul id="langList">
 <li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>English:</strong> Native</span><div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div></li>
@@ -1220,10 +1220,10 @@
 <div class="section section-hover-target" data-zone="main" id="expBlock">
 <div class="section-title" style="position:relative; padding-right:90px;">
 <div class="title-text"><span contenteditable="true">Work Experience</span></div>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><button class="btn-add control-btn" onclick="addExperience()">+ Add Job</button><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addExperience()">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <div class="entry-block list-item-wrapper" style="position:relative; padding-right:60px;">
-<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span></div>
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 <div class="job-title" contenteditable="true">Senior Engineer</div>
 <div class="company-name" contenteditable="true">TechCorp Solutions | New York, NY</div>
 <span class="date-location" contenteditable="true">Jan 2020 – Present</span>
@@ -1232,7 +1232,6 @@
 <li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Led a team of 10 developers to build scalable
                 enterprise architecture.</span><div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
-<li class="list-item-wrapper" onclick="addBullet(this.parentNode)" style="cursor: pointer; color: var(--accent); list-style: none;">+ Add Bullet</li>
 </ul>
 </div>
 </div>
@@ -1240,10 +1239,10 @@
 <div class="section section-hover-target" data-zone="main" id="eduBlock">
 <div class="section-title" style="position:relative; padding-right:90px;">
 <div class="title-text"><span contenteditable="true">Education</span></div>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><button class="btn-add control-btn" onclick="addEducation()">+ Add Edu</button><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addEducation()">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <div class="entry-block list-item-wrapper" style="position:relative; padding-right:60px;">
-<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span></div>
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 <div class="job-title" contenteditable="true">M.S. Computer Science</div>
 <div class="company-name" contenteditable="true">Stanford University</div>
 <span class="date-location" contenteditable="true">2018 – 2020</span>
@@ -1308,20 +1307,33 @@
       const li = document.createElement("li"); li.className = "list-item-wrapper";
       li.setAttribute("style", "position:relative; padding-right:50px;");
       li.innerHTML = `<span contenteditable="true">New detail...</span> <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>`;
-      ulNode.insertBefore(li, ulNode.lastElementChild);
+      ulNode.appendChild(li);
+    }
+    function addNestedBullet(btn) {
+      const section = btn.closest('.section-hover-target, .section');
+      if (!section) return;
+      let ul = section.querySelector('.job-desc ul') || section.querySelector('ul');
+      if (!ul) {
+        const descDiv = document.createElement('div'); descDiv.className = 'job-desc';
+        ul = document.createElement('ul');
+        descDiv.appendChild(ul);
+        const entryBlock = section.querySelector('.entry-block');
+        if (entryBlock) entryBlock.appendChild(descDiv);
+        else section.appendChild(descDiv);
+      }
+      addBullet(ul);
     }
     function addExperience() {
       const section = document.getElementById("expBlock");
       const div = document.createElement("div"); div.className = "entry-block list-item-wrapper";
       div.setAttribute("style", "position:relative; padding-right:60px;");
       div.innerHTML = `
-        <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span></div>
+        <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
         <div class="job-title" contenteditable="true">Job Title</div>
         <div class="company-name" contenteditable="true">Company Name</div>
         <span class="date-location" contenteditable="true">Dates | Location</span>
         <div class="job-desc"><ul>
             <li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Responsibility</span> <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div></li>
-            <li class="list-item-wrapper" onclick="addBullet(this.parentNode)" style="cursor:pointer; color:var(--accent); list-style:none;">+ Add Bullet</li>
         </ul></div>`;
       section.appendChild(div);
     }
@@ -1330,7 +1342,7 @@
       const div = document.createElement("div"); div.className = "entry-block list-item-wrapper";
       div.setAttribute("style", "position:relative; padding-right:60px;");
       div.innerHTML = `
-        <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span></div>
+        <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
         <div class="job-title" contenteditable="true">Degree Title</div>
         <div class="company-name" contenteditable="true">Institution Name</div>
         <span class="date-location" contenteditable="true">Dates | Grades</span>
@@ -1457,6 +1469,8 @@
         else if (percent > 20) qInd.style.background = "#f59e0b";
         else qInd.style.background = "#ef4444";
       } catch (e) {
+        console.error("Quota error:", e);
+      }
     }
     function closeAIModal() {
       document.body.style.overflow = "";
@@ -1588,9 +1602,8 @@ Return a raw JSON object ONLY, NO markdown:
           div.setAttribute("style", "position:relative; padding-right:60px;");
           let bullets = "";
           (exp.responsibilities || []).forEach(r => { bullets += `<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">${r}</span> <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div></li>`; });
-          bullets += `<li class="list-item-wrapper" onclick="addBullet(this.parentNode)" style="cursor:pointer; color:var(--accent); list-style:none;">+ Add Bullet</li>`;
           div.innerHTML = `
-            <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span></div>
+            <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
             <div class="job-title" contenteditable="true">${exp.title || ""}</div>
             <div class="company-name" contenteditable="true">${exp.company || ""}</div>
             <span class="date-location" contenteditable="true">${exp.dates || ""}</span>
@@ -1607,7 +1620,7 @@ Return a raw JSON object ONLY, NO markdown:
           const div = document.createElement("div"); div.className = "entry-block list-item-wrapper";
           div.setAttribute("style", "position:relative; padding-right:60px;");
           div.innerHTML = `
-            <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">Delete</span></div>
+            <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
             <div class="job-title" contenteditable="true">${edu.degree || ""}</div>
             <div class="company-name" contenteditable="true">${edu.institution || ""}</div>
             <span class="date-location" contenteditable="true">${edu.dates || ""}</span>
@@ -1618,7 +1631,7 @@ Return a raw JSON object ONLY, NO markdown:
       }
     }
     function hideEditControls() {
-      return document.querySelectorAll('.control-btn, li[onclick*="addBullet"], .profile-photo-placeholder');
+      return document.querySelectorAll('.control-btn, .profile-photo-placeholder');
     }
     function downloadHighResImage() {
       const cvNode = document.getElementById("cvToExport");

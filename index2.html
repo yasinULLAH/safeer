@@ -116,6 +116,16 @@
       border-color: #7c3aed;
     }
 
+    .btn-random {
+      border-color: #06b6d4;
+      color: #0891b2;
+    }
+
+    .btn-random:hover {
+      background: #ecfeff;
+      border-color: #0891b2;
+    }
+
     .cv-container {
       --bg: #ffffff;
       --primary-area-bg: #1e293b;
@@ -458,14 +468,14 @@
       background-color: var(--primary-area-bg);
       color: var(--primary-area-text);
       width: 35%;
-      padding: 50px 35px;
+      padding: 50px 22px;
       flex-shrink: 0;
       box-sizing: border-box;
     }
 
     .layout-sidebar-left .main-content,
     .layout-sidebar-right .main-content {
-      padding: 50px 45px;
+      padding: 50px 14px;
       flex-grow: 1;
       box-sizing: border-box;
     }
@@ -1167,6 +1177,7 @@
 <body>
 <div class="toolbar" data-html2canvas-ignore="true">
 <button class="btn btn-ai-toolbar" onclick="openAIModal()">✨ AI Design &amp; Build</button>
+<button class="btn btn-random" onclick="generateRandomCV()">🎲 Random CV</button>
 <button class="btn btn-save" onclick="saveCurrentCV()">💾 Save CV</button>
 <button class="btn btn-history" onclick="openHistoryModal()">📚 History</button>
 <button class="btn btn-download" onclick="downloadHighResImage()">🖼️ Export Image</button>
@@ -1358,8 +1369,8 @@
 <div class="section-controls">
 <span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
 </div>
-<h1 contenteditable="true" style="margin-top:0;">Alex Carter</h1>
-<h3 contenteditable="true">Senior Software Engineer</h3>
+<h1 contenteditable="true" style="margin-top:0;">Yasin Ullah</h1>
+<h3 contenteditable="true">Full-Stack Developer &amp; Software Engineer</h3>
 </div>
 <div class="section-hover-target" data-zone="sidebar" id="contactBlock">
 <div style="position:relative;">
@@ -1369,17 +1380,22 @@
 <div class="contact-info">
 <div class="contact-item" style="position:relative; padding-right:50px;">
 <span class="contact-label" contenteditable="true">Phone</span>
-<div contenteditable="true">+1 234 567 890</div>
+<div contenteditable="true">+1 (555) 000-0000</div>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <div class="contact-item" style="position:relative; padding-right:50px;">
 <span class="contact-label" contenteditable="true">Email</span>
-<div contenteditable="true">hello@professional.com</div>
+<div contenteditable="true">your.email@example.com</div>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <div class="contact-item" style="position:relative; padding-right:50px;">
 <span class="contact-label" contenteditable="true">Address</span>
-<div contenteditable="true">Silicon Valley, CA</div>
+<div contenteditable="true">Your City, Country</div>
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+</div>
+<div class="contact-item" style="position:relative; padding-right:50px;">
+<span class="contact-label" contenteditable="true">LinkedIn</span>
+<div contenteditable="true">linkedin.com/in/yourprofile</div>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 </div>
@@ -1390,8 +1406,7 @@
 <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <p class="summary-text" contenteditable="true">
-        Innovative and results-driven professional with a strong track record of designing and executing robust
-        solutions. Passionate about leveraging technology to drive business growth and optimize user experiences.
+        Versatile Full-Stack Developer and Software Engineer with hands-on experience building production-grade web applications, SaaS platforms, mobile apps, and AI-integrated tools. Skilled in PHP, JavaScript, Python, and modern frameworks. Passionate about creating scalable, user-centric solutions and turning complex ideas into polished products.
       </p>
 </div>
 <div class="section-hover-target" data-zone="sidebar" id="skillsBlock">
@@ -1400,10 +1415,16 @@
 <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addListItem('skillsList')">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <ul id="skillsList">
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>Development:</strong> Expert</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>JavaScript / PHP / Python:</strong> Expert</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>UI/UX Design:</strong> Advanced</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>React / Next.js / Node.js:</strong> Advanced</span>
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+</li>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>MySQL / Firebase / REST APIs:</strong> Expert</span>
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+</li>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>AI Integration / Prompt Engineering:</strong> Advanced</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
 </ul>
@@ -1414,7 +1435,13 @@
 <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addListItem('langList')">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <ul id="langList">
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>English:</strong> Native</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>Pashto:</strong> Native</span>
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+</li>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>Urdu:</strong> Fluent</span>
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+</li>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>English:</strong> Fluent</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
 </ul>
@@ -1426,13 +1453,31 @@
 </div>
 <div class="entry-block list-item-wrapper" style="position:relative; padding-right:60px;">
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-<div class="job-title" contenteditable="true">Senior Engineer</div>
-<div class="company-name" contenteditable="true">TechCorp Solutions | New York, NY</div>
-<span class="date-location" contenteditable="true">Jan 2020 – Present</span>
+<div class="job-title" contenteditable="true">Full-Stack Developer &amp; SaaS Architect</div>
+<div class="company-name" contenteditable="true">Freelance / Self-Employed</div>
+<span class="date-location" contenteditable="true">2021 – Present</span>
 <div class="job-desc">
 <ul>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Led a team of 10 developers to build scalable
-                enterprise architecture.</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Built and deployed multi-tenant SaaS platforms including SchoolSaaS and FleetCommand from the ground up.</span>
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+</li>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Integrated AI APIs (Puter, Gemini) into web apps for intelligent CV generation, analytics, and automation.</span>
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+</li>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Developed cross-platform mobile apps using web-to-app conversion with native Android bridges.</span>
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+</li>
+</ul>
+</div>
+</div>
+<div class="entry-block list-item-wrapper" style="position:relative; padding-right:60px;">
+<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
+<div class="job-title" contenteditable="true">Web Developer</div>
+<div class="company-name" contenteditable="true">Various Projects</div>
+<span class="date-location" contenteditable="true">2019 – 2021</span>
+<div class="job-desc">
+<ul>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Designed and developed responsive websites and dashboards using HTML, CSS, JavaScript, and PHP.</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
 </ul>
@@ -1446,11 +1491,10 @@
 </div>
 <div class="entry-block list-item-wrapper" style="position:relative; padding-right:60px;">
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-<div class="job-title" contenteditable="true">M.S. Computer Science</div>
-<div class="company-name" contenteditable="true">Stanford University</div>
-<span class="date-location" contenteditable="true">2018 – 2020</span>
-<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Artificial
-          Intelligence.</p>
+<div class="job-title" contenteditable="true">Bachelor of Science in Computer Science</div>
+<div class="company-name" contenteditable="true">University</div>
+<span class="date-location" contenteditable="true">2017 – 2021</span>
+<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Software Engineering, Web Technologies, and Database Systems.</p>
 </div>
 </div>
 </div>
@@ -1796,6 +1840,59 @@
       document.getElementById('aiTextInput').value = combined;
       switchAIMode('paste');
       if (purpose) document.getElementById('aiPurpose').value = purpose;
+      await generateCVFromAI();
+    }
+    async function generateRandomCV() {
+      const MAX_DAILY = 20;
+      const todayStr = new Date().toLocaleDateString();
+      let quotaData = JSON.parse(localStorage.getItem("ai_daily_quota") || '{"used": 0, "date": ""}');
+      if (quotaData.date !== todayStr) {
+        quotaData = { date: todayStr, used: 0 };
+        localStorage.setItem("ai_daily_quota", JSON.stringify(quotaData));
+      }
+      const remaining = Math.max(0, MAX_DAILY - quotaData.used);
+      const percent = Math.round((remaining / MAX_DAILY) * 100);
+      const now = new Date();
+      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      const diffMs = tomorrow - now;
+      const diffHrs = Math.floor(diffMs / 3600000);
+      const diffMins = Math.floor((diffMs % 3600000) / 60000);
+      let indicatorColor = '#10b981';
+      if (percent <= 20) indicatorColor = '#ef4444';
+      else if (percent <= 50) indicatorColor = '#f59e0b';
+      const result = await Swal.fire({
+        title: '🎲 Generate Random CV',
+        html: `<div style="text-align:left;font-size:14px;line-height:1.7;">
+          <p>This will generate a <b>completely random, beautiful, and professional CV</b> with a unique fictional person, layout, colors, and typography on each click.</p>
+          <div style="display:flex;align-items:center;gap:10px;padding:14px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;margin-top:12px;">
+            <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${indicatorColor};flex-shrink:0;"></span>
+            <div>
+              <div style="font-weight:700;color:#1e293b;">Daily AI Quota: ${percent}% Remaining</div>
+              <div style="font-size:12px;color:#64748b;">${remaining} of ${MAX_DAILY} generations left • Resets in ${diffHrs}h ${diffMins}m</div>
+            </div>
+          </div>
+          ${remaining === 0 ? '<div style="margin-top:12px;padding:12px;background:#fef2f2;border-radius:8px;border:1px solid #fecaca;color:#dc2626;font-weight:600;">⚠️ You have used all your daily quota. Please wait for reset.</div>' : ''}
+        </div>`,
+        showCancelButton: true,
+        confirmButtonText: remaining > 0 ? '🎲 Generate Now' : 'Quota Exhausted',
+        confirmButtonColor: remaining > 0 ? '#06b6d4' : '#94a3b8',
+        cancelButtonText: 'Cancel',
+        width: 520,
+      });
+      if (!result.isConfirmed || remaining === 0) return;
+      const randomProfiles = [
+        "My name is Yasin Ullah. I'm a Full-Stack Developer and Software Engineer with deep experience in building production-grade web applications and SaaS platforms. I built SchoolSaaS, a multi-tenant school management system handling attendance, grades, HR, and financial reporting. I also created FleetCommand, a fleet management dashboard. Skills: PHP, JavaScript, HTML/CSS, MySQL, REST APIs, Python, Node.js, React, Next.js, Firebase, IndexedDB, AI Integration (Puter, Gemini). Languages: Pashto (Native), Urdu (Fluent), English (Fluent). I've converted web apps into Android APKs with native bridges for geolocation and device features.",
+        "My name is Yasin Ullah. I'm a Mobile App Developer and Cross-Platform Engineer. I specialize in building hybrid mobile applications by converting web-based projects into native Android APKs using WebView with custom Kotlin bridges. I built NativeBridge.kt for device security status checks, geolocation tracking, and Settings API integration. Skills: Kotlin, Android SDK, Gradle, WebView, JavaScript bridges, HTML5, CSS3, PHP, Firebase Cloud Messaging, PWA, Service Workers. Languages: Pashto (Native), Urdu (Fluent), English (Fluent). Achievements: Successfully shipped production APKs with CI/CD pipelines and resolved complex dependency issues with KSP and Compose compiler.",
+        "My name is Yasin Ullah. I'm an AI-Powered Product Builder and SaaS Architect. I design and develop intelligent web applications that leverage AI for content generation, design automation, and data analysis. I created Safeer, an AI CV Builder that generates unique professional resumes with dynamic layouts, color palettes, and typography using Puter AI and Gemini APIs. Skills: AI API Integration, Prompt Engineering, JavaScript, PHP, UI/UX Design, SweetAlert2, IndexedDB, html2canvas, jsPDF, Word document generation. Languages: Pashto (Native), Urdu (Fluent), English (Fluent). Built a step-by-step wizard CV generation flow with real-time preview and export to PDF/Word/Image.",
+        "My name is Yasin Ullah. I'm a Frontend Developer and UI/UX Engineer passionate about crafting beautiful, responsive, and accessible user interfaces. I build pixel-perfect designs with modern CSS, glassmorphism effects, micro-animations, and dark mode support. My projects include interactive CV builders, school management dashboards, and fleet tracking interfaces. Skills: HTML5, CSS3, JavaScript ES6+, Responsive Design, CSS Grid/Flexbox, DataTables, Chart.js, Google Fonts, Mobile-First Design, Accessibility. Languages: Pashto (Native), Urdu (Fluent), English (Fluent). I focus on premium aesthetics with smooth transitions and dynamic hover effects.",
+        "My name is Yasin Ullah. I'm a Backend Developer and Database Architect specializing in PHP-based monolithic applications and multi-tenant SaaS architectures. I designed the database schema and backend logic for SchoolSaaS2 handling schools, teachers, students, attendance, QR scanning, HR, financials, and reporting analytics. Skills: PHP, MySQL, Apache, .htaccess routing, session management, IndexedDB, REST APIs, JSON, Cloudflare tunnels, domain management, server administration. Languages: Pashto (Native), Urdu (Fluent), English (Fluent). Achievements: Built role-based access control, tenant isolation, and collapsible filter panels with state persistence.",
+        "My name is Yasin Ullah. I'm a DevOps Engineer and System Administrator with experience in deploying web applications, managing server infrastructure, and setting up CI/CD pipelines for Android builds. I work with local PHP servers, Cloudflare tunnels for domain exposure, and Android SDK toolchains for APK generation. Skills: Apache/Nginx, PHP server configuration, Android SDK, Gradle, Cloudflare, DNS management, Git, GitHub Actions, SSL certificates, environment variables, build automation. Languages: Pashto (Native), Urdu (Fluent), English (Fluent). Resolved complex build failures including Kotlin/KSP version alignment and Compose compiler compatibility.",
+        "My name is Yasin Ullah. I'm a Creative Technologist and Digital Product Designer who combines development skills with design thinking. I build visually stunning web apps with rich color palettes, Google Fonts integration, dynamic CSS variables, and export-ready layouts for PDF, Word, and high-res images. Skills: UI Design, CSS architecture, html2canvas, jsPDF, Word document generation, color theory, typography pairing, layout systems (sidebar, header-top, single-column), design tokens. Languages: Pashto (Native), Urdu (Fluent), English (Fluent). Created an AI-powered CV builder with multiple layout architectures and real-time theme customization.",
+        "My name is Yasin Ullah. I'm a Technical Project Manager and Startup Builder who single-handedly builds and ships complete software products from concept to deployment. I manage the full lifecycle including requirements, architecture, development, testing, and deployment. My portfolio includes school management platforms, fleet tracking systems, AI-powered tools, and mobile applications. Skills: Project planning, full-stack development, Agile methodology, product design, user testing, deployment, documentation, client communication. Languages: Pashto (Native), Urdu (Fluent), English (Fluent). Delivered 5+ production applications used by real users across education and logistics sectors."
+      ];
+      const randomText = randomProfiles[Math.floor(Math.random() * randomProfiles.length)];
+      document.getElementById('aiTextInput').value = randomText;
+      openAIModal();
       await generateCVFromAI();
     }
     function setAIStatus(type, msg) {

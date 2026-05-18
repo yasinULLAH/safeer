@@ -1707,6 +1707,7 @@ Return a raw JSON object ONLY, NO markdown:
       const pAreaText = styles.getPropertyValue('--primary-area-text').trim() || '#ffffff';
       const textMain = styles.getPropertyValue('--text-main').trim() || '#333333';
       const headingFont = (styles.getPropertyValue('--font-heading').trim() || 'Arial').replace(/"/g, "'");
+      const bodyFont = (styles.getPropertyValue('--font-body').trim() || 'sans-serif').replace(/"/g, "'");
       const layout = cvNode.getAttribute('data-layout') || 'sidebar-left';
       const docDir = window.getComputedStyle(cvNode).direction || 'ltr';
       const canvas = document.createElement("canvas"); canvas.width = 140; canvas.height = 140;
@@ -1775,23 +1776,42 @@ Return a raw JSON object ONLY, NO markdown:
         const mainContentHTML = cvClone.querySelector('.main-content').innerHTML;
         wordHTMLTable = `<tr><td valign="top" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 30px; text-align: center;">${topBannerHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td></tr><tr><td valign="top" style="background-color: white; color: ${textMain}; padding: 30px;">${mainContentHTML}</td></tr>`;
       }
+      let sectionTitleStyle = `font-size: 18px; font-family: ${headingFont}; text-transform: uppercase; font-weight: bold; margin-top: 25px; margin-bottom: 15px;`;
+      if (cvNode.classList.contains("style-solid-box")) {
+          sectionTitleStyle += ` background-color: ${primary}; color: #ffffff; padding: 8px 15px;`;
+      } else if (cvNode.classList.contains("style-underline")) {
+          sectionTitleStyle += ` color: ${textMain}; border-bottom: 2px solid ${primary}; padding-bottom: 5px;`;
+      } else {
+          sectionTitleStyle += ` color: ${primary};`;
+      }
+      let h1Color = primary;
+      if (layout === 'header-top' || layout === 'single-column') h1Color = pAreaText;
+
       const wordHTML = `
         <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40" dir="${docDir}">
         <head><meta charset='utf-8'><title>CV</title>
           <style>
-            @page WordSection1 { size: 8.5in 11.0in; margin: 0.5in; }
-            div.WordSection1 { page: WordSection1; font-family: sans-serif; }
-            h1 { font-size: 38px; color: ${primary}; font-family: ${headingFont}; text-transform: uppercase; margin: 0; }
-            h3 { font-size: 18px; font-family: ${headingFont}; margin-top: 5px; }
-            .section-title { font-size: 18px; color: ${primary}; font-family: ${headingFont}; text-transform: uppercase; font-weight: bold; border-bottom: 2px solid ${primary}; padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; }
-            .job-title { font-weight: bold; font-size: 16px; color: ${textMain}; font-family: ${headingFont}; }
-            .company-name { font-weight: bold; color: ${primary}; }
-            .date-location { font-style: italic; color: #7f8c8d; font-size: 13px; }
+            @page WordSection1 { size: 8.5in 11.0in; margin: 0.2in; }
+            div.WordSection1 { page: WordSection1; font-family: ${bodyFont}; }
+            body, table, td, p, span, div, li { font-family: ${bodyFont}; }
+            h1, h2, h3, h4, h5, h6 { font-family: ${headingFont}; }
+            h1 { font-size: 38px; color: ${h1Color}; text-transform: uppercase; margin: 0; }
+            h3 { font-size: 18px; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+            .section-title { ${sectionTitleStyle} }
+            .job-title { font-weight: bold; font-size: 16px; color: ${textMain}; }
+            .company-name { font-weight: bold; color: ${primary}; font-size: 15px; margin-bottom: 5px; }
+            .date-location { font-style: italic; color: #7f8c8d; font-size: 13px; display: block; margin-bottom: 10px; }
             ul { margin-top: 5px; margin-bottom: 15px; padding-left: 20px; }
             li { margin-bottom: 5px; font-size: 14px; line-height: 1.5; }
-            p { font-size: 14px; line-height: 1.6; }
+            p { font-size: 14px; line-height: 1.6; margin-top: 5px; margin-bottom: 10px; }
             .sidebar-title { font-size: 16px; font-family: ${headingFont}; text-transform: uppercase; border-bottom: 1px solid rgba(128,128,128,0.3); padding-bottom: 5px; margin-bottom: 15px; margin-top: 20px; font-weight: bold; }
-            .contact-label { font-weight: bold; opacity: 0.8; font-size: 11px; text-transform: uppercase; display: block; margin-top: 10px; }
+            .contact-label { font-weight: bold; opacity: 0.8; font-size: 11px; text-transform: uppercase; display: block; margin-top: 10px; margin-bottom: 2px; }
+            .contact-item { font-size: 13px; line-height: 1.4; }
+            td[width="30%"] p, td[width="30%"] li, td[width="30%"] span, td[width="30%"] div { color: ${pAreaText}; }
+            td[width="30%"] .sidebar-title { color: ${primary}; border-bottom-color: ${pAreaText}; }
+            td[width="30%"] .contact-label { color: ${pAreaText}; }
+            td[width="70%"] p, td[width="70%"] li, td[width="70%"] span, td[width="70%"] div { color: ${textMain}; }
+            td[colspan="2"] p, td[colspan="2"] li, td[colspan="2"] span, td[colspan="2"] div { color: ${pAreaText}; }
           </style>
         </head>
         <body style="margin: 0; padding: 0;">

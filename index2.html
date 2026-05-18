@@ -1718,6 +1718,7 @@ Return a raw JSON object ONLY, NO markdown:
       const pAreaBg = styles.getPropertyValue('--primary-area-bg').trim() || '#1e293b';
       const pAreaText = styles.getPropertyValue('--primary-area-text').trim() || '#ffffff';
       const textMain = styles.getPropertyValue('--text-main').trim() || '#333333';
+      const mainBg = styles.getPropertyValue('--bg').trim() || '#ffffff';
       const headingFont = (styles.getPropertyValue('--font-heading').trim() || 'Arial').replace(/"/g, "'");
       const bodyFont = (styles.getPropertyValue('--font-body').trim() || 'sans-serif').replace(/"/g, "'");
       const layout = cvNode.getAttribute('data-layout') || 'sidebar-left';
@@ -1764,8 +1765,8 @@ Return a raw JSON object ONLY, NO markdown:
       if (layout === 'sidebar-left' || layout === 'sidebar-right') {
         const sidebarHTML = cvClone.querySelector('.sidebar').innerHTML;
         const mainContentHTML = cvClone.querySelector('.main-content').innerHTML;
-        const colSidebar = `<td width="30%" valign="top" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 25px;">${sidebarHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td>`;
-        const colMain = `<td width="70%" valign="top" style="background-color: white; color: ${textMain}; padding: 25px;">${mainContentHTML}</td>`;
+        const colSidebar = `<td width="30%" valign="top" bgcolor="${pAreaBg}" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 25px;">${sidebarHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td>`;
+        const colMain = `<td width="70%" valign="top" bgcolor="${mainBg}" style="background-color: ${mainBg}; color: ${textMain}; padding: 25px;">${mainContentHTML}</td>`;
         wordHTMLTable = `<tr>${layout === 'sidebar-left' ? colSidebar + colMain : colMain + colSidebar}</tr>`;
       }
       else if (layout === 'header-top') {
@@ -1779,14 +1780,14 @@ Return a raw JSON object ONLY, NO markdown:
         }
         const leftColHTML = cvClone.querySelector('.body-left').innerHTML;
         const rightColHTML = cvClone.querySelector('.body-right').innerHTML;
-        const topRow = `<tr><td colspan="2" valign="top" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 30px;">${topBannerHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td></tr>`;
-        const bottomRow = `<tr><td width="30%" valign="top" style="background-color: #f8fafc; padding: 25px;">${leftColHTML.replace(/<h2.*?>/g, `<div class="sidebar-title" style="color:${primary};">`).replace(/<\/h2>/g, '</div>')}</td><td width="70%" valign="top" style="background-color: white; color: ${textMain}; padding: 25px;">${rightColHTML}</td></tr>`;
+        const topRow = `<tr><td colspan="2" valign="top" bgcolor="${pAreaBg}" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 30px;">${topBannerHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td></tr>`;
+        const bottomRow = `<tr><td width="30%" valign="top" bgcolor="${mainBg}" style="background-color: ${mainBg}; padding: 25px;">${leftColHTML.replace(/<h2.*?>/g, `<div class="sidebar-title" style="color:${primary};">`).replace(/<\/h2>/g, '</div>')}</td><td width="70%" valign="top" bgcolor="${mainBg}" style="background-color: ${mainBg}; color: ${textMain}; padding: 25px;">${rightColHTML}</td></tr>`;
         wordHTMLTable = topRow + bottomRow;
       }
       else if (layout === 'single-column') {
         const topBannerHTML = cvClone.querySelector('.top-banner').innerHTML;
         const mainContentHTML = cvClone.querySelector('.main-content').innerHTML;
-        wordHTMLTable = `<tr><td valign="top" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 30px; text-align: center;">${topBannerHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td></tr><tr><td valign="top" style="background-color: white; color: ${textMain}; padding: 30px;">${mainContentHTML}</td></tr>`;
+        wordHTMLTable = `<tr><td valign="top" bgcolor="${pAreaBg}" style="background-color: ${pAreaBg}; color: ${pAreaText}; padding: 30px; text-align: center;">${topBannerHTML.replace(/<h2.*?>/g, `<div class="sidebar-title">`).replace(/<\/h2>/g, '</div>')}</td></tr><tr><td valign="top" bgcolor="${mainBg}" style="background-color: ${mainBg}; color: ${textMain}; padding: 30px;">${mainContentHTML}</td></tr>`;
       }
       let sectionTitleStyle = `font-size: 18px; font-family: ${headingFont}; text-transform: uppercase; font-weight: bold; margin-top: 25px; margin-bottom: 15px;`;
       if (cvNode.classList.contains("style-solid-box")) {

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport"/>
-<title>Interactive AI CV Builder</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://js.puter.com/v2/"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<style>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport" />
+  <title>Interactive AI CV Builder</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://js.puter.com/v2/"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <style>
     body {
       font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: #e2e8f0;
@@ -192,15 +192,15 @@
       gap: 5px;
       z-index: 10;
     }
-    
+
     .section-hover-target {
       position: relative;
     }
 
-    .section-hover-target:hover > .section-controls .control-btn,
-    .section-hover-target:hover > .section-title > .section-controls .control-btn,
-    .list-item-wrapper:hover > .section-controls .control-btn,
-    .contact-item:hover > .section-controls .control-btn {
+    .section-hover-target:hover>.section-controls .control-btn,
+    .section-hover-target:hover>.section-title>.section-controls .control-btn,
+    .list-item-wrapper:hover>.section-controls .control-btn,
+    .contact-item:hover>.section-controls .control-btn {
       opacity: 1;
     }
 
@@ -241,7 +241,12 @@
     }
 
     @media print {
-      .toolbar, .control-btn, .hide-on-export, li[onclick*="addBullet"], #photoPlaceholder {
+
+      .toolbar,
+      .control-btn,
+      .hide-on-export,
+      li[onclick*="addBullet"],
+      #photoPlaceholder {
         display: none !important;
       }
     }
@@ -865,7 +870,7 @@
         display: inline-block !important;
         padding: 6px 10px !important;
         margin-left: 6px !important;
-        background: rgba(0,0,0,0.08) !important;
+        background: rgba(0, 0, 0, 0.08) !important;
         border-radius: 6px !important;
         font-size: 18px !important;
         opacity: 1 !important;
@@ -1055,215 +1060,303 @@
         font-size: 22px !important;
       }
     }
+
+    .hide-on-export,
+    .control-btn.hide-on-export,
+    .profile-photo-placeholder.hide-on-export,
+    .toolbar.hide-on-export {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
   </style>
-<link href="manifest.json" rel="manifest"/>
-<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="manifest.json" rel="manifest" />
+  <link href="favicon.ico" rel="icon" type="image/x-icon" />
 </head>
+
 <body>
-<div class="toolbar" data-html2canvas-ignore="true">
-<button class="btn btn-ai-toolbar" onclick="openAIModal()">✨ AI Design &amp; Build</button>
-<button class="btn btn-save" onclick="saveCurrentCV()">💾 Save CV</button>
-<button class="btn btn-history" onclick="openHistoryModal()">📚 History</button>
-<button class="btn btn-download" onclick="downloadHighResImage()">🖼️ Export Image</button>
-<button class="btn btn-pdf" onclick="downloadPDF()">📄 Export PDF</button>
-<button class="btn btn-word" onclick="downloadWord()">📝 Export Word</button>
-</div>
-<div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
-<div class="ai-modal">
-<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-<h2>✨ AI Resume &amp; Structural Designer</h2>
-<div id="aiQuotaDisplay" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: nowrap;">
-<span id="aiQuotaIndicator" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
-<span id="aiQuotaText">Loading Quota...</span>
-</div>
-</div>
-<p class="ai-subtitle">The AI will evaluate your profile and guarantee a <b>completely unique structural
+  <div class="toolbar" data-html2canvas-ignore="true">
+    <button class="btn btn-ai-toolbar" onclick="openAIModal()">✨ AI Design &amp; Build</button>
+    <button class="btn btn-save" onclick="saveCurrentCV()">💾 Save CV</button>
+    <button class="btn btn-history" onclick="openHistoryModal()">📚 History</button>
+    <button class="btn btn-download" onclick="downloadHighResImage()">🖼️ Export Image</button>
+    <button class="btn btn-pdf" onclick="downloadPDF()">📄 Export PDF</button>
+    <button class="btn btn-word" onclick="downloadWord()">📝 Export Word</button>
+  </div>
+  <div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
+    <div class="ai-modal">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <h2>✨ AI Resume &amp; Structural Designer</h2>
+        <div id="aiQuotaDisplay"
+          style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: nowrap;">
+          <span id="aiQuotaIndicator"
+            style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
+          <span id="aiQuotaText">Loading Quota...</span>
+        </div>
+      </div>
+      <p class="ai-subtitle">The AI will evaluate your profile and guarantee a <b>completely unique structural
           layout</b>, color palette, typography, and content flow on every single click.</p>
-<textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
-<details id="aiOptionalDetails" style="margin-top:18px;">
-<summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">⚙️
+      <textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
+      <details id="aiOptionalDetails" style="margin-top:18px;">
+        <summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">⚙️
           Optional Details (click to expand)</summary>
-<div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;padding:18px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
-<div>
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">What
+        <div
+          style="display:flex;flex-direction:column;gap:12px;margin-top:14px;padding:18px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
+          <div>
+            <label
+              style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">What
               is this CV for?</label>
-<input id="aiPurpose" placeholder="e.g. Job application, Academic admission, Freelance portfolio..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
-</div>
-<div>
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Applying
+            <input id="aiPurpose" placeholder="e.g. Job application, Academic admission, Freelance portfolio..."
+              style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;"
+              type="text" />
+          </div>
+          <div>
+            <label
+              style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Applying
               for / Target Role</label>
-<input id="aiTargetRole" placeholder="e.g. Senior Frontend Developer at Google, Medical School..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
-</div>
-<div>
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Look
+            <input id="aiTargetRole" placeholder="e.g. Senior Frontend Developer at Google, Medical School..."
+              style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;"
+              type="text" />
+          </div>
+          <div>
+            <label
+              style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Look
               &amp; Feel / Style Preferences</label>
-<input id="aiStylePref" placeholder="e.g. Modern dark sidebar, minimalist, bold &amp; colorful, corporate..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
-</div>
-<div style="display:flex;gap:16px;flex-wrap:wrap;">
-<div style="flex:1;min-width:120px;">
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Primary
+            <input id="aiStylePref"
+              placeholder="e.g. Modern dark sidebar, minimalist, bold &amp; colorful, corporate..."
+              style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;"
+              type="text" />
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:120px;">
+              <label
+                style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Primary
                 Color</label>
-<div style="display:flex;align-items:center;gap:8px;">
-<input id="aiPrimaryColor" style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color" value="#3b82f6"/>
-<span id="aiPrimaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#3b82f6</span>
-</div>
-</div>
-<div style="flex:1;min-width:120px;">
-<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Secondary
+              <div style="display:flex;align-items:center;gap:8px;">
+                <input id="aiPrimaryColor"
+                  style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color"
+                  value="#3b82f6" />
+                <span id="aiPrimaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#3b82f6</span>
+              </div>
+            </div>
+            <div style="flex:1;min-width:120px;">
+              <label
+                style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Secondary
                 / Sidebar Color</label>
-<div style="display:flex;align-items:center;gap:8px;">
-<input id="aiSecondaryColor" style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color" value="#1e293b"/>
-<span id="aiSecondaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#1e293b</span>
-</div>
-</div>
-</div>
-</div>
-</details>
-<div class="ai-status" id="aiStatus"></div>
-<div class="ai-modal-actions">
-<button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
-<button class="btn-ai-generate" id="aiGenerateBtn" onclick="generateCVFromAI()">
-<span id="aiBtnText">Generate Architecture</span>
-<div class="ai-spinner" id="aiSpinner"></div>
-</button>
-</div>
-</div>
-</div>
-<div class="ai-modal-overlay" id="historyModalOverlay" onclick="if (event.target === this) closeHistoryModal();">
-<div class="ai-modal" style="width: 800px; max-width: 95vw;">
-<h2>📚 Saved CVs &amp; Backup</h2>
-<div style="display:flex; justify-content:space-between; margin-bottom: 15px; align-items:center;">
-<p style="margin:0; color:#64748b; font-size:14px;">Click a CV below to load it.</p>
-<div style="display:flex; gap:10px;">
-<button class="btn" onclick="document.getElementById('historyFilters').style.display = document.getElementById('historyFilters').style.display === 'none' ? 'block' : 'none'" style="display:inline-flex; border-color:#cbd5e1; color:#475569;" title="Filter &amp; Search">🔍</button>
-<button class="btn" onclick="exportBackup()" style="display:inline-flex; border-color:#3b82f6; color:#2563eb;">📦 Backup All</button>
-<button class="btn" onclick="document.getElementById('importBackupInput').click()" style="display:inline-flex; border-color:#10b981; color:#059669;">📥 Restore</button>
-<input accept=".json" id="importBackupInput" onchange="importBackup(event)" style="display:none" type="file"/>
-</div>
-</div>
-<div id="historyFilters" style="display:none; margin-bottom:15px; padding:15px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
-<div style="display:flex; gap:15px; flex-wrap:wrap;">
-<input id="historySearch" onkeyup="renderHistory()" placeholder="Search by name or title..." style="flex:1; min-width:200px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; outline:none; font-family:Inter,sans-serif;" type="text"/>
-<select id="historySort" onchange="renderHistory()" style="padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; outline:none; background:white; color:#334155; font-family:Inter,sans-serif;">
-<option value="newest">Newest First</option>
-<option value="oldest">Oldest First</option>
-<option value="a-z">Name (A-Z)</option>
-<option value="z-a">Name (Z-A)</option>
-</select>
-</div>
-</div>
-<div id="historyList" style="display:grid; gap:12px; max-height:400px; overflow-y:auto; padding-right:10px;">
-</div>
-<div class="ai-modal-actions">
-<button class="btn-ai-cancel" onclick="closeHistoryModal()">Close</button>
-</div>
-</div>
-</div>
-<div class="cv-container layout-sidebar-left style-clean-text" data-layout="sidebar-left" id="cvToExport">
-<div class="sidebar primary-area"></div>
-<div class="main-content"></div>
-</div>
-<div id="repo" style="display:none;">
-<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="if(!event.target.classList.contains('control-btn')) document.getElementById('photoInput').click()">
-<div style="position:absolute; top:5px; right:5px; z-index:10;"><span class="btn-delete control-btn" onclick="deleteItem(this)" style="background:rgba(255,0,0,0.5); color:white;">×</span></div>
-<input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
-<img alt="Profile" id="profileImg" onerror="this.src='safeer.png';" src="safeer.png"/>
-<div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
-</div>
-<div class="header section-hover-target" data-zone="main" id="headerBlock">
-<div class="section-controls">
-<span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
-</div>
-<h1 contenteditable="true" style="margin-top:0;">Alex Carter</h1>
-<h3 contenteditable="true">Senior Software Engineer</h3>
-</div>
-<div class="section-hover-target" data-zone="sidebar" id="contactBlock">
-<div style="position:relative;">
-<h2 style="margin:0; padding-right:70px;">Contact</h2>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addContact()">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-</div>
-<div class="contact-info">
-<div class="contact-item" style="position:relative; padding-right:50px;">
-<span class="contact-label" contenteditable="true">Phone</span>
-<div contenteditable="true">+1 234 567 890</div>
-<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-</div>
-<div class="contact-item" style="position:relative; padding-right:50px;">
-<span class="contact-label" contenteditable="true">Email</span>
-<div contenteditable="true">hello@professional.com</div>
-<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-</div>
-<div class="contact-item" style="position:relative; padding-right:50px;">
-<span class="contact-label" contenteditable="true">Address</span>
-<div contenteditable="true">Silicon Valley, CA</div>
-<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-</div>
-</div>
-</div>
-<div class="section section-hover-target" data-zone="main" id="summaryBlock">
-<div class="section-title" style="position:relative;">
-<div class="title-text"><span contenteditable="true">Professional Summary</span></div>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-</div>
-<p class="summary-text" contenteditable="true">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <input id="aiSecondaryColor"
+                  style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color"
+                  value="#1e293b" />
+                <span id="aiSecondaryColorHex"
+                  style="font-size:13px;color:#475569;font-family:monospace;">#1e293b</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+      <div class="ai-status" id="aiStatus"></div>
+      <div class="ai-modal-actions">
+        <button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
+        <button class="btn-ai-generate" id="aiGenerateBtn" onclick="generateCVFromAI()">
+          <span id="aiBtnText">Generate Architecture</span>
+          <div class="ai-spinner" id="aiSpinner"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="ai-modal-overlay" id="historyModalOverlay" onclick="if (event.target === this) closeHistoryModal();">
+    <div class="ai-modal" style="width: 800px; max-width: 95vw;">
+      <h2>📚 Saved CVs &amp; Backup</h2>
+      <div style="display:flex; justify-content:space-between; margin-bottom: 15px; align-items:center;">
+        <p style="margin:0; color:#64748b; font-size:14px;">Click a CV below to load it.</p>
+        <div style="display:flex; gap:10px;">
+          <button class="btn"
+            onclick="document.getElementById('historyFilters').style.display = document.getElementById('historyFilters').style.display === 'none' ? 'block' : 'none'"
+            style="display:inline-flex; border-color:#cbd5e1; color:#475569;" title="Filter &amp; Search">🔍</button>
+          <button class="btn" onclick="exportBackup()"
+            style="display:inline-flex; border-color:#3b82f6; color:#2563eb;">📦 Backup All</button>
+          <button class="btn" onclick="document.getElementById('importBackupInput').click()"
+            style="display:inline-flex; border-color:#10b981; color:#059669;">📥 Restore</button>
+          <input accept=".json" id="importBackupInput" onchange="importBackup(event)" style="display:none"
+            type="file" />
+        </div>
+      </div>
+      <div id="historyFilters"
+        style="display:none; margin-bottom:15px; padding:15px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
+        <div style="display:flex; gap:15px; flex-wrap:wrap;">
+          <input id="historySearch" onkeyup="renderHistory()" placeholder="Search by name or title..."
+            style="flex:1; min-width:200px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; outline:none; font-family:Inter,sans-serif;"
+            type="text" />
+          <select id="historySort" onchange="renderHistory()"
+            style="padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; outline:none; background:white; color:#334155; font-family:Inter,sans-serif;">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="a-z">Name (A-Z)</option>
+            <option value="z-a">Name (Z-A)</option>
+          </select>
+        </div>
+      </div>
+      <div id="historyList" style="display:grid; gap:12px; max-height:400px; overflow-y:auto; padding-right:10px;">
+      </div>
+      <div class="ai-modal-actions">
+        <button class="btn-ai-cancel" onclick="closeHistoryModal()">Close</button>
+      </div>
+    </div>
+  </div>
+  <div class="cv-container layout-sidebar-left style-clean-text" data-layout="sidebar-left" id="cvToExport">
+    <div class="sidebar primary-area"></div>
+    <div class="main-content"></div>
+  </div>
+  <div id="repo" style="display:none;">
+    <div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock"
+      onclick="if(!event.target.classList.contains('control-btn')) document.getElementById('photoInput').click()">
+      <div style="position:absolute; top:5px; right:5px; z-index:10;"><span class="btn-delete control-btn"
+          onclick="deleteItem(this)" style="background:rgba(255,0,0,0.5); color:white;">×</span></div>
+      <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file" />
+      <img alt="Profile" id="profileImg" onerror="this.src='safeer.png';" src="safeer.png" />
+      <div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
+    </div>
+    <div class="header section-hover-target" data-zone="main" id="headerBlock">
+      <div class="section-controls">
+        <span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span
+          class="btn-delete control-btn" onclick="deleteItem(this)">×</span>
+      </div>
+      <h1 contenteditable="true" style="margin-top:0;">Alex Carter</h1>
+      <h3 contenteditable="true">Senior Software Engineer</h3>
+    </div>
+    <div class="section-hover-target" data-zone="sidebar" id="contactBlock">
+      <div style="position:relative;">
+        <h2 style="margin:0; padding-right:70px;">Contact</h2>
+        <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn"
+            onclick="addContact()">+</span><span class="btn-duplicate control-btn"
+            onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">×</span></div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-item" style="position:relative; padding-right:50px;">
+          <span class="contact-label" contenteditable="true">Phone</span>
+          <div contenteditable="true">+1 234 567 890</div>
+          <div class="section-controls"><span class="btn-duplicate control-btn"
+              onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+              onclick="deleteItem(this)">×</span></div>
+        </div>
+        <div class="contact-item" style="position:relative; padding-right:50px;">
+          <span class="contact-label" contenteditable="true">Email</span>
+          <div contenteditable="true">hello@professional.com</div>
+          <div class="section-controls"><span class="btn-duplicate control-btn"
+              onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+              onclick="deleteItem(this)">×</span></div>
+        </div>
+        <div class="contact-item" style="position:relative; padding-right:50px;">
+          <span class="contact-label" contenteditable="true">Address</span>
+          <div contenteditable="true">Silicon Valley, CA</div>
+          <div class="section-controls"><span class="btn-duplicate control-btn"
+              onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+              onclick="deleteItem(this)">×</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="section section-hover-target" data-zone="main" id="summaryBlock">
+      <div class="section-title" style="position:relative;">
+        <div class="title-text"><span contenteditable="true">Professional Summary</span></div>
+        <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span
+            class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">×</span></div>
+      </div>
+      <p class="summary-text" contenteditable="true">
         Innovative and results-driven professional with a strong track record of designing and executing robust
         solutions. Passionate about leveraging technology to drive business growth and optimize user experiences.
       </p>
-</div>
-<div class="section-hover-target" data-zone="sidebar" id="skillsBlock">
-<div style="position:relative;">
-<h2 style="margin:0; padding-right:70px;">Skills</h2>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addListItem('skillsList')">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-</div>
-<ul id="skillsList">
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>Development:</strong> Expert</span><div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div></li>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>UI/UX Design:</strong> Advanced</span><div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div></li>
-</ul>
-</div>
-<div class="section-hover-target" data-zone="sidebar" id="langBlock">
-<div style="position:relative;">
-<h2 style="margin:0; padding-right:70px;">Languages</h2>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addListItem('langList')">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-</div>
-<ul id="langList">
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true"><strong>English:</strong> Native</span><div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div></li>
-</ul>
-</div>
-<div class="section section-hover-target" data-zone="main" id="expBlock">
-<div class="section-title" style="position:relative; padding-right:90px;">
-<div class="title-text"><span contenteditable="true">Work Experience</span></div>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addExperience()">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-</div>
-<div class="entry-block list-item-wrapper" style="position:relative; padding-right:60px;">
-<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-<div class="job-title" contenteditable="true">Senior Engineer</div>
-<div class="company-name" contenteditable="true">TechCorp Solutions | New York, NY</div>
-<span class="date-location" contenteditable="true">Jan 2020 – Present</span>
-<div class="job-desc">
-<ul>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Led a team of 10 developers to build scalable
-                enterprise architecture.</span><div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section section-hover-target" data-zone="main" id="eduBlock">
-<div class="section-title" style="position:relative; padding-right:90px;">
-<div class="title-text"><span contenteditable="true">Education</span></div>
-<div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn" onclick="addEducation()">+</span><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-</div>
-<div class="entry-block list-item-wrapper" style="position:relative; padding-right:60px;">
-<div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
-<div class="job-title" contenteditable="true">M.S. Computer Science</div>
-<div class="company-name" contenteditable="true">Stanford University</div>
-<span class="date-location" contenteditable="true">2018 – 2020</span>
-<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Artificial
+    </div>
+    <div class="section-hover-target" data-zone="sidebar" id="skillsBlock">
+      <div style="position:relative;">
+        <h2 style="margin:0; padding-right:70px;">Skills</h2>
+        <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn"
+            onclick="addListItem('skillsList')">+</span><span class="btn-duplicate control-btn"
+            onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">×</span></div>
+      </div>
+      <ul id="skillsList">
+        <li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span
+            contenteditable="true"><strong>Development:</strong> Expert</span>
+          <div class="section-controls"><span class="btn-duplicate control-btn"
+              onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+              onclick="deleteItem(this)">×</span></div>
+        </li>
+        <li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span
+            contenteditable="true"><strong>UI/UX Design:</strong> Advanced</span>
+          <div class="section-controls"><span class="btn-duplicate control-btn"
+              onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+              onclick="deleteItem(this)">×</span></div>
+        </li>
+      </ul>
+    </div>
+    <div class="section-hover-target" data-zone="sidebar" id="langBlock">
+      <div style="position:relative;">
+        <h2 style="margin:0; padding-right:70px;">Languages</h2>
+        <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn"
+            onclick="addListItem('langList')">+</span><span class="btn-duplicate control-btn"
+            onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">×</span></div>
+      </div>
+      <ul id="langList">
+        <li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span
+            contenteditable="true"><strong>English:</strong> Native</span>
+          <div class="section-controls"><span class="btn-duplicate control-btn"
+              onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+              onclick="deleteItem(this)">×</span></div>
+        </li>
+      </ul>
+    </div>
+    <div class="section section-hover-target" data-zone="main" id="expBlock">
+      <div class="section-title" style="position:relative; padding-right:90px;">
+        <div class="title-text"><span contenteditable="true">Work Experience</span></div>
+        <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn"
+            onclick="addExperience()">+</span><span class="btn-duplicate control-btn"
+            onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">×</span></div>
+      </div>
+      <div class="entry-block list-item-wrapper" style="position:relative; padding-right:60px;">
+        <div class="section-controls"><span class="btn-duplicate control-btn"
+            onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">×</span></div>
+        <div class="job-title" contenteditable="true">Senior Engineer</div>
+        <div class="company-name" contenteditable="true">TechCorp Solutions | New York, NY</div>
+        <span class="date-location" contenteditable="true">Jan 2020 – Present</span>
+        <div class="job-desc">
+          <ul>
+            <li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span
+                contenteditable="true">Led a team of 10 developers to build scalable
+                enterprise architecture.</span>
+              <div class="section-controls"><span class="btn-duplicate control-btn"
+                  onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+                  onclick="deleteItem(this)">×</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="section section-hover-target" data-zone="main" id="eduBlock">
+      <div class="section-title" style="position:relative; padding-right:90px;">
+        <div class="title-text"><span contenteditable="true">Education</span></div>
+        <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-add control-btn"
+            onclick="addEducation()">+</span><span class="btn-duplicate control-btn"
+            onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">×</span></div>
+      </div>
+      <div class="entry-block list-item-wrapper" style="position:relative; padding-right:60px;">
+        <div class="section-controls"><span class="btn-duplicate control-btn"
+            onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn"
+            onclick="deleteItem(this)">×</span></div>
+        <div class="job-title" contenteditable="true">M.S. Computer Science</div>
+        <div class="company-name" contenteditable="true">Stanford University</div>
+        <span class="date-location" contenteditable="true">2018 – 2020</span>
+        <p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Artificial
           Intelligence.</p>
-</div>
-</div>
-</div>
-<script>
+      </div>
+    </div>
+  </div>
+  <script>
     document.addEventListener("DOMContentLoaded", () => {
       const savedText = localStorage.getItem("cv_raw_text");
       if (savedText) document.getElementById("aiTextInput").value = savedText;
@@ -1291,7 +1384,7 @@
       const parent = btn.closest('.list-item-wrapper, .entry-block, .contact-item, .section-hover-target');
       if (parent) {
         const clone = parent.cloneNode(true);
-        if (clone.id) clone.removeAttribute('id'); // Prevent duplicate IDs
+        if (clone.id) clone.removeAttribute('id');
         parent.parentNode.insertBefore(clone, parent.nextSibling);
       }
     }
@@ -1365,27 +1458,21 @@
       const cvNode = document.getElementById("cvToExport");
       const source = cvNode.querySelectorAll('[data-zone]').length === 0 ? document.getElementById("repo") : cvNode;
       const zones = Array.from(source.querySelectorAll('[data-zone]'));
-      
       const sidebarBlocks = zones.filter(z => z.getAttribute("data-zone") === "sidebar");
       const mainBlocks = zones.filter(z => z.getAttribute("data-zone") === "main");
-      
       const photoBlock = zones.find(z => z.id === "photoBlock");
       const headerBlock = zones.find(z => z.id === "headerBlock");
       const contactBlock = zones.find(z => z.id === "contactBlock");
-      
       zones.forEach(b => { if (b && b.parentNode) b.parentNode.removeChild(b); });
-      
       cvNode.innerHTML = "";
       cvNode.setAttribute("data-layout", layoutName);
       cvNode.classList.remove("layout-sidebar-left", "layout-sidebar-right", "layout-header-top", "layout-single-column");
       cvNode.classList.add("layout-" + layoutName);
-      
       if (layoutName === 'sidebar-left' || layoutName === 'sidebar-right') {
         const sidebar = document.createElement("div"); sidebar.className = "sidebar primary-area";
         sidebarBlocks.forEach(b => sidebar.appendChild(b));
         const main = document.createElement("div"); main.className = "main-content";
         mainBlocks.forEach(b => main.appendChild(b));
-        
         if (layoutName === 'sidebar-left') cvNode.append(sidebar, main);
         else cvNode.append(main, sidebar);
       }
@@ -1396,14 +1483,11 @@
         if (contactBlock) headerInfo.appendChild(contactBlock);
         if (photoBlock) topBanner.appendChild(photoBlock);
         topBanner.appendChild(headerInfo);
-        
         const bottomBody = document.createElement("div"); bottomBody.className = "bottom-body";
         const leftCol = document.createElement("div"); leftCol.className = "body-left";
         const rightCol = document.createElement("div"); rightCol.className = "body-right";
-        
         sidebarBlocks.forEach(b => { if (b !== photoBlock && b !== contactBlock) leftCol.appendChild(b); });
         mainBlocks.forEach(b => { if (b !== headerBlock) rightCol.appendChild(b); });
-        
         bottomBody.append(leftCol, rightCol);
         cvNode.append(topBanner, bottomBody);
       }
@@ -1412,11 +1496,9 @@
         if (photoBlock) topBanner.appendChild(photoBlock);
         if (headerBlock) topBanner.appendChild(headerBlock);
         if (contactBlock) topBanner.appendChild(contactBlock);
-        
         const main = document.createElement("div"); main.className = "main-content";
         mainBlocks.forEach(b => { if (b !== headerBlock) main.appendChild(b); });
         sidebarBlocks.forEach(b => { if (b !== photoBlock && b !== contactBlock) main.appendChild(b); });
-        
         cvNode.append(topBanner, main);
       }
     }
@@ -1457,7 +1539,6 @@
       try {
         const qText = document.getElementById("aiQuotaText");
         const qInd = document.getElementById("aiQuotaIndicator");
-        
         const MAX_DAILY = 20;
         const todayStr = new Date().toLocaleDateString();
         let quotaData = JSON.parse(localStorage.getItem("ai_daily_quota") || '{"used": 0, "date": ""}');
@@ -1465,18 +1546,14 @@
           quotaData = { date: todayStr, used: 0 };
           localStorage.setItem("ai_daily_quota", JSON.stringify(quotaData));
         }
-        
         const remaining = Math.max(0, MAX_DAILY - quotaData.used);
         const percent = Math.round((remaining / MAX_DAILY) * 100);
-        
         const now = new Date();
         const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
         const diffMs = tomorrow - now;
         const diffHrs = Math.floor(diffMs / 3600000);
         const diffMins = Math.floor((diffMs % 3600000) / 60000);
-        
         qText.textContent = `Daily Premium Quota: ${percent}% Remaining (Resets in ${diffHrs}h ${diffMins}m)`;
-        
         if (percent > 50) qInd.style.background = "#10b981";
         else if (percent > 20) qInd.style.background = "#f59e0b";
         else qInd.style.background = "#ef4444";
@@ -1520,29 +1597,27 @@
       localStorage.setItem("last_cv_layout", forcedLayout);
       const isCustomColors = !(primaryColor === "#3b82f6" && secondaryColor === "#1e293b");
       const hasCustomDetails = purpose || targetRole || stylePref || isCustomColors;
-
       let optionalContextStr = "";
       if (hasCustomDetails) {
-          let parts = ["OPTIONAL CONTEXT FROM USER (use this to tailor content and design):"];
-          if (purpose) parts.push(`- CV Purpose: ${purpose}`);
-          if (targetRole) parts.push(`- Target Role: ${targetRole}`);
-          if (stylePref) parts.push(`- Style Preference: ${stylePref}`);
-          if (isCustomColors) {
-              parts.push(`- User-chosen Primary/Accent Color: ${primaryColor}`);
-              parts.push(`- User-chosen Secondary/Sidebar Color: ${secondaryColor}`);
-              parts.push("Make sure to strictly apply the user-chosen colors!");
-          } else {
-              parts.push("- Generate a COMPLETELY NEW, visually striking and professional color palette.");
-          }
-          optionalContextStr = parts.join('\n');
+        let parts = ["OPTIONAL CONTEXT FROM USER (use this to tailor content and design):"];
+        if (purpose) parts.push(`- CV Purpose: ${purpose}`);
+        if (targetRole) parts.push(`- Target Role: ${targetRole}`);
+        if (stylePref) parts.push(`- Style Preference: ${stylePref}`);
+        if (isCustomColors) {
+          parts.push(`- User-chosen Primary/Accent Color: ${primaryColor}`);
+          parts.push(`- User-chosen Secondary/Sidebar Color: ${secondaryColor}`);
+          parts.push("Make sure to strictly apply the user-chosen colors!");
+        } else {
+          parts.push("- Generate a COMPLETELY NEW, visually striking and professional color palette.");
+        }
+        optionalContextStr = parts.join('\n');
       } else {
-          optionalContextStr = `NO OPTIONAL DETAILS PROVIDED. You have FULL CREATIVE FREEDOM!
+        optionalContextStr = `NO OPTIONAL DETAILS PROVIDED. You have FULL CREATIVE FREEDOM!
 - Generate a STUNNING, UNIQUE, ADVANCED, AND HIGHLY PROFESSIONAL CV.
 - Create a completely new, visually striking color palette (use rich, modern colors like sleek dark modes, vibrant gradients, or sophisticated corporate tones).
 - Pick modern Google Fonts for headings and body that pair beautifully.
 - Do NOT just use generic blues and grays. Surprise the user with a premium design!`;
       }
-
       const systemPrompt = `You are a world-class Resume parser AND an Expert UI/UX Architect.
 Do TWO things:
 1. Extract the CV data efficiently.
@@ -1586,7 +1661,6 @@ Return a raw JSON object ONLY, NO markdown:
         if (parsed.data) populateCV(parsed.data);
         if (parsed.theme) applyAITheme(parsed.theme);
         setAIStatus("success", "✅ New Structure, Colors & Content fully generated!");
-        
         let quotaData = JSON.parse(localStorage.getItem("ai_daily_quota") || '{"used": 0, "date": ""}');
         if (quotaData.date === new Date().toLocaleDateString()) {
           quotaData.used += 1;
@@ -1594,7 +1668,6 @@ Return a raw JSON object ONLY, NO markdown:
           quotaData = { date: new Date().toLocaleDateString(), used: 1 };
         }
         localStorage.setItem("ai_daily_quota", JSON.stringify(quotaData));
-        
         setTimeout(() => closeAIModal(), 2000);
       } catch (error) {
         console.error(error); setAIStatus("error", "❌ Failed to parse AI response. Please try again.");
@@ -1628,18 +1701,18 @@ Return a raw JSON object ONLY, NO markdown:
         if (expSec) {
           expSec.querySelectorAll(".entry-block").forEach(b => b.remove());
           data.experience.forEach(exp => {
-          const div = document.createElement("div"); div.className = "entry-block list-item-wrapper";
-          div.setAttribute("style", "position:relative; padding-right:60px;");
-          let bullets = "";
-          (exp.responsibilities || []).forEach(r => { bullets += `<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">${r}</span> <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div></li>`; });
-          div.innerHTML = `
+            const div = document.createElement("div"); div.className = "entry-block list-item-wrapper";
+            div.setAttribute("style", "position:relative; padding-right:60px;");
+            let bullets = "";
+            (exp.responsibilities || []).forEach(r => { bullets += `<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">${r}</span> <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div></li>`; });
+            div.innerHTML = `
             <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
             <div class="job-title" contenteditable="true">${exp.title || ""}</div>
             <div class="company-name" contenteditable="true">${exp.company || ""}</div>
             <span class="date-location" contenteditable="true">${exp.dates || ""}</span>
             <div class="job-desc"><ul>${bullets}</ul></div>`;
-          expSec.appendChild(div);
-        });
+            expSec.appendChild(div);
+          });
         }
       }
       if (data.education && data.education.length) {
@@ -1647,16 +1720,16 @@ Return a raw JSON object ONLY, NO markdown:
         if (eduSec) {
           eduSec.querySelectorAll(".entry-block").forEach(b => b.remove());
           data.education.forEach(edu => {
-          const div = document.createElement("div"); div.className = "entry-block list-item-wrapper";
-          div.setAttribute("style", "position:relative; padding-right:60px;");
-          div.innerHTML = `
+            const div = document.createElement("div"); div.className = "entry-block list-item-wrapper";
+            div.setAttribute("style", "position:relative; padding-right:60px;");
+            div.innerHTML = `
             <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
             <div class="job-title" contenteditable="true">${edu.degree || ""}</div>
             <div class="company-name" contenteditable="true">${edu.institution || ""}</div>
             <span class="date-location" contenteditable="true">${edu.dates || ""}</span>
             <p class="summary-text" contenteditable="true" style="margin-top:5px; font-size:14px;">${edu.details || ""}</p>`;
-          eduSec.appendChild(div);
-        });
+            eduSec.appendChild(div);
+          });
         }
       }
     }
@@ -1727,40 +1800,37 @@ Return a raw JSON object ONLY, NO markdown:
       const ctx = canvas.getContext("2d");
       let base64Img = "";
       try {
-          const radiusStr = styles.getPropertyValue('--photo-radius').trim();
-          ctx.beginPath();
-          if (radiusStr === '50%') {
-              ctx.arc(70, 70, 70, 0, Math.PI * 2);
-          } else if (radiusStr === '15px') {
-              const r = 15;
-              ctx.moveTo(r, 0); ctx.lineTo(140-r, 0); ctx.quadraticCurveTo(140, 0, 140, r);
-              ctx.lineTo(140, 140-r); ctx.quadraticCurveTo(140, 140, 140-r, 140);
-              ctx.lineTo(r, 140); ctx.quadraticCurveTo(0, 140, 0, 140-r);
-              ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0);
-          } else {
-              ctx.rect(0, 0, 140, 140);
-          }
-          ctx.clip();
-          ctx.drawImage(document.getElementById("profileImg"), 0, 0, canvas.width, canvas.height); 
-          base64Img = canvas.toDataURL("image/png"); 
+        const radiusStr = styles.getPropertyValue('--photo-radius').trim();
+        ctx.beginPath();
+        if (radiusStr === '50%') {
+          ctx.arc(70, 70, 70, 0, Math.PI * 2);
+        } else if (radiusStr === '15px') {
+          const r = 15;
+          ctx.moveTo(r, 0); ctx.lineTo(140 - r, 0); ctx.quadraticCurveTo(140, 0, 140, r);
+          ctx.lineTo(140, 140 - r); ctx.quadraticCurveTo(140, 140, 140 - r, 140);
+          ctx.lineTo(r, 140); ctx.quadraticCurveTo(0, 140, 0, 140 - r);
+          ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0);
+        } else {
+          ctx.rect(0, 0, 140, 140);
+        }
+        ctx.clip();
+        ctx.drawImage(document.getElementById("profileImg"), 0, 0, canvas.width, canvas.height);
+        base64Img = canvas.toDataURL("image/png");
       } catch (e) { console.error(e); }
-
       if (cloneImg && base64Img) {
-          cloneImg.src = base64Img;
-          cloneImg.setAttribute("width", "130");
-          cloneImg.setAttribute("height", "130");
-          cloneImg.style.display = "block";
-          if (photoContainer) photoContainer.style.textAlign = "center";
+        cloneImg.src = base64Img;
+        cloneImg.setAttribute("width", "130");
+        cloneImg.setAttribute("height", "130");
+        cloneImg.style.display = "block";
+        if (photoContainer) photoContainer.style.textAlign = "center";
       } else if (photoContainer) {
-          photoContainer.remove();
+        photoContainer.remove();
       }
-
       cvClone.querySelectorAll('.contact-item').forEach(el => {
-          el.style.display = "inline-block";
-          el.style.marginRight = "20px";
-          el.style.verticalAlign = "top";
+        el.style.display = "inline-block";
+        el.style.marginRight = "20px";
+        el.style.verticalAlign = "top";
       });
-
       let wordHTMLTable = "";
       if (layout === 'sidebar-left' || layout === 'sidebar-right') {
         const sidebarHTML = cvClone.querySelector('.sidebar').innerHTML;
@@ -1774,9 +1844,9 @@ Return a raw JSON object ONLY, NO markdown:
         const hInfo = cvClone.querySelector('.top-banner .header-info');
         let topBannerHTML = "";
         if (pBlock && hInfo) {
-            topBannerHTML = `<table width="100%" cellpadding="0" cellspacing="0"><tr><td width="160" valign="middle">${pBlock.outerHTML}</td><td valign="middle">${hInfo.outerHTML}</td></tr></table>`;
+          topBannerHTML = `<table width="100%" cellpadding="0" cellspacing="0"><tr><td width="160" valign="middle">${pBlock.outerHTML}</td><td valign="middle">${hInfo.outerHTML}</td></tr></table>`;
         } else {
-            topBannerHTML = cvClone.querySelector('.top-banner').innerHTML;
+          topBannerHTML = cvClone.querySelector('.top-banner').innerHTML;
         }
         const leftColHTML = cvClone.querySelector('.body-left').innerHTML;
         const rightColHTML = cvClone.querySelector('.body-right').innerHTML;
@@ -1791,15 +1861,14 @@ Return a raw JSON object ONLY, NO markdown:
       }
       let sectionTitleStyle = `font-size: 18px; font-family: ${headingFont}; text-transform: uppercase; font-weight: bold; margin-top: 25px; margin-bottom: 15px;`;
       if (cvNode.classList.contains("style-solid-box")) {
-          sectionTitleStyle += ` background-color: ${primary}; color: #ffffff; padding: 8px 15px;`;
+        sectionTitleStyle += ` background-color: ${primary}; color: #ffffff; padding: 8px 15px;`;
       } else if (cvNode.classList.contains("style-underline")) {
-          sectionTitleStyle += ` color: ${textMain}; border-bottom: 2px solid ${primary}; padding-bottom: 5px;`;
+        sectionTitleStyle += ` color: ${textMain}; border-bottom: 2px solid ${primary}; padding-bottom: 5px;`;
       } else {
-          sectionTitleStyle += ` color: ${primary};`;
+        sectionTitleStyle += ` color: ${primary};`;
       }
       let h1Color = primary;
       if (layout === 'header-top' || layout === 'single-column') h1Color = pAreaText;
-
       const wordHTML = `
         <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40" dir="${docDir}">
         <head><meta charset='utf-8'><title>CV</title>
@@ -1883,7 +1952,6 @@ Return a raw JSON object ONLY, NO markdown:
       const nameNode = document.querySelector("#headerBlock h1");
       const titleNode = document.querySelector("#headerBlock h3");
       const defaultName = nameNode ? nameNode.textContent.trim() : "Untitled";
-      
       const { value: cvName } = await Swal.fire({
         title: 'Save CV',
         input: 'text',
@@ -1895,9 +1963,7 @@ Return a raw JSON object ONLY, NO markdown:
           if (!value) return 'Please provide a name to save the CV'
         }
       });
-
       if (!cvName) return;
-
       const title = titleNode ? titleNode.textContent.trim() : "";
       const cvData = {
         id: Date.now(),
@@ -1910,7 +1976,6 @@ Return a raw JSON object ONLY, NO markdown:
         layout: cvNode.getAttribute("data-layout")
       };
       await saveToDB(cvData);
-      
       Swal.fire({
         icon: 'warning',
         title: 'CV Saved Locally!',
@@ -1943,16 +2008,13 @@ Return a raw JSON object ONLY, NO markdown:
       let cvs = await getAllFromDB();
       const searchQ = (document.getElementById("historySearch")?.value || "").toLowerCase();
       const sortV = document.getElementById("historySort")?.value || "newest";
-      
       if (searchQ) {
-          cvs = cvs.filter(cv => (cv.name||"").toLowerCase().includes(searchQ) || (cv.title||"").toLowerCase().includes(searchQ));
+        cvs = cvs.filter(cv => (cv.name || "").toLowerCase().includes(searchQ) || (cv.title || "").toLowerCase().includes(searchQ));
       }
-      
-      if (sortV === "newest") cvs.sort((a,b) => b.id - a.id);
-      else if (sortV === "oldest") cvs.sort((a,b) => a.id - b.id);
-      else if (sortV === "a-z") cvs.sort((a,b) => (a.name||"").localeCompare(b.name||""));
-      else if (sortV === "z-a") cvs.sort((a,b) => (b.name||"").localeCompare(a.name||""));
-
+      if (sortV === "newest") cvs.sort((a, b) => b.id - a.id);
+      else if (sortV === "oldest") cvs.sort((a, b) => a.id - b.id);
+      else if (sortV === "a-z") cvs.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+      else if (sortV === "z-a") cvs.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
       if (cvs.length === 0) {
         list.innerHTML = "<p style='text-align:center; color:#94a3b8; padding: 20px;'>No saved CVs found.</p>";
         return;
@@ -2013,5 +2075,7 @@ Return a raw JSON object ONLY, NO markdown:
       reader.readAsText(file);
     }
   </script>
-<script src="./pwa-register.js" type="module"></script></body>
+  <script src="./pwa-register.js" type="module"></script>
+</body>
+
 </html>

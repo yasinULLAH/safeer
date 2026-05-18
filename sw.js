@@ -58,15 +58,15 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "4ee2c0801ca0ec8b69616de3a2114dc1"
+        "revision": "7a34bca71e234293ecb1ababcdcb991c"
     },
     {
         "url": "index2.html",
-        "revision": "33f149135f4b2b92842611184553a504"
+        "revision": "43da8e695f6e42198cc7f0d09a30a061"
     },
     {
         "url": "index3.html",
-        "revision": "4f699166abe9192c9c531a88dc0c6d85"
+        "revision": "6383069929b9b4a1962358bb37d620be"
     },
     {
         "url": "manifest.json",
@@ -74,7 +74,11 @@ if (workbox) {
     },
     {
         "url": "offline.html",
-        "revision": "8987c4b748db7cbdf5e4c6165507121b"
+        "revision": "ad17d01f02bb01615fbc0509f5aee82a"
+    },
+    {
+        "url": "pwa-register.js",
+        "revision": "3ec872e4f752840ad8f85922ff6cebe7"
     },
     {
         "url": "readme.md",
@@ -90,11 +94,11 @@ if (workbox) {
     },
     {
         "url": "sw.js",
-        "revision": "3d7554b967c6aaf65728e30bcf0d14d8"
+        "revision": "95f2d4dfdc739f463dab510db085acaf"
     },
     {
         "url": "test.html",
-        "revision": "995e8e30e33c0da39ff5e50b85580711"
+        "revision": "41e4a698e8bdd0122a9f1dd0d27f2089"
     }
 ]);
 

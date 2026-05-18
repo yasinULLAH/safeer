@@ -1132,12 +1132,24 @@
 <div class="ai-modal-overlay" id="historyModalOverlay" onclick="if (event.target === this) closeHistoryModal();">
 <div class="ai-modal" style="width: 800px; max-width: 95vw;">
 <h2>📚 Saved CVs &amp; Backup</h2>
-<div style="display:flex; justify-content:space-between; margin-bottom: 20px;">
+<div style="display:flex; justify-content:space-between; margin-bottom: 15px; align-items:center;">
 <p style="margin:0; color:#64748b; font-size:14px;">Click a CV below to load it.</p>
-<div>
+<div style="display:flex; gap:10px;">
+<button class="btn" onclick="document.getElementById('historyFilters').style.display = document.getElementById('historyFilters').style.display === 'none' ? 'block' : 'none'" style="display:inline-flex; border-color:#cbd5e1; color:#475569;" title="Filter &amp; Search">🔍</button>
 <button class="btn" onclick="exportBackup()" style="display:inline-flex; border-color:#3b82f6; color:#2563eb;">📦 Backup All</button>
-<button class="btn" onclick="document.getElementById('importBackupInput').click()" style="display:inline-flex; border-color:#10b981; color:#059669;">📥 Restore Backup</button>
+<button class="btn" onclick="document.getElementById('importBackupInput').click()" style="display:inline-flex; border-color:#10b981; color:#059669;">📥 Restore</button>
 <input accept=".json" id="importBackupInput" onchange="importBackup(event)" style="display:none" type="file"/>
+</div>
+</div>
+<div id="historyFilters" style="display:none; margin-bottom:15px; padding:15px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
+<div style="display:flex; gap:15px; flex-wrap:wrap;">
+<input id="historySearch" onkeyup="renderHistory()" placeholder="Search by name or title..." style="flex:1; min-width:200px; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; outline:none; font-family:Inter,sans-serif;" type="text"/>
+<select id="historySort" onchange="renderHistory()" style="padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; outline:none; background:white; color:#334155; font-family:Inter,sans-serif;">
+<option value="newest">Newest First</option>
+<option value="oldest">Oldest First</option>
+<option value="a-z">Name (A-Z)</option>
+<option value="z-a">Name (Z-A)</option>
+</select>
 </div>
 </div>
 <div id="historyList" style="display:grid; gap:12px; max-height:400px; overflow-y:auto; padding-right:10px;">
@@ -1904,6 +1916,14 @@ Return a raw JSON object ONLY, NO markdown:
         html: '<div style="text-align:left; font-size:14px;"><p>Your CV has been saved to this browser.</p><p style="color:#e11d48; font-weight:bold;">CRITICAL REMINDER:</p><p>Please make sure to use the <b>Backup All</b> button in the History menu frequently. If you clear your browser cache/data without an external backup, your saved CVs will be <b>permanently lost</b> and we cannot be held responsible.</p></div>',
         confirmButtonText: 'I understand',
         confirmButtonColor: '#3b82f6'
+      }).then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Saved Successfully!',
+          text: 'You can access this CV anytime from the History menu.',
+          timer: 2500,
+          showConfirmButton: false
+        });
       });
     }
     async function loadCV(id) {
@@ -1919,9 +1939,21 @@ Return a raw JSON object ONLY, NO markdown:
     }
     async function renderHistory() {
       const list = document.getElementById("historyList");
-      const cvs = await getAllFromDB();
+      let cvs = await getAllFromDB();
+      const searchQ = (document.getElementById("historySearch")?.value || "").toLowerCase();
+      const sortV = document.getElementById("historySort")?.value || "newest";
+      
+      if (searchQ) {
+          cvs = cvs.filter(cv => (cv.name||"").toLowerCase().includes(searchQ) || (cv.title||"").toLowerCase().includes(searchQ));
+      }
+      
+      if (sortV === "newest") cvs.sort((a,b) => b.id - a.id);
+      else if (sortV === "oldest") cvs.sort((a,b) => a.id - b.id);
+      else if (sortV === "a-z") cvs.sort((a,b) => (a.name||"").localeCompare(b.name||""));
+      else if (sortV === "z-a") cvs.sort((a,b) => (b.name||"").localeCompare(a.name||""));
+
       if (cvs.length === 0) {
-        list.innerHTML = "<p style='text-align:center; color:#94a3b8; padding: 20px;'>No saved CVs yet.</p>";
+        list.innerHTML = "<p style='text-align:center; color:#94a3b8; padding: 20px;'>No saved CVs found.</p>";
         return;
       }
       list.innerHTML = cvs.map(cv => `

@@ -3,9 +3,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=1024" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport"/>
 <title>Interactive AI CV Builder</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://js.puter.com/v2/"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -85,6 +86,15 @@
     .btn-word {
       background-color: #10b981;
       color: white;
+    }
+
+    .btn-pdf {
+      background-color: #e53e3e;
+      color: white;
+    }
+
+    .btn-pdf:hover {
+      background-color: #c53030;
     }
 
     /* ========================================================
@@ -802,13 +812,81 @@
     }
 
     @keyframes scanline {
-      0% {
-        top: 0;
-      }
+      0% { top: 0; }
+      100% { top: 100%; }
+    }
 
-      100% {
-        top: 100%;
+    /* ========================================================
+       MOBILE FIRST RESPONSIVE STYLES
+       ======================================================== */
+    @media (max-width: 768px) {
+      body {
+        padding: 80px 0 60px 0;
+        background-image: none;
+        background-color: #e2e8f0;
       }
+      .toolbar {
+        top: 0;
+        left: 0;
+        right: 0;
+        transform: none;
+        border-radius: 0;
+        padding: 8px 10px;
+        gap: 6px;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .btn {
+        padding: 9px 14px;
+        font-size: 12px;
+        gap: 5px;
+        flex: 1;
+        min-width: 0;
+        justify-content: center;
+      }
+      .cv-container {
+        width: 100% !important;
+        min-height: auto;
+        border-radius: 0;
+        box-shadow: none;
+        flex-direction: column !important;
+      }
+      .layout-sidebar-left .sidebar,
+      .layout-sidebar-right .sidebar {
+        width: 100% !important;
+        padding: 30px 20px !important;
+      }
+      .layout-sidebar-left .main-content,
+      .layout-sidebar-right .main-content {
+        padding: 25px 20px !important;
+      }
+      .layout-header-top .top-banner {
+        flex-direction: column;
+        padding: 25px 20px;
+        gap: 20px;
+      }
+      .layout-header-top .bottom-body {
+        flex-direction: column;
+      }
+      .layout-header-top .body-left,
+      .layout-header-top .body-right {
+        width: 100% !important;
+        padding: 20px !important;
+      }
+      .layout-single-column .top-banner {
+        padding: 30px 20px;
+      }
+      .layout-single-column .main-content {
+        padding: 25px 20px !important;
+        max-width: 100%;
+      }
+      .header h1 { font-size: 30px; }
+      .header h3 { font-size: 16px; }
+      .profile-photo-container { width: 120px; height: 120px; }
+      .ai-modal { padding: 25px 18px; border-radius: 16px; }
+      .ai-modal h2 { font-size: 20px; }
     }
   </style>
 <link href="manifest.json" rel="manifest"/>
@@ -816,25 +894,50 @@
 </head>
 <body>
 <div class="toolbar" data-html2canvas-ignore="true">
-<button class="btn btn-ai-toolbar" onclick="openAIModal()">
-      ✨ AI Design &amp; Build
-    </button>
-<button class="btn btn-download" onclick="downloadCV()">
-      📥 Export Image / PDF
-    </button>
-<button class="btn btn-word" onclick="downloadWord()">
-      📄 Export MS Word
-    </button>
+<button class="btn btn-ai-toolbar" onclick="openAIModal()">✨ AI Design &amp; Build</button>
+<button class="btn btn-download" onclick="downloadHighResImage()">🖼️ Export Image</button>
+<button class="btn btn-pdf" onclick="downloadPDF()">📄 Export PDF</button>
+<button class="btn btn-word" onclick="downloadWord()">📝 Export Word</button>
 </div>
 <!-- AI Modal -->
 <div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
 <div class="ai-modal">
 <h2>✨ AI Resume &amp; Structural Designer</h2>
-<p class="ai-subtitle">
-        The AI will evaluate your profile and guarantee a <b>completely unique structural layout</b>, color palette,
-        typography, and content flow on every single click.
-      </p>
+<p class="ai-subtitle">The AI will evaluate your profile and guarantee a <b>completely unique structural layout</b>, color palette, typography, and content flow on every single click.</p>
 <textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
+<details id="aiOptionalDetails" style="margin-top:18px;">
+<summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">⚙️ Optional Details (click to expand)</summary>
+<div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;padding:18px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
+<div>
+<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">What is this CV for?</label>
+<input id="aiPurpose" placeholder="e.g. Job application, Academic admission, Freelance portfolio..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
+</div>
+<div>
+<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Applying for / Target Role</label>
+<input id="aiTargetRole" placeholder="e.g. Senior Frontend Developer at Google, Medical School..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
+</div>
+<div>
+<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Look &amp; Feel / Style Preferences</label>
+<input id="aiStylePref" placeholder="e.g. Modern dark sidebar, minimalist, bold &amp; colorful, corporate..." style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Inter,sans-serif;box-sizing:border-box;outline:none;background:#fff;" type="text"/>
+</div>
+<div style="display:flex;gap:16px;flex-wrap:wrap;">
+<div style="flex:1;min-width:120px;">
+<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Primary Color</label>
+<div style="display:flex;align-items:center;gap:8px;">
+<input id="aiPrimaryColor" style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color" value="#3b82f6"/>
+<span id="aiPrimaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#3b82f6</span>
+</div>
+</div>
+<div style="flex:1;min-width:120px;">
+<label style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;display:block;margin-bottom:6px;">Secondary / Sidebar Color</label>
+<div style="display:flex;align-items:center;gap:8px;">
+<input id="aiSecondaryColor" style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;padding:2px;" type="color" value="#1e293b"/>
+<span id="aiSecondaryColorHex" style="font-size:13px;color:#475569;font-family:monospace;">#1e293b</span>
+</div>
+</div>
+</div>
+</div>
+</details>
 <div class="ai-status" id="aiStatus"></div>
 <div class="ai-modal-actions">
 <button class="btn-ai-cancel" onclick="closeAIModal()">Cancel</button>
@@ -855,7 +958,7 @@
 <div id="repo" style="display:none;">
 <div class="profile-photo-container" id="photoBlock" onclick="document.getElementById('photoInput').click()">
 <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
-<img alt="Profile" id="profileImg" src="https://via.placeholder.com/200/34495e/ffffff?text=Upload+Photo"/>
+<img alt="Profile" id="profileImg" onerror="this.src='safeer.png';" src="safeer.png"/>
 <div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
 </div>
 <div class="header" id="headerBlock">
@@ -941,12 +1044,17 @@
 <script>
     // --- Lifecycle & Initialization ---
     document.addEventListener("DOMContentLoaded", () => {
-      // Restore previous prompt
       const savedText = localStorage.getItem("cv_raw_text");
       if (savedText) document.getElementById("aiTextInput").value = savedText;
-
-      // Init Default Layout Structural placement
       applyLayoutStructure("sidebar-left");
+
+      const pc = document.getElementById("aiPrimaryColor");
+      const sc = document.getElementById("aiSecondaryColor");
+      pc.addEventListener("input", () => document.getElementById("aiPrimaryColorHex").textContent = pc.value);
+      sc.addEventListener("input", () => document.getElementById("aiSecondaryColorHex").textContent = sc.value);
+
+      const img = document.getElementById("profileImg");
+      img.onerror = () => { img.onerror = null; img.src = "safeer.png"; };
     });
 
     // --- UI Interactions ---
@@ -1097,7 +1205,11 @@
     }
 
     // --- AI Brain ---
-    function openAIModal() { document.getElementById("aiModalOverlay").classList.add("active"); document.getElementById("aiTextInput").focus(); document.getElementById("aiStatus").style.display = 'none'; }
+    function openAIModal() {
+      document.getElementById("aiModalOverlay").classList.add("active");
+      document.getElementById("aiTextInput").focus();
+      document.getElementById("aiStatus").style.display = 'none';
+    }
     function closeAIModal() { document.getElementById("aiModalOverlay").classList.remove("active"); }
     function setAIStatus(type, msg) {
       const st = document.getElementById("aiStatus"); st.className = "ai-status " + type; st.style.display = 'block';
@@ -1107,7 +1219,13 @@
     async function generateCVFromAI() {
       const rawText = document.getElementById("aiTextInput").value.trim();
       if (!rawText) return setAIStatus("error", "⚠️ Please paste your resume info first.");
-      localStorage.setItem("cv_raw_text", rawText); // Save memory
+      localStorage.setItem("cv_raw_text", rawText);
+
+      const purpose = document.getElementById("aiPurpose").value.trim();
+      const targetRole = document.getElementById("aiTargetRole").value.trim();
+      const stylePref = document.getElementById("aiStylePref").value.trim();
+      const primaryColor = document.getElementById("aiPrimaryColor").value;
+      const secondaryColor = document.getElementById("aiSecondaryColor").value;
 
       const btn = document.getElementById("aiGenerateBtn");
       const btnText = document.getElementById("aiBtnText");
@@ -1118,77 +1236,73 @@
       cvNode.classList.add("cv-scanning");
       setAIStatus("processing", "AI is writing your content & building a dynamic CSS/DOM Architecture...");
 
-      // ---------------------------------------------------------
-      // JAVASCRIPT FORCED RANDOMIZATION
-      // This guarantees the AI CANNOT repeat the same layout twice
-      // ---------------------------------------------------------
       const allLayouts = ["sidebar-left", "sidebar-right", "header-top", "single-column"];
       const allHeaders = ["solid-box", "underline", "clean-text"];
       const allShapes = ["circle", "square", "rounded"];
 
-      // Get the layout used last time and eliminate it from the pool
       const lastLayout = localStorage.getItem("last_cv_layout");
       let availableLayouts = allLayouts.filter(l => l !== lastLayout);
-      if (availableLayouts.length === 0) availableLayouts = allLayouts; // Failsafe
+      if (availableLayouts.length === 0) availableLayouts = allLayouts;
 
       const forcedLayout = availableLayouts[Math.floor(Math.random() * availableLayouts.length)];
       const forcedHeader = allHeaders[Math.floor(Math.random() * allHeaders.length)];
       const forcedShape = allShapes[Math.floor(Math.random() * allShapes.length)];
-
       localStorage.setItem("last_cv_layout", forcedLayout);
+
+      const optionalContext = [
+        purpose ? `CV Purpose: ${purpose}` : '',
+        targetRole ? `Target Role/Position: ${targetRole}` : '',
+        stylePref ? `Look & Feel Preference: ${stylePref}` : '',
+        `User-chosen Primary/Accent Color: ${primaryColor}`,
+        `User-chosen Secondary/Sidebar Color: ${secondaryColor}`
+      ].filter(Boolean).join('\n');
 
       const systemPrompt = `You are a world-class Resume parser AND an Expert UI/UX Architect.
 Do TWO things:
 1. Extract the CV data efficiently.
-2. Generate a thematic design payload based on the forced properties below.
+2. Generate a thematic design payload.
 
-CRITICAL REQUIREMENT: To ensure true randomization, you MUST use the following exact values in your JSON output for the theme:
+CRITICAL REQUIREMENT: Use these exact values in your JSON output:
 - "layoutDirection": "${forcedLayout}"
 - "headerStyle": "${forcedHeader}"
 - "photoShape": "${forcedShape}"
 
-You must also generate a COMPLETELY NEW and UNIQUE color palette. Do NOT reuse safe colors. Be creative (e.g. Dark Mode backgrounds, vibrant sidebars, soft pastels, or sharp corporate tones). 
+${optionalContext ? `OPTIONAL CONTEXT FROM USER (use to tailor content and design):\n${optionalContext}\nIf the user specified colors, use them as accentColor and primaryAreaColor. If style preference given, match it.` : 'Generate a COMPLETELY NEW unique color palette. Be creative.'}
 
-Return a raw JSON object ONLY, NO markdown blocks:
+Return a raw JSON object ONLY, NO markdown:
 {
   "theme": {
     "layoutDirection": "${forcedLayout}",
     "headerStyle": "${forcedHeader}",
     "photoShape": "${forcedShape}",
-    "backgroundColor": "Hex code (Main body bg)",
-    "primaryAreaColor": "Hex code (For Sidebars / Top Banners. Can be dark, colorful, or soft)",
-    "primaryTextColor": "Hex code (Text on primaryAreaColor)",
-    "mainTextColor": "Hex code (Text on backgroundColor)",
-    "secondaryTextColor": "Hex code (Muted text for dates)",
-    "accentColor": "Hex code (For highlights/titles)",
-    "headingFont": "Google Font Name (e.g. Playfair Display, Montserrat, Oswald)",
-    "bodyFont": "Google Font Name (e.g. Lato, Inter, Roboto)"
+    "backgroundColor": "Hex",
+    "primaryAreaColor": "Hex",
+    "primaryTextColor": "Hex",
+    "mainTextColor": "Hex",
+    "secondaryTextColor": "Hex",
+    "accentColor": "Hex",
+    "headingFont": "Google Font Name",
+    "bodyFont": "Google Font Name"
   },
   "data": {
     "name": "Full Name", "title": "Job Title", "phone": "Phone", "email": "Email", "address": "Address",
     "summary": "Professional summary paragraph.",
-    "skills": [{"name": "Skill", "level": "Expert/Intermediate"}],
+    "skills": [{"name": "Skill", "level": "Expert"}],
     "languages": [{"name": "Lang", "level": "Fluent"}],
-    "experience": [{"title": "Job", "company": "Company", "dates": "Dates", "responsibilities": ["Resp 1"]}],
+    "experience": [{"title": "Job", "company": "Company", "dates": "Dates", "responsibilities": ["Resp"]}],
     "education": [{"degree": "Degree", "institution": "School", "dates": "Dates", "details": "Info"}]
   }
 }`;
 
       try {
         let content = await puter.ai.chat(systemPrompt + "\n\nUSER TEXT:\n" + rawText, { model: 'gemini-2.5-flash-lite' });
-
         if (typeof content !== 'string') content = content?.text || content?.message?.content || "";
         content = content.replace(/```json\s*/gi, "").replace(/```\s*/g, "").trim();
         const jsonStart = content.indexOf('{'); const jsonEnd = content.lastIndexOf('}');
         if (jsonStart !== -1 && jsonEnd !== -1) content = content.substring(jsonStart, jsonEnd + 1);
-
         const parsed = JSON.parse(content);
-
-        // Populate Data FIRST
         if (parsed.data) populateCV(parsed.data);
-        // THEN Apply the complex layout architecture
         if (parsed.theme) applyAITheme(parsed.theme);
-
         setAIStatus("success", "✅ New Structure, Colors & Content fully generated!");
         setTimeout(() => closeAIModal(), 2000);
       } catch (error) {
@@ -1198,6 +1312,7 @@ Return a raw JSON object ONLY, NO markdown blocks:
         cvNode.classList.remove("cv-scanning");
       }
     }
+
 
     function populateCV(data) {
       if (data.name) { document.querySelector("#headerBlock h1").textContent = data.name; window._cvName = data.name.replace(/\s+/g, "_"); }
@@ -1254,20 +1369,55 @@ Return a raw JSON object ONLY, NO markdown blocks:
       }
     }
 
-    // --- Exports (Image and Word) ---
-    function downloadCV() {
-      const cvNode = document.getElementById("cvToExport");
-      const btns = document.querySelectorAll('.control-btn, li[onclick*="addBullet"]');
-      btns.forEach((b) => b.classList.add("hide-on-export"));
-
-      setTimeout(() => {
-        html2canvas(cvNode, { scale: 3, useCORS: true }).then((canvas) => {
-          const link = document.createElement("a"); link.download = (window._cvName || "Resume") + ".png";
-          link.href = canvas.toDataURL("image/png"); link.click();
-          btns.forEach((b) => b.classList.remove("hide-on-export"));
-        });
-      }, 500);
+    function hideEditControls() {
+      return document.querySelectorAll('.control-btn, li[onclick*="addBullet"]');
     }
+
+    function downloadHighResImage() {
+      const cvNode = document.getElementById("cvToExport");
+      const btns = hideEditControls();
+      btns.forEach(b => b.classList.add("hide-on-export"));
+      const origW = cvNode.style.width;
+      cvNode.style.width = "210mm";
+      setTimeout(() => {
+        html2canvas(cvNode, { scale: 4, useCORS: true, allowTaint: true }).then(canvas => {
+          const link = document.createElement("a");
+          link.download = (window._cvName || "Resume") + "_HighRes.png";
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+          btns.forEach(b => b.classList.remove("hide-on-export"));
+          cvNode.style.width = origW;
+        });
+      }, 300);
+    }
+
+    function downloadPDF() {
+      const cvNode = document.getElementById("cvToExport");
+      const btns = hideEditControls();
+      btns.forEach(b => b.classList.add("hide-on-export"));
+      const origW = cvNode.style.width;
+      cvNode.style.width = "210mm";
+      setTimeout(() => {
+        html2canvas(cvNode, { scale: 3, useCORS: true, allowTaint: true }).then(canvas => {
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+          const imgData = canvas.toDataURL('image/png');
+          const pdfW = pdf.internal.pageSize.getWidth();
+          const pdfH = (canvas.height * pdfW) / canvas.width;
+          let yPos = 0;
+          const pageH = pdf.internal.pageSize.getHeight();
+          while (yPos < pdfH) {
+            pdf.addImage(imgData, 'PNG', 0, -yPos, pdfW, pdfH);
+            yPos += pageH;
+            if (yPos < pdfH) pdf.addPage();
+          }
+          pdf.save((window._cvName || "Resume") + ".pdf");
+          btns.forEach(b => b.classList.remove("hide-on-export"));
+          cvNode.style.width = origW;
+        });
+      }, 300);
+    }
+
 
     function downloadWord() {
       const cvClone = document.getElementById("cvToExport").cloneNode(true);

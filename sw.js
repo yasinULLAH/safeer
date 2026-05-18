@@ -58,11 +58,11 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "c7455ca39e89b8d8450ecb23d3d0fb39"
+        "revision": "6a29a195404f02efac63fa809d1e24c4"
     },
     {
         "url": "index2.html",
-        "revision": "fbae172c36a498d256b2d20edd7204ae"
+        "revision": "2c701a47dcd84f4830272abd68b29612"
     },
     {
         "url": "index3.html",
@@ -81,12 +81,16 @@ if (workbox) {
         "revision": "06157c2ad610b40ed48802008ccfd4e4"
     },
     {
-        "url": "safeer.PNG",
+        "url": "safeer.png",
+        "revision": "b6ada0cbd309c0fc5deebc14bd2c79b9"
+    },
+    {
+        "url": "safeer2.PNG",
         "revision": "add12a579844df24591c805f484f737a"
     },
     {
         "url": "sw.js",
-        "revision": "c8f649dffe2a7e47353fa37a3b88ed96"
+        "revision": "54e756bfc9f90c3256bd7cffc0e090fa"
     },
     {
         "url": "test.html",

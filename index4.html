@@ -1956,10 +1956,11 @@
 <div class="main-content"></div>
 </div>
 <div id="repo" style="display:none;">
-<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="if(!event.target.classList.contains('control-btn')) document.getElementById('photoInput').click()">
+<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="if(!event.target.classList.contains('control-btn')) pickPhoto()">
 <div style="position:absolute; top:5px; right:5px; z-index:10;"><span class="btn-delete control-btn" onclick="deleteItem(this)" style="background:rgba(255,0,0,0.5); color:white;">×</span></div>
 <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
-<img alt="Profile" id="profileImg" onerror="this.src='safeer.png';" src="safeer.png"/>
+<input accept="image/*" capture="environment" id="photoCameraInput" onchange="loadPhoto(event)" style="display:none;" type="file"/>
+<img alt="Profile" id="profileImg" src="safeer.png"/>
 <div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
 </div>
 <div class="header section-hover-target" data-zone="main" id="headerBlock">
@@ -2441,12 +2442,30 @@
     function saveCVState(theme) {
       try {
         const cvNode = document.getElementById('cvToExport');
+        const img = cvNode.querySelector('#profileImg');
+        let origSrc = null;
+        if (img && img.src && img.src.startsWith('data:')) {
+          origSrc = img.src;
+          img.src = 'safeer.png';
+        }
         localStorage.setItem('cv_saved_html', cvNode.innerHTML);
+        if (img && origSrc) img.src = origSrc;
         if (theme) localStorage.setItem('cv_saved_theme', JSON.stringify(theme));
         localStorage.setItem('cv_saved_layout', cvNode.getAttribute('data-layout') || 'sidebar-left');
         const classes = [...cvNode.classList].filter(c => c.startsWith('style-'));
         if (classes.length) localStorage.setItem('cv_saved_style', classes[0]);
       } catch(e) { console.warn('Could not save CV state', e); }
+    }
+    function restoreProfilePhoto() {
+      const savedPhoto = localStorage.getItem('cv_profile_photo');
+      if (!savedPhoto) return;
+      document.querySelectorAll('#profileImg').forEach(img => {
+        img.src = savedPhoto;
+        img.removeAttribute('onerror');
+      });
+      document.querySelectorAll('#photoPlaceholder').forEach(ph => {
+        ph.style.display = 'none';
+      });
     }
     document.addEventListener("DOMContentLoaded", () => {
       const savedText = localStorage.getItem("cv_raw_text");
@@ -2465,25 +2484,93 @@
       } else {
         applyLayoutStructure("sidebar-left");
       }
+      restoreProfilePhoto();
       const pc = document.getElementById("aiPrimaryColor");
       const sc = document.getElementById("aiSecondaryColor");
       pc.addEventListener("input", () => document.getElementById("aiPrimaryColorHex").textContent = pc.value);
       sc.addEventListener("input", () => document.getElementById("aiSecondaryColorHex").textContent = sc.value);
-      const img = document.getElementById("profileImg");
-      img.onerror = () => { img.onerror = null; img.src = "safeer.png"; };
       applyColorOverridesToCV();
+      setTimeout(() => restoreProfilePhoto(), 500);
+      let _autoSaveTimer = null;
+      let _autoSaveReady = false;
+      const cvEl = document.getElementById('cvToExport');
+      setTimeout(() => {
+        _autoSaveReady = true;
+        saveCVState();
+      }, 2000);
+      cvEl.addEventListener('input', () => {
+        if (!_autoSaveReady) return;
+        clearTimeout(_autoSaveTimer);
+        _autoSaveTimer = setTimeout(() => saveCVState(), 1000);
+      });
+      const _mo = new MutationObserver(() => {
+        if (!_autoSaveReady) return;
+        clearTimeout(_autoSaveTimer);
+        _autoSaveTimer = setTimeout(() => saveCVState(), 1000);
+      });
+      _mo.observe(cvEl, { childList: true, subtree: true });
     });
-    function loadPhoto(event) {
-      const image = document.getElementById("profileImg");
-      const placeholder = document.getElementById("photoPlaceholder");
-      if (event.target.files && event.target.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          image.src = e.target.result;
-          placeholder.style.display = "none";
-        };
-        reader.readAsDataURL(event.target.files[0]);
+    function pickPhoto() {
+      if (!window.matchMedia('(max-width: 820px)').matches) {
+        const inp = document.getElementById('cvToExport').querySelector('#photoInput') || document.getElementById('photoInput');
+        if (inp) inp.click();
+        return;
       }
+      Swal.fire({
+        title: 'Upload Photo',
+        html: '<p style="color:#64748b;font-size:14px;">Choose how you\'d like to add your photo</p>',
+        showCancelButton: true,
+        showDenyButton: true,
+        confirmButtonText: '📷 Camera',
+        denyButtonText: '🖼️ Gallery',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#3b82f6',
+        denyButtonColor: '#8b5cf6',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const cam = document.getElementById('cvToExport').querySelector('#photoCameraInput') || document.getElementById('photoCameraInput');
+          if (cam) cam.click();
+        } else if (result.isDenied) {
+          const inp = document.getElementById('cvToExport').querySelector('#photoInput') || document.getElementById('photoInput');
+          if (inp) inp.click();
+        }
+      });
+    }
+    function resizeImage(file, maxSize, quality, callback) {
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        img.onload = function () {
+          let w = img.width, h = img.height;
+          if (w > maxSize || h > maxSize) {
+            if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+            else { w = Math.round(w * maxSize / h); h = maxSize; }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          callback(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+    function loadPhoto(event) {
+      const cvNode = document.getElementById("cvToExport");
+      const image = cvNode.querySelector("#profileImg");
+      const placeholder = cvNode.querySelector("#photoPlaceholder");
+      if (!image || !event.target.files || !event.target.files[0]) return;
+      resizeImage(event.target.files[0], 400, 0.85, function (dataUrl) {
+        image.src = dataUrl;
+        if (placeholder) placeholder.style.display = "none";
+        try {
+          localStorage.setItem('cv_profile_photo', dataUrl);
+        } catch (err) {
+          console.warn('Photo storage failed', err);
+        }
+        saveCVState();
+      });
     }
     function duplicateItem(btn) {
       const parent = btn.closest('.list-item-wrapper, .entry-block, .contact-item, .section-hover-target');
@@ -2505,7 +2592,7 @@
       `;
       container.appendChild(div);
     }
-    function deleteItem(btn) { if (confirm("Remove this item?")) btn.closest(".list-item-wrapper, .contact-item, .entry-block").remove(); }
+    function deleteItem(btn) { if (confirm("Remove this item?")) { const el = btn.closest(".list-item-wrapper, .contact-item, .entry-block, .section-hover-target, .section"); if (el) el.remove(); } }
     function addListItem(listId) {
       const ul = document.getElementById(listId);
       const li = document.createElement("li"); li.className = "list-item-wrapper";
@@ -3351,13 +3438,25 @@ Return a raw JSON object ONLY, NO markdown:
     }
     async function exportBackup() {
       const cvs = await getAllFromDB();
-      const blob = new Blob([JSON.stringify(cvs)], { type: "application/json" });
+      const lsData = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        lsData[key] = localStorage.getItem(key);
+      }
+      const backup = {
+        _safeer_backup_version: 2,
+        timestamp: new Date().toISOString(),
+        indexedDB: cvs,
+        localStorage: lsData
+      };
+      const blob = new Blob([JSON.stringify(backup)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = "Safeer_CV_Backup_" + new Date().toISOString().split('T')[0] + ".json";
       a.click();
       URL.revokeObjectURL(url);
+      Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Full backup exported', showConfirmButton: false, timer: 1500, timerProgressBar: true });
     }
     async function importBackup(event) {
       const file = event.target.files[0];
@@ -3366,18 +3465,28 @@ Return a raw JSON object ONLY, NO markdown:
       reader.onload = async function (e) {
         try {
           const data = JSON.parse(e.target.result);
-          if (Array.isArray(data)) {
-            for (const cv of data) {
-              if (cv.id && cv.html) await saveToDB(cv);
+          let cvArray = [];
+          if (data._safeer_backup_version && data._safeer_backup_version >= 2) {
+            cvArray = data.indexedDB || [];
+            if (data.localStorage && typeof data.localStorage === 'object') {
+              Object.entries(data.localStorage).forEach(([k, v]) => {
+                localStorage.setItem(k, v);
+              });
             }
-            alert("Backup restored successfully!");
-            renderHistory();
+          } else if (Array.isArray(data)) {
+            cvArray = data;
           }
+          for (const cv of cvArray) {
+            if (cv.id && cv.html) await saveToDB(cv);
+          }
+          Swal.fire({ icon: 'success', title: 'Backup Restored!', text: `${cvArray.length} CV(s) and all settings restored. Reloading...`, timer: 2000, showConfirmButton: false });
+          setTimeout(() => location.reload(), 2000);
         } catch (err) {
-          alert("Invalid backup file.");
+          Swal.fire({ icon: 'error', title: 'Invalid Backup', text: 'The file could not be read as a valid Safeer backup.' });
         }
       };
       reader.readAsText(file);
+      event.target.value = '';
     }
     var _mobileScrolling = false;
     var _mobileTouchStartX = 0;

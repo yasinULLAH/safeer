@@ -219,12 +219,12 @@
       position: relative;
     }
 
-    .section-hover-target:hover > .section-controls .control-btn,
-    .section-hover-target:hover > .section-title > .section-controls .control-btn,
+    .section-hover-target:hover>.section-controls .control-btn,
+    .section-hover-target:hover>.section-title>.section-controls .control-btn,
     .section-hover-target:hover .section-controls .control-btn,
-    .list-item-wrapper:hover > .section-controls .control-btn,
+    .list-item-wrapper:hover>.section-controls .control-btn,
     .list-item-wrapper:hover .section-controls .control-btn,
-    .contact-item:hover > .section-controls .control-btn,
+    .contact-item:hover>.section-controls .control-btn,
     .contact-item:hover .section-controls .control-btn,
     .entry-block:hover .section-controls .control-btn {
       opacity: 1;
@@ -238,7 +238,7 @@
       border: none;
       border-radius: 4px;
       padding: 2px 6px;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     }
 
     .btn-delete {
@@ -248,7 +248,7 @@
       padding: 2px 6px;
       border-radius: 4px;
       background: #ef4444;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     }
 
     .btn-delete:hover {
@@ -263,7 +263,7 @@
       padding: 2px 6px;
       border-radius: 4px;
       background: #3b82f6;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     }
 
     .btn-duplicate:hover {
@@ -1115,7 +1115,10 @@
 
     .tpl-picker-overlay {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(15, 23, 42, 0.85);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -1270,7 +1273,7 @@
         padding: 10px 0 !important;
       }
 
-      #tplColorOverrides > div {
+      #tplColorOverrides>div {
         padding: 14px !important;
       }
 
@@ -1320,7 +1323,7 @@
         padding: 10px 12px !important;
       }
 
-      .tpl-picker-modal > div:last-child button {
+      .tpl-picker-modal>div:last-child button {
         width: 100% !important;
         padding: 14px !important;
         font-size: 16px !important;
@@ -1361,6 +1364,7 @@
         opacity: 0;
         transform: translateX(30px);
       }
+
       to {
         opacity: 1;
         transform: translateX(0);
@@ -1377,7 +1381,8 @@
       box-shadow: 0 8px 20px rgba(236, 72, 153, 0.4);
     }
 
-    #tabPasteGo:hover, #tabStepByStep:hover {
+    #tabPasteGo:hover,
+    #tabStepByStep:hover {
       background: #fdf2f8;
     }
 
@@ -1395,21 +1400,22 @@
         padding: 18px 0 !important;
       }
 
-      .wizard-step > div:first-child > span {
+      .wizard-step>div:first-child>span {
         width: 48px !important;
         height: 48px !important;
         font-size: 22px !important;
       }
 
-      .wizard-step > div:first-child > div > div:first-child {
+      .wizard-step>div:first-child>div>div:first-child {
         font-size: 26px !important;
       }
 
-      .wizard-step > div:first-child > div > div:last-child {
+      .wizard-step>div:first-child>div>div:last-child {
         font-size: 20px !important;
       }
 
-      #stepPrevBtn, #stepNextBtn {
+      #stepPrevBtn,
+      #stepNextBtn {
         font-size: 24px !important;
         padding: 18px 36px !important;
         border-radius: 16px !important;
@@ -1444,15 +1450,18 @@
 </div>
 </div>
 <div id="aiModeTabs" style="display:flex;gap:0;margin-bottom:22px;border-bottom:2px solid #e2e8f0;">
-<button id="tabPasteGo" onclick="switchAIMode('paste')" style="flex:1;padding:13px 0;font-size:15px;font-weight:700;border:none;background:none;cursor:pointer;color:#ec4899;border-bottom:3px solid #ec4899;transition:all 0.25s;">📋 Paste &amp; Go</button>
-<button id="tabStepByStep" onclick="switchAIMode('step')" style="flex:1;padding:13px 0;font-size:15px;font-weight:700;border:none;background:none;cursor:pointer;color:#94a3b8;border-bottom:3px solid transparent;transition:all 0.25s;">🪜 Step-by-Step Guide</button>
+<button id="tabPasteGo" onclick="switchAIMode('paste')" style="flex:1;padding:13px 0;font-size:15px;font-weight:700;border:none;background:none;cursor:pointer;color:#ec4899;border-bottom:3px solid #ec4899;transition:all 0.25s;">📋
+          Paste &amp; Go</button>
+<button id="tabStepByStep" onclick="switchAIMode('step')" style="flex:1;padding:13px 0;font-size:15px;font-weight:700;border:none;background:none;cursor:pointer;color:#94a3b8;border-bottom:3px solid transparent;transition:all 0.25s;">🪜
+          Step-by-Step Guide</button>
 </div>
 <div id="aiPasteMode">
 <p class="ai-subtitle">The AI will evaluate your profile and guarantee a <b>completely unique structural
             layout</b>, color palette, typography, and content flow on every single click.</p>
 <textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
 <details id="aiOptionalDetails" style="margin-top:18px;">
-<summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">⚙️
+<summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">
+            ⚙️
             Optional Details (click to expand)</summary>
 <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;padding:18px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
 <div>
@@ -1499,14 +1508,17 @@
 <div id="aiOverrideDetail" style="font-size:11px;color:#6366f1;margin-top:2px;"></div>
 </div>
 </div>
-<button onclick="clearAllOverrides();updateAIOverrideNotice();" style="padding:6px 14px;border-radius:6px;border:1px solid #c7d2fe;background:#fff;color:#6366f1;font-size:12px;font-weight:600;cursor:pointer;">Clear Overrides</button>
+<button onclick="clearAllOverrides();updateAIOverrideNotice();" style="padding:6px 14px;border-radius:6px;border:1px solid #c7d2fe;background:#fff;color:#6366f1;font-size:12px;font-weight:600;cursor:pointer;">Clear
+              Overrides</button>
 </div>
 </div>
 </div>
 <div id="aiStepMode" style="display:none;">
 <div id="stepProgressBar" style="display:flex;align-items:center;gap:0;margin-bottom:24px;position:relative;">
-<div id="stepProgressTrack" style="position:absolute;top:50%;left:24px;right:24px;height:4px;background:#e2e8f0;border-radius:2px;transform:translateY(-50%);z-index:0;"></div>
-<div id="stepProgressFill" style="position:absolute;top:50%;left:24px;height:4px;background:linear-gradient(90deg,#ec4899,#8b5cf6);border-radius:2px;transform:translateY(-50%);z-index:1;width:0%;transition:width 0.4s ease;"></div>
+<div id="stepProgressTrack" style="position:absolute;top:50%;left:24px;right:24px;height:4px;background:#e2e8f0;border-radius:2px;transform:translateY(-50%);z-index:0;">
+</div>
+<div id="stepProgressFill" style="position:absolute;top:50%;left:24px;height:4px;background:linear-gradient(90deg,#ec4899,#8b5cf6);border-radius:2px;transform:translateY(-50%);z-index:1;width:0%;transition:width 0.4s ease;">
+</div>
 </div>
 <div id="stepContainer">
 <div class="wizard-step" data-step="1">
@@ -1544,7 +1556,8 @@
 <span style="background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;">4</span>
 <div>
 <div style="font-size:18px;font-weight:800;color:#1e293b;">🛠️ Skills &amp; Tools</div>
-<div style="font-size:13px;color:#64748b;">What are you good at? Technologies, soft skills, anything!</div>
+<div style="font-size:13px;color:#64748b;">What are you good at? Technologies, soft skills, anything!
+                </div>
 </div>
 </div>
 <textarea class="step-textarea" id="stepSkills" placeholder="Example: I'm really good at Python and JavaScript. I also know React, Node.js, and PostgreSQL. I'm great at problem solving and teamwork. I can also use Figma for design and I'm familiar with AWS and Docker."></textarea>
@@ -1554,7 +1567,8 @@
 <span style="background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;">5</span>
 <div>
 <div style="font-size:18px;font-weight:800;color:#1e293b;">🏆 Achievements &amp; Extras</div>
-<div style="font-size:13px;color:#64748b;">Awards, certifications, hobbies, volunteer work — anything extra!</div>
+<div style="font-size:13px;color:#64748b;">Awards, certifications, hobbies, volunteer work — anything
+                  extra!</div>
 </div>
 </div>
 <textarea class="step-textarea" id="stepAchievements" placeholder="Example: I won the Dean's List award twice in college. I volunteer at a local coding bootcamp teaching kids on weekends. I have an AWS Certified Solutions Architect certification. My hobbies are hiking and photography."></textarea>
@@ -1563,17 +1577,22 @@
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
 <span style="background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;">6</span>
 <div>
-<div style="font-size:18px;font-weight:800;color:#1e293b;">🎯 CV Purpose <span style="font-size:12px;font-weight:500;color:#f59e0b;background:#fffbeb;padding:2px 10px;border-radius:20px;margin-left:8px;">Optional</span></div>
-<div style="font-size:13px;color:#64748b;">What is this CV for? This helps AI tailor your CV perfectly.</div>
+<div style="font-size:18px;font-weight:800;color:#1e293b;">🎯 CV Purpose <span style="font-size:12px;font-weight:500;color:#f59e0b;background:#fffbeb;padding:2px 10px;border-radius:20px;margin-left:8px;">Optional</span>
+</div>
+<div style="font-size:13px;color:#64748b;">What is this CV for? This helps AI tailor your CV perfectly.
+                </div>
 </div>
 </div>
 <textarea class="step-textarea" id="stepPurpose" placeholder="Example: I'm applying for a Senior Frontend Developer position at Google. I want the CV to highlight my React and JavaScript skills. Make it look modern and professional, maybe with a dark sidebar design."></textarea>
 </div>
 </div>
 <div id="stepNavigation" style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">
-<button id="stepPrevBtn" onclick="wizardNav(-1)" style="padding:12px 28px;border-radius:12px;border:2px solid #e2e8f0;background:#f8fafc;color:#475569;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;display:none;">← Back</button>
-<div id="stepCounter" style="flex:1;text-align:center;font-size:13px;font-weight:600;color:#94a3b8;">Step 1 of 6</div>
-<button id="stepNextBtn" onclick="wizardNav(1)" style="padding:12px 28px;border-radius:12px;border:none;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 15px rgba(236,72,153,0.3);">Next →</button>
+<button id="stepPrevBtn" onclick="wizardNav(-1)" style="padding:12px 28px;border-radius:12px;border:2px solid #e2e8f0;background:#f8fafc;color:#475569;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;display:none;">←
+            Back</button>
+<div id="stepCounter" style="flex:1;text-align:center;font-size:13px;font-weight:600;color:#94a3b8;">Step 1 of
+            6</div>
+<button id="stepNextBtn" onclick="wizardNav(1)" style="padding:12px 28px;border-radius:12px;border:none;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 15px rgba(236,72,153,0.3);">Next
+            →</button>
 </div>
 </div>
 <div class="ai-status" id="aiStatus"></div>
@@ -1619,40 +1638,52 @@
 <div class="tpl-picker-overlay" id="tplPickerOverlay" onclick="if(event.target===this)closeTemplatePicker()">
 <div class="tpl-picker-modal">
 <h2>🎨 Choose a Template</h2>
-<div class="tpl-picker-subtitle">Pick a professional starting point. You can fully customize everything after selecting.</div>
+<div class="tpl-picker-subtitle">Pick a professional starting point. You can fully customize everything after
+        selecting.</div>
 <details id="tplColorOverrides" style="margin-bottom:20px;">
-<summary style="cursor:pointer;font-weight:700;font-size:14px;color:#6366f1;user-select:none;padding:8px 0;display:flex;align-items:center;gap:8px;">🎨 Custom Color Overrides <span id="tplOverrideCount" style="font-size:11px;font-weight:600;background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;display:none;">0 active</span></summary>
+<summary style="cursor:pointer;font-weight:700;font-size:14px;color:#6366f1;user-select:none;padding:8px 0;display:flex;align-items:center;gap:8px;">
+          🎨 Custom Color Overrides <span id="tplOverrideCount" style="font-size:11px;font-weight:600;background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;display:none;">0
+            active</span></summary>
 <div style="display:flex;flex-direction:column;gap:14px;margin-top:10px;padding:16px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
-<div style="font-size:12px;color:#64748b;line-height:1.5;margin-bottom:4px;">Set colors here to override any template or AI-generated design. These persist until you clear them.</div>
+<div style="font-size:12px;color:#64748b;line-height:1.5;margin-bottom:4px;">Set colors here to override any
+            template or AI-generated design. These persist until you clear them.</div>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Page Background</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Page
+                Background</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="backgroundColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#ffffff"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('backgroundColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Sidebar / Header BG</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Sidebar
+                / Header BG</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="primaryAreaColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#1e293b"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('primaryAreaColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Sidebar / Header Text</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Sidebar
+                / Header Text</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="primaryTextColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#f8fafc"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('primaryTextColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Main Text</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Main
+                Text</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="mainTextColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#334155"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('mainTextColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Muted Text</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Muted
+                Text</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="secondaryTextColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#64748b"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('secondaryTextColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Accent Color</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Accent
+                Color</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="accentColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#3b82f6"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('accentColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 </div>
 <div style="display:flex;gap:10px;margin-top:10px;">
-<button onclick="applyOverridesNow()" style="padding:8px 18px;border-radius:8px;border:none;background:#6366f1;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Apply Colors Now</button>
-<button onclick="clearAllOverrides()" style="padding:8px 18px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:13px;font-weight:600;cursor:pointer;">Clear All Overrides</button>
+<button onclick="applyOverridesNow()" style="padding:8px 18px;border-radius:8px;border:none;background:#6366f1;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Apply
+              Colors Now</button>
+<button onclick="clearAllOverrides()" style="padding:8px 18px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:13px;font-weight:600;cursor:pointer;">Clear
+              All Overrides</button>
 </div>
 </div>
 </details>
@@ -1667,10 +1698,11 @@
 <div class="main-content"></div>
 </div>
 <div id="repo" style="display:none;">
-<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="if(!event.target.classList.contains('control-btn')) document.getElementById('photoInput').click()">
+<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="if(!event.target.classList.contains('control-btn')) pickPhoto()">
 <div style="position:absolute; top:5px; right:5px; z-index:10;"><span class="btn-delete control-btn" onclick="deleteItem(this)" style="background:rgba(255,0,0,0.5); color:white;">×</span></div>
 <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
-<img alt="Profile" id="profileImg" onerror="this.src='safeer.png';" src="safeer.png"/>
+<input accept="image/*" capture="environment" id="photoCameraInput" onchange="loadPhoto(event)" style="display:none;" type="file"/>
+<img alt="Profile" id="profileImg" src="safeer.png"/>
 <div class="profile-photo-placeholder" id="photoPlaceholder">Upload Photo</div>
 </div>
 <div class="header section-hover-target" data-zone="main" id="headerBlock">
@@ -1714,7 +1746,10 @@
 <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <p class="summary-text" contenteditable="true">
-        Versatile Full-Stack Developer and Software Engineer with hands-on experience building production-grade web applications, SaaS platforms, mobile apps, and AI-integrated tools. Skilled in PHP, JavaScript, Python, and modern frameworks. Passionate about creating scalable, user-centric solutions and turning complex ideas into polished products.
+        Versatile Full-Stack Developer and Software Engineer with hands-on experience building production-grade web
+        applications, SaaS platforms, mobile apps, and AI-integrated tools. Skilled in PHP, JavaScript, Python, and
+        modern frameworks. Passionate about creating scalable, user-centric solutions and turning complex ideas into
+        polished products.
       </p>
 </div>
 <div class="section-hover-target" data-zone="sidebar" id="skillsBlock">
@@ -1766,13 +1801,16 @@
 <span class="date-location" contenteditable="true">2021 – Present</span>
 <div class="job-desc">
 <ul>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Built and deployed multi-tenant SaaS platforms including SchoolSaaS and FleetCommand from the ground up.</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Built and deployed multi-tenant SaaS platforms including SchoolSaaS and
+                FleetCommand from the ground up.</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Integrated AI APIs (Puter, Gemini) into web apps for intelligent CV generation, analytics, and automation.</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Integrated AI APIs (Puter, Gemini) into web apps for intelligent CV generation,
+                analytics, and automation.</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Developed cross-platform mobile apps using web-to-app conversion with native Android bridges.</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Developed cross-platform mobile apps using web-to-app conversion with native
+                Android bridges.</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
 </ul>
@@ -1785,7 +1823,8 @@
 <span class="date-location" contenteditable="true">2019 – 2021</span>
 <div class="job-desc">
 <ul>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Designed and developed responsive websites and dashboards using HTML, CSS, JavaScript, and PHP.</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Designed and developed responsive websites and dashboards using HTML, CSS,
+                JavaScript, and PHP.</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
 </ul>
@@ -1802,7 +1841,8 @@
 <div class="job-title" contenteditable="true">Bachelor of Science in Computer Science</div>
 <div class="company-name" contenteditable="true">University</div>
 <span class="date-location" contenteditable="true">2017 – 2021</span>
-<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Software Engineering, Web Technologies, and Database Systems.</p>
+<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Software
+          Engineering, Web Technologies, and Database Systems.</p>
 </div>
 </div>
 </div>
@@ -1826,7 +1866,7 @@
           headingFont: 'Playfair Display',
           bodyFont: 'Source Sans 3'
         },
-        previewColors: ['#0f172a','#f59e0b','#ffffff']
+        previewColors: ['#0f172a', '#f59e0b', '#ffffff']
       },
       {
         id: 'modern-vibrant',
@@ -1846,7 +1886,7 @@
           headingFont: 'Outfit',
           bodyFont: 'Inter'
         },
-        previewColors: ['#0d9488','#14b8a6','#ffffff']
+        previewColors: ['#0d9488', '#14b8a6', '#ffffff']
       },
       {
         id: 'minimal-elegant',
@@ -1866,7 +1906,7 @@
           headingFont: 'DM Serif Display',
           bodyFont: 'DM Sans'
         },
-        previewColors: ['#44403c','#be123c','#fffbf5']
+        previewColors: ['#44403c', '#be123c', '#fffbf5']
       },
       {
         id: 'europass-classic',
@@ -1886,7 +1926,7 @@
           headingFont: 'Roboto',
           bodyFont: 'Roboto'
         },
-        previewColors: ['#003399','#003399','#ffffff']
+        previewColors: ['#003399', '#003399', '#ffffff']
       },
       {
         id: 'europass-modern',
@@ -1906,7 +1946,7 @@
           headingFont: 'Nunito Sans',
           bodyFont: 'Open Sans'
         },
-        previewColors: ['#1e3a5f','#2563eb','#f8fafc']
+        previewColors: ['#1e3a5f', '#2563eb', '#f8fafc']
       }
     ];
     function buildTplPreview(tpl) {
@@ -2016,7 +2056,7 @@
       </div>`;
     }
     function getColorOverrides() {
-      try { return JSON.parse(localStorage.getItem('cv_color_overrides') || '{}'); } catch(e) { return {}; }
+      try { return JSON.parse(localStorage.getItem('cv_color_overrides') || '{}'); } catch (e) { return {}; }
     }
     function saveColorOverrides(overrides) {
       localStorage.setItem('cv_color_overrides', JSON.stringify(overrides));
@@ -2097,7 +2137,7 @@
     }
     function initColorOverrideInputs() {
       document.querySelectorAll('.tpl-color-input').forEach(inp => {
-        inp.addEventListener('input', function() {
+        inp.addEventListener('input', function () {
           const key = this.getAttribute('data-key');
           const val = this.value;
           const wrapper = this.parentElement;
@@ -2122,7 +2162,7 @@
       const count = Object.keys(ov).length;
       if (count > 0) {
         notice.style.display = 'block';
-        const names = { backgroundColor:'Background', primaryAreaColor:'Sidebar BG', primaryTextColor:'Sidebar Text', mainTextColor:'Main Text', secondaryTextColor:'Muted Text', accentColor:'Accent' };
+        const names = { backgroundColor: 'Background', primaryAreaColor: 'Sidebar BG', primaryTextColor: 'Sidebar Text', mainTextColor: 'Main Text', secondaryTextColor: 'Muted Text', accentColor: 'Accent' };
         const list = Object.keys(ov).map(k => names[k] || k).join(', ');
         document.getElementById('aiOverrideDetail').textContent = 'Overriding: ' + list + '. AI will use these colors. Clear to let AI choose.';
       } else {
@@ -2151,12 +2191,30 @@
     function saveCVState(theme) {
       try {
         const cvNode = document.getElementById('cvToExport');
+        const img = cvNode.querySelector('#profileImg');
+        let origSrc = null;
+        if (img && img.src && img.src.startsWith('data:')) {
+          origSrc = img.src;
+          img.src = 'safeer.png';
+        }
         localStorage.setItem('cv_saved_html', cvNode.innerHTML);
+        if (img && origSrc) img.src = origSrc;
         if (theme) localStorage.setItem('cv_saved_theme', JSON.stringify(theme));
         localStorage.setItem('cv_saved_layout', cvNode.getAttribute('data-layout') || 'sidebar-left');
         const classes = [...cvNode.classList].filter(c => c.startsWith('style-'));
         if (classes.length) localStorage.setItem('cv_saved_style', classes[0]);
-      } catch(e) { console.warn('Could not save CV state', e); }
+      } catch (e) { console.warn('Could not save CV state', e); }
+    }
+    function restoreProfilePhoto() {
+      const savedPhoto = localStorage.getItem('cv_profile_photo');
+      if (!savedPhoto) return;
+      document.querySelectorAll('#profileImg').forEach(img => {
+        img.src = savedPhoto;
+        img.removeAttribute('onerror');
+      });
+      document.querySelectorAll('#photoPlaceholder').forEach(ph => {
+        ph.style.display = 'none';
+      });
     }
     document.addEventListener("DOMContentLoaded", () => {
       const savedText = localStorage.getItem("cv_raw_text");
@@ -2175,25 +2233,93 @@
       } else {
         applyLayoutStructure("sidebar-left");
       }
+      restoreProfilePhoto();
       const pc = document.getElementById("aiPrimaryColor");
       const sc = document.getElementById("aiSecondaryColor");
       pc.addEventListener("input", () => document.getElementById("aiPrimaryColorHex").textContent = pc.value);
       sc.addEventListener("input", () => document.getElementById("aiSecondaryColorHex").textContent = sc.value);
-      const img = document.getElementById("profileImg");
-      img.onerror = () => { img.onerror = null; img.src = "safeer.png"; };
       applyColorOverridesToCV();
+      setTimeout(() => restoreProfilePhoto(), 500);
+      let _autoSaveTimer = null;
+      let _autoSaveReady = false;
+      const cvEl = document.getElementById('cvToExport');
+      setTimeout(() => {
+        _autoSaveReady = true;
+        saveCVState();
+      }, 2000);
+      cvEl.addEventListener('input', () => {
+        if (!_autoSaveReady) return;
+        clearTimeout(_autoSaveTimer);
+        _autoSaveTimer = setTimeout(() => saveCVState(), 1000);
+      });
+      const _mo = new MutationObserver(() => {
+        if (!_autoSaveReady) return;
+        clearTimeout(_autoSaveTimer);
+        _autoSaveTimer = setTimeout(() => saveCVState(), 1000);
+      });
+      _mo.observe(cvEl, { childList: true, subtree: true });
     });
-    function loadPhoto(event) {
-      const image = document.getElementById("profileImg");
-      const placeholder = document.getElementById("photoPlaceholder");
-      if (event.target.files && event.target.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          image.src = e.target.result;
-          placeholder.style.display = "none";
-        };
-        reader.readAsDataURL(event.target.files[0]);
+    function pickPhoto() {
+      if (!window.matchMedia('(max-width: 820px)').matches) {
+        const inp = document.getElementById('cvToExport').querySelector('#photoInput') || document.getElementById('photoInput');
+        if (inp) inp.click();
+        return;
       }
+      Swal.fire({
+        title: 'Upload Photo',
+        html: '<p style="color:#64748b;font-size:14px;">Choose how you\'d like to add your photo</p>',
+        showCancelButton: true,
+        showDenyButton: true,
+        confirmButtonText: '📷 Camera',
+        denyButtonText: '🖼️ Gallery',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#3b82f6',
+        denyButtonColor: '#8b5cf6',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const cam = document.getElementById('cvToExport').querySelector('#photoCameraInput') || document.getElementById('photoCameraInput');
+          if (cam) cam.click();
+        } else if (result.isDenied) {
+          const inp = document.getElementById('cvToExport').querySelector('#photoInput') || document.getElementById('photoInput');
+          if (inp) inp.click();
+        }
+      });
+    }
+    function resizeImage(file, maxSize, quality, callback) {
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        img.onload = function () {
+          let w = img.width, h = img.height;
+          if (w > maxSize || h > maxSize) {
+            if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+            else { w = Math.round(w * maxSize / h); h = maxSize; }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          callback(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+    function loadPhoto(event) {
+      const cvNode = document.getElementById("cvToExport");
+      const image = cvNode.querySelector("#profileImg");
+      const placeholder = cvNode.querySelector("#photoPlaceholder");
+      if (!image || !event.target.files || !event.target.files[0]) return;
+      resizeImage(event.target.files[0], 400, 0.85, function (dataUrl) {
+        image.src = dataUrl;
+        if (placeholder) placeholder.style.display = "none";
+        try {
+          localStorage.setItem('cv_profile_photo', dataUrl);
+        } catch (err) {
+          console.warn('Photo storage failed', err);
+        }
+        saveCVState();
+      });
     }
     function duplicateItem(btn) {
       const parent = btn.closest('.list-item-wrapper, .entry-block, .contact-item, .section-hover-target');
@@ -2215,7 +2341,7 @@
       `;
       container.appendChild(div);
     }
-    function deleteItem(btn) { if (confirm("Remove this item?")) btn.closest(".list-item-wrapper, .contact-item, .entry-block").remove(); }
+    function deleteItem(btn) { if (confirm("Remove this item?")) { const el = btn.closest(".list-item-wrapper, .contact-item, .entry-block, .section-hover-target, .section"); if (el) el.remove(); } }
     function addListItem(listId) {
       const ul = document.getElementById(listId);
       const li = document.createElement("li"); li.className = "list-item-wrapper";
@@ -2479,7 +2605,7 @@
         if (s.val) {
           reviewHTML += `<div style="margin-bottom:16px;padding:14px;background:#f8fafc;border-radius:10px;border-left:4px solid ${s.optional ? '#f59e0b' : '#ec4899'};">`;
           reviewHTML += `<div style="font-weight:700;color:#1e293b;margin-bottom:6px;">${s.icon} ${s.title}</div>`;
-          reviewHTML += `<div style="color:#475569;white-space:pre-wrap;">${s.val.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+          reviewHTML += `<div style="color:#475569;white-space:pre-wrap;">${s.val.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`;
           reviewHTML += '</div>';
         } else if (!s.optional) {
           reviewHTML += `<div style="margin-bottom:16px;padding:14px;background:#fef2f2;border-radius:10px;border-left:4px solid #ef4444;">`;
@@ -2611,7 +2737,7 @@
         if (targetRole) parts.push(`- Target Role: ${targetRole}`);
         if (stylePref) parts.push(`- Style Preference: ${stylePref}`);
         if (hasColorOverrides) {
-          const ovNames = { backgroundColor:'backgroundColor', primaryAreaColor:'primaryAreaColor', primaryTextColor:'primaryTextColor', mainTextColor:'mainTextColor', secondaryTextColor:'secondaryTextColor', accentColor:'accentColor' };
+          const ovNames = { backgroundColor: 'backgroundColor', primaryAreaColor: 'primaryAreaColor', primaryTextColor: 'primaryTextColor', mainTextColor: 'mainTextColor', secondaryTextColor: 'secondaryTextColor', accentColor: 'accentColor' };
           Object.entries(colorOv).forEach(([k, v]) => {
             parts.push(`- FORCED ${ovNames[k] || k}: ${v}`);
           });
@@ -2993,7 +3119,7 @@ Return a raw JSON object ONLY, NO markdown:
       Swal.fire({
         icon: 'warning',
         title: 'CV Saved Locally!',
-        html: '<div style="text-align:left; font-size:14px;"><p>Your CV has been saved to this browser.</p><p style="color:#e11d48; font-weight:bold;">CRITICAL REMINDER:</p><p>Please make sure to use the <b>Backup All</b> button in the History menu frequently. If you clear your browser cache/data without an external backup, your saved CVs will be <b>permanently lost</b> and we cannot be held responsible.</p></div>',
+        html: '<div style="text-align:left; font-size:14px;"><p>Your CV has been saved to this browser.</p><p style="color:#e11d48; font-weight:bold;">CRITICAL REMINDER:</p><p>Please make sure to use the <b>Backup</b> button in the History menu frequently. If you clear your browser cache/data without an external backup, your saved CVs will be <b>permanently lost</b> and we cannot be held responsible.</p></div>',
         confirmButtonText: 'I understand',
         confirmButtonColor: '#3b82f6'
       }).then(() => {
@@ -3060,13 +3186,25 @@ Return a raw JSON object ONLY, NO markdown:
     }
     async function exportBackup() {
       const cvs = await getAllFromDB();
-      const blob = new Blob([JSON.stringify(cvs)], { type: "application/json" });
+      const lsData = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        lsData[key] = localStorage.getItem(key);
+      }
+      const backup = {
+        _safeer_backup_version: 2,
+        timestamp: new Date().toISOString(),
+        indexedDB: cvs,
+        localStorage: lsData
+      };
+      const blob = new Blob([JSON.stringify(backup)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = "Safeer_CV_Backup_" + new Date().toISOString().split('T')[0] + ".json";
       a.click();
       URL.revokeObjectURL(url);
+      Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Full backup exported', showConfirmButton: false, timer: 1500, timerProgressBar: true });
     }
     async function importBackup(event) {
       const file = event.target.files[0];
@@ -3075,18 +3213,28 @@ Return a raw JSON object ONLY, NO markdown:
       reader.onload = async function (e) {
         try {
           const data = JSON.parse(e.target.result);
-          if (Array.isArray(data)) {
-            for (const cv of data) {
-              if (cv.id && cv.html) await saveToDB(cv);
+          let cvArray = [];
+          if (data._safeer_backup_version && data._safeer_backup_version >= 2) {
+            cvArray = data.indexedDB || [];
+            if (data.localStorage && typeof data.localStorage === 'object') {
+              Object.entries(data.localStorage).forEach(([k, v]) => {
+                localStorage.setItem(k, v);
+              });
             }
-            alert("Backup restored successfully!");
-            renderHistory();
+          } else if (Array.isArray(data)) {
+            cvArray = data;
           }
+          for (const cv of cvArray) {
+            if (cv.id && cv.html) await saveToDB(cv);
+          }
+          Swal.fire({ icon: 'success', title: 'Backup Restored!', text: `${cvArray.length} CV(s) and all settings restored. Reloading...`, timer: 2000, showConfirmButton: false });
+          setTimeout(() => location.reload(), 2000);
         } catch (err) {
-          alert("Invalid backup file.");
+          Swal.fire({ icon: 'error', title: 'Invalid Backup', text: 'The file could not be read as a valid Safeer backup.' });
         }
       };
       reader.readAsText(file);
+      event.target.value = '';
     }
     var _mobileScrolling = false;
     var _mobileTouchStartX = 0;
@@ -3096,7 +3244,7 @@ Return a raw JSON object ONLY, NO markdown:
       var cv = document.getElementById('cvToExport');
       if (!cv || cv._touchFixDone) return;
       cv._touchFixDone = true;
-      cv.addEventListener('touchstart', function(e) {
+      cv.addEventListener('touchstart', function (e) {
         _mobileTouchStartX = e.touches[0].clientX;
         _mobileTouchStartY = e.touches[0].clientY;
         _mobileScrolling = false;
@@ -3121,7 +3269,7 @@ Return a raw JSON object ONLY, NO markdown:
           t = t.parentElement;
         }
       }, { passive: true });
-      cv.addEventListener('touchmove', function(e) {
+      cv.addEventListener('touchmove', function (e) {
         if (!_mobileScrolling) {
           var dx = Math.abs(e.touches[0].clientX - _mobileTouchStartX);
           var dy = Math.abs(e.touches[0].clientY - _mobileTouchStartY);
@@ -3130,7 +3278,7 @@ Return a raw JSON object ONLY, NO markdown:
           }
         }
       }, { passive: true });
-      cv.addEventListener('touchend', function(e) {
+      cv.addEventListener('touchend', function (e) {
         if (_mobileTouchTarget) {
           _mobileTouchTarget.setAttribute('contenteditable', 'true');
           if (!_mobileScrolling) {

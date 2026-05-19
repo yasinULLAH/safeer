@@ -50,6 +50,9 @@
       gap: 5px;
       background: white;
       color: #334155;
+    }
+
+    .toolbar .btn {
       width: 100%;
       box-sizing: border-box;
     }
@@ -2431,13 +2434,37 @@
       const tpl = CV_TEMPLATES.find(t => t.id === id);
       if (!tpl) return;
       applyAITheme(tpl.theme);
+      saveCVState(tpl.theme);
       closeTemplatePicker();
       if (window.matchMedia('(max-width: 820px)').matches) mobileShowCV();
+    }
+    function saveCVState(theme) {
+      try {
+        const cvNode = document.getElementById('cvToExport');
+        localStorage.setItem('cv_saved_html', cvNode.innerHTML);
+        if (theme) localStorage.setItem('cv_saved_theme', JSON.stringify(theme));
+        localStorage.setItem('cv_saved_layout', cvNode.getAttribute('data-layout') || 'sidebar-left');
+        const classes = [...cvNode.classList].filter(c => c.startsWith('style-'));
+        if (classes.length) localStorage.setItem('cv_saved_style', classes[0]);
+      } catch(e) { console.warn('Could not save CV state', e); }
     }
     document.addEventListener("DOMContentLoaded", () => {
       const savedText = localStorage.getItem("cv_raw_text");
       if (savedText) document.getElementById("aiTextInput").value = savedText;
-      applyLayoutStructure("sidebar-left");
+      const savedHTML = localStorage.getItem('cv_saved_html');
+      if (savedHTML) {
+        const cvNode = document.getElementById('cvToExport');
+        cvNode.innerHTML = savedHTML;
+        const savedTheme = JSON.parse(localStorage.getItem('cv_saved_theme') || 'null');
+        if (savedTheme) {
+          applyAITheme(savedTheme);
+        } else {
+          const savedLayout = localStorage.getItem('cv_saved_layout') || 'sidebar-left';
+          applyLayoutStructure(savedLayout);
+        }
+      } else {
+        applyLayoutStructure("sidebar-left");
+      }
       const pc = document.getElementById("aiPrimaryColor");
       const sc = document.getElementById("aiSecondaryColor");
       pc.addEventListener("input", () => document.getElementById("aiPrimaryColorHex").textContent = pc.value);
@@ -2937,6 +2964,7 @@ Return a raw JSON object ONLY, NO markdown:
         if (parsed.data) populateCV(parsed.data);
         if (parsed.theme) applyAITheme(parsed.theme);
         setAIStatus("success", "✅ New Structure, Colors & Content fully generated!");
+        saveCVState(parsed.theme);
         let quotaData = JSON.parse(localStorage.getItem("ai_daily_quota") || '{"used": 0, "date": ""}');
         if (quotaData.date === new Date().toLocaleDateString()) {
           quotaData.used += 1;

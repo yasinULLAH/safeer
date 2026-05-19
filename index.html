@@ -50,6 +50,9 @@
       gap: 5px;
       background: white;
       color: #334155;
+    }
+
+    .toolbar .btn {
       width: 100%;
       box-sizing: border-box;
     }
@@ -1590,7 +1593,7 @@
 <p style="margin:0; color:#64748b; font-size:14px;">Click a CV below to load it.</p>
 <div style="display:flex; gap:10px;">
 <button class="btn" onclick="document.getElementById('historyFilters').style.display = document.getElementById('historyFilters').style.display === 'none' ? 'block' : 'none'" style="display:inline-flex; border-color:#cbd5e1; color:#475569;" title="Filter &amp; Search">🔍</button>
-<button class="btn" onclick="exportBackup()" style="display:inline-flex; border-color:#3b82f6; color:#2563eb;">📦 Backup All</button>
+<button class="btn" onclick="exportBackup()" style="display:inline-flex; border-color:#3b82f6; color:#2563eb;">📦 Backup</button>
 <button class="btn" onclick="document.getElementById('importBackupInput').click()" style="display:inline-flex; border-color:#10b981; color:#059669;">📥 Restore</button>
 <input accept=".json" id="importBackupInput" onchange="importBackup(event)" style="display:none" type="file"/>
 </div>
@@ -2142,12 +2145,36 @@
       const tpl = CV_TEMPLATES.find(t => t.id === id);
       if (!tpl) return;
       applyAITheme(tpl.theme);
+      saveCVState(tpl.theme);
       closeTemplatePicker();
+    }
+    function saveCVState(theme) {
+      try {
+        const cvNode = document.getElementById('cvToExport');
+        localStorage.setItem('cv_saved_html', cvNode.innerHTML);
+        if (theme) localStorage.setItem('cv_saved_theme', JSON.stringify(theme));
+        localStorage.setItem('cv_saved_layout', cvNode.getAttribute('data-layout') || 'sidebar-left');
+        const classes = [...cvNode.classList].filter(c => c.startsWith('style-'));
+        if (classes.length) localStorage.setItem('cv_saved_style', classes[0]);
+      } catch(e) { console.warn('Could not save CV state', e); }
     }
     document.addEventListener("DOMContentLoaded", () => {
       const savedText = localStorage.getItem("cv_raw_text");
       if (savedText) document.getElementById("aiTextInput").value = savedText;
-      applyLayoutStructure("sidebar-left");
+      const savedHTML = localStorage.getItem('cv_saved_html');
+      if (savedHTML) {
+        const cvNode = document.getElementById('cvToExport');
+        cvNode.innerHTML = savedHTML;
+        const savedTheme = JSON.parse(localStorage.getItem('cv_saved_theme') || 'null');
+        if (savedTheme) {
+          applyAITheme(savedTheme);
+        } else {
+          const savedLayout = localStorage.getItem('cv_saved_layout') || 'sidebar-left';
+          applyLayoutStructure(savedLayout);
+        }
+      } else {
+        applyLayoutStructure("sidebar-left");
+      }
       const pc = document.getElementById("aiPrimaryColor");
       const sc = document.getElementById("aiSecondaryColor");
       pc.addEventListener("input", () => document.getElementById("aiPrimaryColorHex").textContent = pc.value);
@@ -2647,6 +2674,7 @@ Return a raw JSON object ONLY, NO markdown:
         if (parsed.data) populateCV(parsed.data);
         if (parsed.theme) applyAITheme(parsed.theme);
         setAIStatus("success", "✅ New Structure, Colors & Content fully generated!");
+        saveCVState(parsed.theme);
         let quotaData = JSON.parse(localStorage.getItem("ai_daily_quota") || '{"used": 0, "date": ""}');
         if (quotaData.date === new Date().toLocaleDateString()) {
           quotaData.used += 1;

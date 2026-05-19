@@ -1604,6 +1604,9 @@
       max-width: 95vw;
       max-height: 90vh;
       overflow-y: auto;
+      overscroll-behavior: contain;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       transform: translateY(30px) scale(0.95);
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1631,6 +1634,16 @@
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 18px;
       margin-bottom: 24px;
+    }
+
+    .tpl-actions {
+      position: sticky;
+      bottom: -1px;
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 12px;
+      background: linear-gradient(to top, #ffffff 70%, rgba(255, 255, 255, 0));
+      z-index: 2;
     }
 
     .tpl-card {
@@ -1838,6 +1851,17 @@
       .tpl-picker-modal h2 {
         font-size: 22px !important;
         margin-bottom: 6px !important;
+      }
+
+      .tpl-actions {
+        padding-top: 14px !important;
+      }
+
+      .tpl-actions button {
+        width: 100%;
+        font-size: 16px !important;
+        padding: 14px 18px !important;
+        border-radius: 12px !important;
       }
 
       .tpl-picker-subtitle {
@@ -2427,7 +2451,7 @@
 </div>
 </details>
 <div class="tpl-grid" id="tplGrid"></div>
-<div style="display:flex;justify-content:flex-end;">
+<div class="tpl-actions">
 <button onclick="closeTemplatePicker()" style="padding:12px 28px;border-radius:12px;border:none;background:#f1f5f9;color:#475569;font-size:15px;font-weight:600;cursor:pointer;">Close</button>
 </div>
 </div>
@@ -3207,6 +3231,12 @@
         if (!isMobileViewport()) return;
         const chooser = document.getElementById('mobileRouteChooser');
         if (!getMobileRoute() && chooser && !chooser.classList.contains('active')) openRouteChooser(false);
+        if (typeof _mobileSwalViewportLockCount !== 'undefined' && _mobileSwalViewportLockCount > 0) {
+          if (typeof _getDeviceViewportContent === 'function') {
+            _setViewportContent(_getDeviceViewportContent());
+          }
+          return;
+        }
         _applyViewportForCurrentMobileMode();
       });
     });

@@ -2191,7 +2191,7 @@
 <div class="main-content"></div>
 </div>
 <div id="repo" style="display:none;">
-<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="if (!event.target.classList.contains('control-btn') &amp;&amp; event.target.tagName !== 'INPUT') { pickPhoto(); }">
+<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="handlePhotoBlockClick(event)">
 <div style="position:absolute; top:5px; right:5px; z-index:10;"><span class="btn-delete control-btn" onclick="deleteItem(this)" style="background:rgba(255,0,0,0.5); color:white;">×</span></div>
 <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
 <input accept="image/*" capture="environment" id="photoCameraInput" onchange="loadPhoto(event)" style="display:none;" type="file"/>
@@ -2915,7 +2915,7 @@
       restoreProfilePhoto();
       const pb = document.getElementById('cvToExport').querySelector('#photoBlock');
       if (pb) {
-        pb.setAttribute('onclick', "if(!event.target.classList.contains('control-btn') && event.target.tagName !== 'INPUT') pickPhoto()");
+        pb.setAttribute('onclick', "handlePhotoBlockClick(event)");
         if (!pb.querySelector('#photoCameraInput')) {
           const ci = document.createElement('input');
           ci.type = 'file'; ci.accept = 'image/*'; ci.capture = 'environment';
@@ -2983,6 +2983,11 @@
       popup.querySelectorAll('.swal2-html-container > div').forEach(el => {
         el.style.gap = (4 * scale) + 'vw';
       });
+    }
+    function handlePhotoBlockClick(event) {
+      if (!event.target.classList.contains('control-btn') && event.target.tagName !== 'INPUT') {
+        pickPhoto();
+      }
     }
     function pickPhoto() {
       if (!window.matchMedia('(max-width: 820px)').matches) {

@@ -58,7 +58,7 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "0cf500da5d7a34c719f03851cb299e6e"
+        "revision": "317310c277e13a5ee14d507c0effba9f"
     },
     {
         "url": "index3.html",
@@ -102,7 +102,7 @@ if (workbox) {
     },
     {
         "url": "sw.js",
-        "revision": "2e62e998b6109b86ed09433d95769287"
+        "revision": "d169070c6e645ac264f6aa347ea45238"
     },
     {
         "url": "test.html",

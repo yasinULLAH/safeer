@@ -910,11 +910,11 @@
       }
 
       body.mobile-cv-view .cv-container {
-        touch-action: manipulation;
+        touch-action: pan-x pan-y pinch-zoom;
       }
 
       body.mobile-cv-view .cv-container * {
-        touch-action: manipulation;
+        touch-action: auto;
       }
 
       .control-btn {
@@ -3231,6 +3231,9 @@
         if (!isMobileViewport()) return;
         const chooser = document.getElementById('mobileRouteChooser');
         if (!getMobileRoute() && chooser && !chooser.classList.contains('active')) openRouteChooser(false);
+        if (window.visualViewport && Math.abs((window.visualViewport.scale || 1) - 1) > 0.02) {
+          return;
+        }
         if (typeof _mobileSwalViewportLockCount !== 'undefined' && _mobileSwalViewportLockCount > 0) {
           if (typeof _getDeviceViewportContent === 'function') {
             _setViewportContent(_getDeviceViewportContent());
@@ -4347,8 +4350,8 @@ Return a raw JSON object ONLY, NO markdown:
       if (viewportMeta.getAttribute('content') !== content) viewportMeta.setAttribute('content', content);
     }
     function _getMobileFitScale() {
-      const viewportWidth = window.innerWidth || (window.screen && window.screen.width) || 390;
-      const scale = Math.max(0.35, Math.min(1, viewportWidth / 810));
+      const screenWidth = (window.screen && window.screen.width) ? window.screen.width : 390;
+      const scale = Math.max(0.35, Math.min(1, screenWidth / 810));
       return Number(scale.toFixed(3));
     }
     function _getCVViewportContent() {

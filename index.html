@@ -1742,7 +1742,7 @@
 <div class="main-content"></div>
 </div>
 <div id="repo" style="display:none;">
-<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="if(!event.target.classList.contains('control-btn') &amp;&amp; event.target.tagName !== 'INPUT') pickPhoto()">
+<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="if (!event.target.classList.contains('control-btn') &amp;&amp; event.target.tagName !== 'INPUT') { pickPhoto(); }">
 <div style="position:absolute; top:5px; right:5px; z-index:10;"><span class="btn-delete control-btn" onclick="deleteItem(this)" style="background:rgba(255,0,0,0.5); color:white;">×</span></div>
 <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
 <input accept="image/*" capture="environment" id="photoCameraInput" onchange="loadPhoto(event)" style="display:none;" type="file"/>

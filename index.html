@@ -895,7 +895,8 @@
       body {
         --mobile-safe-top: 0px;
         --mobile-safe-top: env(safe-area-inset-top);
-        --mobile-safe-top-offset: calc(var(--mobile-safe-top) + 10px);
+        --mobile-safe-top-extra: 10px;
+        --mobile-safe-top-offset: calc(var(--mobile-safe-top) + var(--mobile-safe-top-extra));
         padding: var(--mobile-safe-top-offset) 0 0 0 !important;
         margin: 0;
         background-image: none;
@@ -903,6 +904,23 @@
         width: 100% !important;
         align-items: center;
         min-height: 100vh;
+      }
+
+      body.apk-view {
+        --mobile-safe-top-extra: 34px;
+      }
+
+      body.apk-view #mobileActionPanel {
+        padding-top: calc(var(--mobile-safe-top-offset) + 22px) !important;
+      }
+
+      body.apk-view .ai-modal {
+        padding-top: calc(var(--mobile-safe-top-offset) + 22px) !important;
+      }
+
+      body.apk-view .swal2-popup:not(.swal2-toast),
+      body.apk-view .swal2-fullscreen-mobile .swal2-popup {
+        padding-top: calc(var(--mobile-safe-top-offset) + 22px) !important;
       }
 
       body.mobile-cv-view {
@@ -3177,6 +3195,9 @@
       });
     }
     document.addEventListener("DOMContentLoaded", () => {
+      _applyApkViewClass();
+      setTimeout(_applyApkViewClass, 350);
+      setTimeout(_applyApkViewClass, 1200);
       const savedText = localStorage.getItem("cv_raw_text");
       if (savedText) document.getElementById("aiTextInput").value = savedText;
       const savedHTML = localStorage.getItem('cv_saved_html');
@@ -4347,6 +4368,18 @@ Return a raw JSON object ONLY, NO markdown:
       event.target.value = '';
     }
     const MOBILE_ROUTE_KEY = 'cv_mobile_route';
+    function _isLikelyApkView() {
+      const bridgeFound = typeof window.NativeBridge !== 'undefined' && window.NativeBridge !== null;
+      const androidBridgeFound = typeof window.Android !== 'undefined' && window.Android !== null;
+      const ua = navigator.userAgent || '';
+      const webViewUA = /\bwv\b/i.test(ua) || /; wv\)/i.test(ua);
+      const androidWebViewHint = /Android/i.test(ua) && /Version\/[\d.]+/i.test(ua) && /Chrome\/[\d.]+/i.test(ua);
+      return bridgeFound || androidBridgeFound || webViewUA || androidWebViewHint;
+    }
+    function _applyApkViewClass() {
+      const isApkView = _isLikelyApkView();
+      document.body.classList.toggle('apk-view', isApkView);
+    }
     function isMobileViewport() {
       return window.matchMedia('(max-width: 820px)').matches;
     }

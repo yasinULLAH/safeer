@@ -1825,9 +1825,13 @@
       }
     ];
     function buildTplPreview(tpl) {
-      const [c1, c2, c3] = tpl.previewColors;
+      let [c1, c2, c3] = tpl.previewColors;
       const layout = tpl.theme.layoutDirection;
       let previewHTML = '';
+      const ov = getColorOverrides();
+      c1 = ov.primaryAreaColor || c1;
+      c2 = ov.accentColor || c2;
+      c3 = ov.backgroundColor || c3;
       const badgeClass = tpl.badge === 'europass' ? 'tpl-badge-europass' : tpl.badge === 'exec' ? 'tpl-badge-exec' : 'tpl-badge-modern';
       const badgeLabel = tpl.badge === 'europass' ? 'Europass' : tpl.badge === 'exec' ? 'Executive' : 'Modern';
       if (layout === 'sidebar-left') {
@@ -1949,6 +1953,8 @@
       const wrapper = btn.parentElement;
       wrapper.querySelector('.tpl-color-clear').style.display = 'none';
       wrapper.querySelector('.tpl-color-hex').textContent = '';
+      refreshTplGrid();
+      Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'Override removed', showConfirmButton: false, timer: 1200, timerProgressBar: true });
     }
     function clearAllOverrides() {
       localStorage.removeItem('cv_color_overrides');
@@ -1958,6 +1964,8 @@
         wrapper.querySelector('.tpl-color-hex').textContent = '';
       });
       updateOverrideCountBadge();
+      refreshTplGrid();
+      Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'All color overrides cleared', showConfirmButton: false, timer: 1500, timerProgressBar: true });
     }
     function applyColorOverridesToCV() {
       const ov = getColorOverrides();
@@ -1977,6 +1985,12 @@
     }
     function applyOverridesNow() {
       applyColorOverridesToCV();
+      const count = Object.keys(getColorOverrides()).length;
+      if (count > 0) {
+        Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: count + ' color override' + (count > 1 ? 's' : '') + ' applied to CV', showConfirmButton: false, timer: 1500, timerProgressBar: true });
+      } else {
+        Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'No overrides set yet', showConfirmButton: false, timer: 1200, timerProgressBar: true });
+      }
     }
     function loadOverridesIntoUI() {
       const ov = getColorOverrides();
@@ -2008,8 +2022,13 @@
           ov[key] = val;
           saveColorOverrides(ov);
           applyColorOverridesToCV();
+          refreshTplGrid();
         });
       });
+    }
+    function refreshTplGrid() {
+      const grid = document.getElementById('tplGrid');
+      if (grid) grid.innerHTML = CV_TEMPLATES.map(t => buildTplPreview(t)).join('');
     }
     function updateAIOverrideNotice() {
       const ov = getColorOverrides();

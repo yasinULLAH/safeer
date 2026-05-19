@@ -3825,6 +3825,116 @@
       const st = document.getElementById("aiStatus"); st.className = "ai-status " + type; st.style.display = 'block';
       if (type === "processing") st.innerHTML = '<div class="status-spinner"></div><span>' + msg + "</span>"; else st.innerHTML = msg;
     }
+    function _withTimeout(promise, timeoutMs, timeoutMessage) {
+      let timer = null;
+      const timeoutPromise = new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error(timeoutMessage || "Operation timed out.")), timeoutMs);
+      });
+      return Promise.race([promise, timeoutPromise]).finally(() => {
+        if (timer) clearTimeout(timer);
+      });
+    }
+    function _getAIErrorMessage(error, isApkView) {
+      const raw = (error && (error.message || error.toString())) ? String(error.message || error.toString()) : "";
+      const msg = raw.toLowerCase();
+      if (msg.includes("timed out") || msg.includes("timeout")) {
+        if (isApkView) return "Authentication/AI request timed out in APK WebView. Use APK fallback token mode and try again.";
+        return "The AI request timed out. Please try again.";
+      }
+      if (msg.includes("cancel") || msg.includes("popup") || msg.includes("closed")) {
+        return "Puter sign-in was not completed. Please complete authentication and try again.";
+      }
+      if (raw) return raw;
+      return "Failed to generate AI response. Please try again.";
+    }
+    async function _ensurePuterAuthForAI(isApkView) {
+      if (!window.puter) throw new Error("Puter SDK is not loaded.");
+      if (!puter.ai || typeof puter.ai.chat !== 'function') throw new Error("Puter AI API is unavailable.");
+      const authApi = puter.auth && typeof puter.auth.isSignedIn === 'function';
+      const signedInAlready = authApi ? !!puter.auth.isSignedIn() : false;
+      if (signedInAlready) return;
+      if (puter.ui && typeof puter.ui.authenticateWithPuter === 'function') {
+        setAIStatus("processing", isApkView ? "Opening Puter authentication dialog..." : "Authenticating with Puter...");
+        await _withTimeout(
+          puter.ui.authenticateWithPuter(),
+          isApkView ? 30000 : 45000,
+          "Authentication timed out."
+        );
+      } else if (puter.auth && typeof puter.auth.signIn === 'function') {
+        setAIStatus("processing", isApkView ? "Opening Puter sign-in window..." : "Authenticating with Puter...");
+        await _withTimeout(
+          puter.auth.signIn({ attempt_temp_user_creation: true }),
+          isApkView ? 30000 : 45000,
+          "Authentication timed out."
+        );
+      } else {
+        throw new Error("No compatible Puter authentication method found.");
+      }
+      if (authApi && !puter.auth.isSignedIn()) {
+        throw new Error("Authentication did not complete.");
+      }
+    }
+    const PUTER_AUTH_TOKEN_KEY = "puter_auth_token_manual";
+    function _getStoredPuterAuthToken() {
+      const token = localStorage.getItem(PUTER_AUTH_TOKEN_KEY) || "";
+      return token.trim();
+    }
+    async function _promptForPuterAuthToken() {
+      const result = await Swal.fire({
+        title: "Puter Auth Token Required",
+        html: "<div style='text-align:left;font-size:14px;line-height:1.5;'>" +
+              "<p>APK WebView cannot complete popup login on this device.</p>" +
+              "<p>Paste your Puter Auth Token from puter.com/dashboard#account.</p>" +
+              "</div>",
+        input: "password",
+        inputPlaceholder: "Paste PUTER_AUTH_TOKEN",
+        inputValue: _getStoredPuterAuthToken(),
+        showCancelButton: true,
+        confirmButtonText: "Save & Continue",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#2563eb",
+        inputValidator: (value) => {
+          if (!value || !value.trim()) return "Token is required.";
+          if (value.trim().length < 20) return "This token looks too short.";
+          return null;
+        }
+      });
+      if (!result.isConfirmed) return "";
+      const token = String(result.value || "").trim();
+      if (token) localStorage.setItem(PUTER_AUTH_TOKEN_KEY, token);
+      return token;
+    }
+    async function _callPuterOpenAICompat(prompt, model, token, isApkView) {
+      const response = await _withTimeout(
+        fetch("https://api.puter.com/puterai/openai/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+          },
+          body: JSON.stringify({
+            model: model || "gemini-2.5-flash-lite",
+            messages: [{ role: "user", content: prompt }]
+          })
+        }),
+        isApkView ? 70000 : 90000,
+        "AI request timed out."
+      );
+      if (!response.ok) {
+        const errText = await response.text().catch(() => "");
+        if (response.status === 401 || response.status === 403) {
+          localStorage.removeItem(PUTER_AUTH_TOKEN_KEY);
+          throw new Error("Invalid or expired Puter token. Please paste a fresh token.");
+        }
+        throw new Error("Puter API error (" + response.status + "): " + (errText || response.statusText));
+      }
+      const payload = await response.json();
+      const content = payload?.choices?.[0]?.message?.content;
+      if (!content || typeof content !== "string") {
+        throw new Error("Puter API returned an empty response.");
+      }
+      return content;
+    }
     async function generateCVFromAI() {
       const rawText = document.getElementById("aiTextInput").value.trim();
       if (!rawText) return setAIStatus("error", "⚠️ Please paste your resume info first.");
@@ -3851,6 +3961,7 @@
       const forcedHeader = allHeaders[Math.floor(Math.random() * allHeaders.length)];
       const forcedShape = allShapes[Math.floor(Math.random() * allShapes.length)];
       localStorage.setItem("last_cv_layout", forcedLayout);
+      const isApkView = document.body.classList.contains('apk-view') || _isLikelyApkView();
       const isCustomColors = !(primaryColor === "#3b82f6" && secondaryColor === "#1e293b");
       const colorOv = getColorOverrides();
       const hasColorOverrides = Object.keys(colorOv).length > 0;
@@ -3912,11 +4023,32 @@ Return a raw JSON object ONLY, NO markdown:
     "skills": [{"name": "Skill", "level": "Expert"}],
     "languages": [{"name": "Lang", "level": "Fluent"}],
     "experience": [{"title": "Job", "company": "Company", "dates": "Dates", "responsibilities": ["Resp"]}],
-    "education": [{"degree": "Degree", "institution": "School", "dates": "Dates", "details": "Info"}]
+      "education": [{"degree": "Degree", "institution": "School", "dates": "Dates", "details": "Info"}]
   }
 }`;
       try {
-        let content = await puter.ai.chat(systemPrompt + "\n\nUSER TEXT:\n" + rawText, { model: 'gemini-2.5-flash-lite' });
+        let content = "";
+        try {
+          await _ensurePuterAuthForAI(isApkView);
+          setAIStatus("processing", "AI is generating your CV architecture...");
+          content = await _withTimeout(
+            puter.ai.chat(systemPrompt + "\n\nUSER TEXT:\n" + rawText, { model: 'gemini-2.5-flash-lite' }),
+            isApkView ? 70000 : 90000,
+            "AI request timed out."
+          );
+        } catch (sdkError) {
+          if (!isApkView) throw sdkError;
+          setAIStatus("processing", "Trying APK fallback mode...");
+          let token = _getStoredPuterAuthToken();
+          if (!token) token = await _promptForPuterAuthToken();
+          if (!token) throw new Error("Token entry cancelled.");
+          content = await _callPuterOpenAICompat(
+            systemPrompt + "\n\nUSER TEXT:\n" + rawText,
+            "gemini-2.5-flash-lite",
+            token,
+            isApkView
+          );
+        }
         if (typeof content !== 'string') content = content?.text || content?.message?.content || "";
         content = content.replace(/```json\s*/gi, "").replace(/```\s*/g, "").trim();
         const jsonStart = content.indexOf('{'); const jsonEnd = content.lastIndexOf('}');
@@ -3935,7 +4067,8 @@ Return a raw JSON object ONLY, NO markdown:
         localStorage.setItem("ai_daily_quota", JSON.stringify(quotaData));
         setTimeout(() => { closeAIModal(); if (window.matchMedia('(max-width: 820px)').matches) showMobileViewAfterAction(); }, 2000);
       } catch (error) {
-        console.error(error); setAIStatus("error", "❌ Failed to parse AI response. Please try again.");
+        console.error(error);
+        setAIStatus("error", "❌ " + _getAIErrorMessage(error, isApkView));
       } finally {
         btn.disabled = false; btnText.textContent = "Generate Architecture"; spinner.style.display = "none";
         cvNode.classList.remove("cv-scanning");

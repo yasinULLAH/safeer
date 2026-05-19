@@ -1,12 +1,12 @@
 {
   "name": "Interactive AI CV Builder",
   "short_name": "Interactive AI CV Builder",
-  "description": "Yasin Ullah's Interactive CV app",
+  "description": "A description of the web application.",
   "start_url": "index.html",
-  "display": "fullscreen",
+  "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#007bff",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "icon-72.png",
@@ -48,10 +48,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "id": "com.yasincv.app",
-  "prefer_related_applications": false,
-  "categories": [
-    "productivity"
   ]
 }

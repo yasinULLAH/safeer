@@ -53,8 +53,16 @@ if (workbox) {
         "revision": "05bdb783ee6514c8c072e47680af8ff7"
     },
     {
+        "url": "assetlinks.json",
+        "revision": "318623e200923d8084008ec69dfe209a"
+    },
+    {
         "url": "build pwa make html app offline and installable yasin best working re-run this for updates best for html only.pyw",
         "revision": "d3ceb161cfab9e9c5f40a93e15e5be27"
+    },
+    {
+        "url": "Copy of manifest.json",
+        "revision": "d5fdf318e01e29220eca36f33f88ab55"
     },
     {
         "url": "index.html",
@@ -77,8 +85,16 @@ if (workbox) {
         "revision": "2b28e69076c555c3ff79acb23b3ce8d4"
     },
     {
+        "url": "Interactive AI CV Builder.aab",
+        "revision": "3e8ec7eb483c57439453364044c0e6d9"
+    },
+    {
+        "url": "Interactive AI CV Builder.apk",
+        "revision": "2d17b38c9eb07283d543c27081376690"
+    },
+    {
         "url": "manifest.json",
-        "revision": "d5fdf318e01e29220eca36f33f88ab55"
+        "revision": "4a1f851bdabf98152d27970bbbec57d6"
     },
     {
         "url": "offline.html",
@@ -87,6 +103,10 @@ if (workbox) {
     {
         "url": "pwa-register.js",
         "revision": "3ec872e4f752840ad8f85922ff6cebe7"
+    },
+    {
+        "url": "Readme.html",
+        "revision": "af4a7aec1e8cf8d832d93698dee3e4d7"
     },
     {
         "url": "readme.md",
@@ -101,8 +121,16 @@ if (workbox) {
         "revision": "add12a579844df24591c805f484f737a"
     },
     {
+        "url": "signing-key-info.txt",
+        "revision": "5a82ecc18225690b993c81261a85c5af"
+    },
+    {
+        "url": "signing.keystore",
+        "revision": "61abd2b9d20047c1ec78bf89816015fc"
+    },
+    {
         "url": "sw.js",
-        "revision": "c367040a2700e19c6574b9c3e5412f74"
+        "revision": "8dc8dffd1344e98fe6e31cf95b32291b"
     },
     {
         "url": "test.html",

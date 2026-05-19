@@ -1088,6 +1088,161 @@
       opacity: 0 !important;
       visibility: hidden !important;
     }
+
+    .tpl-picker-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .tpl-picker-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .tpl-picker-modal {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 40px;
+      width: 900px;
+      max-width: 95vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      transform: translateY(30px) scale(0.95);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .tpl-picker-overlay.active .tpl-picker-modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .tpl-picker-modal h2 {
+      margin: 0 0 6px 0;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .tpl-picker-subtitle {
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .tpl-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .tpl-card {
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      background: #fff;
+    }
+
+    .tpl-card:hover {
+      border-color: #6366f1;
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.18);
+      transform: translateY(-4px);
+    }
+
+    .tpl-card-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      z-index: 2;
+    }
+
+    .tpl-badge-europass {
+      background: #003399;
+      color: #ffffff;
+    }
+
+    .tpl-badge-exec {
+      background: #1e293b;
+      color: #f59e0b;
+    }
+
+    .tpl-badge-modern {
+      background: #ecfdf5;
+      color: #059669;
+    }
+
+    .tpl-card-preview {
+      height: 200px;
+      overflow: hidden;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .tpl-card-info {
+      padding: 14px 16px;
+    }
+
+    .tpl-card-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    .tpl-card-desc {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 820px) {
+      .tpl-picker-modal {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+        padding: 24px !important;
+        margin: 0 !important;
+        box-sizing: border-box;
+      }
+
+      .tpl-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+      }
+
+      .tpl-card-preview {
+        height: 140px !important;
+      }
+
+      .tpl-card-name {
+        font-size: 13px !important;
+      }
+
+      .tpl-card-desc {
+        font-size: 11px !important;
+      }
+    }
+
     .step-textarea {
       width: 100%;
       min-height: 180px;
@@ -1185,6 +1340,7 @@
 </head>
 <body>
 <div class="toolbar" data-html2canvas-ignore="true">
+<button class="btn" onclick="showTemplatePicker()" style="border-color:#6366f1;color:#4f46e5;">🎨 Templates</button>
 <button class="btn btn-ai-toolbar" onclick="openAIModal()">✨ AI Design &amp; Build</button>
 <button class="btn btn-random" onclick="generateRandomCV()">🎲 Random CV</button>
 <button class="btn btn-save" onclick="saveCurrentCV()">💾 Save CV</button>
@@ -1363,6 +1519,16 @@
 </div>
 </div>
 </div>
+<div class="tpl-picker-overlay" id="tplPickerOverlay" onclick="if(event.target===this)closeTemplatePicker()">
+<div class="tpl-picker-modal">
+<h2>🎨 Choose a Template</h2>
+<div class="tpl-picker-subtitle">Pick a professional starting point. You can fully customize everything after selecting.</div>
+<div class="tpl-grid" id="tplGrid"></div>
+<div style="display:flex;justify-content:flex-end;">
+<button onclick="closeTemplatePicker()" style="padding:12px 28px;border-radius:12px;border:none;background:#f1f5f9;color:#475569;font-size:15px;font-weight:600;cursor:pointer;">Close</button>
+</div>
+</div>
+</div>
 <div class="cv-container layout-sidebar-left style-clean-text" data-layout="sidebar-left" id="cvToExport">
 <div class="sidebar primary-area"></div>
 <div class="main-content"></div>
@@ -1508,6 +1674,226 @@
 </div>
 </div>
 <script>
+    const CV_TEMPLATES = [
+      {
+        id: 'executive-dark',
+        name: 'Executive Dark',
+        desc: 'Bold dark sidebar with gold accents. Perfect for senior professionals and executives.',
+        badge: 'exec',
+        theme: {
+          layoutDirection: 'sidebar-left',
+          headerStyle: 'clean-text',
+          photoShape: 'circle',
+          backgroundColor: '#ffffff',
+          primaryAreaColor: '#0f172a',
+          primaryTextColor: '#f1f5f9',
+          mainTextColor: '#1e293b',
+          secondaryTextColor: '#64748b',
+          accentColor: '#f59e0b',
+          headingFont: 'Playfair Display',
+          bodyFont: 'Source Sans 3'
+        },
+        previewColors: ['#0f172a','#f59e0b','#ffffff']
+      },
+      {
+        id: 'modern-vibrant',
+        name: 'Modern Vibrant',
+        desc: 'Clean header-top layout with a vivid teal palette and contemporary typography.',
+        badge: 'modern',
+        theme: {
+          layoutDirection: 'header-top',
+          headerStyle: 'solid-box',
+          photoShape: 'rounded',
+          backgroundColor: '#ffffff',
+          primaryAreaColor: '#0d9488',
+          primaryTextColor: '#f0fdfa',
+          mainTextColor: '#1e293b',
+          secondaryTextColor: '#64748b',
+          accentColor: '#14b8a6',
+          headingFont: 'Outfit',
+          bodyFont: 'Inter'
+        },
+        previewColors: ['#0d9488','#14b8a6','#ffffff']
+      },
+      {
+        id: 'minimal-elegant',
+        name: 'Minimal Elegant',
+        desc: 'Refined single-column design with serif headings and a muted rose accent.',
+        badge: 'modern',
+        theme: {
+          layoutDirection: 'single-column',
+          headerStyle: 'underline',
+          photoShape: 'circle',
+          backgroundColor: '#fffbf5',
+          primaryAreaColor: '#44403c',
+          primaryTextColor: '#fafaf9',
+          mainTextColor: '#292524',
+          secondaryTextColor: '#78716c',
+          accentColor: '#be123c',
+          headingFont: 'DM Serif Display',
+          bodyFont: 'DM Sans'
+        },
+        previewColors: ['#44403c','#be123c','#fffbf5']
+      },
+      {
+        id: 'europass-classic',
+        name: 'Europass Classic',
+        desc: 'Official EU Europass-inspired format. Clean, structured, and internationally recognized.',
+        badge: 'europass',
+        theme: {
+          layoutDirection: 'sidebar-left',
+          headerStyle: 'underline',
+          photoShape: 'square',
+          backgroundColor: '#ffffff',
+          primaryAreaColor: '#003399',
+          primaryTextColor: '#ffffff',
+          mainTextColor: '#1a1a2e',
+          secondaryTextColor: '#4a4a68',
+          accentColor: '#003399',
+          headingFont: 'Roboto',
+          bodyFont: 'Roboto'
+        },
+        previewColors: ['#003399','#003399','#ffffff']
+      },
+      {
+        id: 'europass-modern',
+        name: 'Europass Modern',
+        desc: 'A modernized Europass variant with a fresh blue-gray palette and updated feel.',
+        badge: 'europass',
+        theme: {
+          layoutDirection: 'sidebar-right',
+          headerStyle: 'clean-text',
+          photoShape: 'rounded',
+          backgroundColor: '#f8fafc',
+          primaryAreaColor: '#1e3a5f',
+          primaryTextColor: '#e8edf2',
+          mainTextColor: '#1e293b',
+          secondaryTextColor: '#64748b',
+          accentColor: '#2563eb',
+          headingFont: 'Nunito Sans',
+          bodyFont: 'Open Sans'
+        },
+        previewColors: ['#1e3a5f','#2563eb','#f8fafc']
+      }
+    ];
+    function buildTplPreview(tpl) {
+      const [c1, c2, c3] = tpl.previewColors;
+      const layout = tpl.theme.layoutDirection;
+      let previewHTML = '';
+      const badgeClass = tpl.badge === 'europass' ? 'tpl-badge-europass' : tpl.badge === 'exec' ? 'tpl-badge-exec' : 'tpl-badge-modern';
+      const badgeLabel = tpl.badge === 'europass' ? 'Europass' : tpl.badge === 'exec' ? 'Executive' : 'Modern';
+      if (layout === 'sidebar-left') {
+        previewHTML = `<div style="display:flex;height:100%;">
+          <div style="width:35%;background:${c1};padding:14px;box-sizing:border-box;">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);margin:0 auto 10px;"></div>
+            <div style="height:6px;background:rgba(255,255,255,0.3);border-radius:3px;margin-bottom:6px;width:80%;"></div>
+            <div style="height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin-bottom:4px;width:60%;"></div>
+            <div style="height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin-bottom:10px;width:70%;"></div>
+            <div style="height:5px;background:rgba(255,255,255,0.25);border-radius:2px;margin-bottom:5px;width:50%;"></div>
+            <div style="height:3px;background:rgba(255,255,255,0.12);border-radius:2px;margin-bottom:3px;width:70%;"></div>
+            <div style="height:3px;background:rgba(255,255,255,0.12);border-radius:2px;width:55%;"></div>
+          </div>
+          <div style="flex:1;background:${c3};padding:14px;box-sizing:border-box;">
+            <div style="height:10px;background:${c2};border-radius:3px;margin-bottom:4px;width:65%;"></div>
+            <div style="height:5px;background:#cbd5e1;border-radius:2px;margin-bottom:12px;width:45%;"></div>
+            <div style="height:6px;background:${c2};border-radius:2px;margin-bottom:6px;width:40%;opacity:0.7;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:90%;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:80%;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:10px;width:85%;"></div>
+            <div style="height:6px;background:${c2};border-radius:2px;margin-bottom:6px;width:35%;opacity:0.7;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:70%;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;width:60%;"></div>
+          </div>
+        </div>`;
+      } else if (layout === 'sidebar-right') {
+        previewHTML = `<div style="display:flex;height:100%;">
+          <div style="flex:1;background:${c3};padding:14px;box-sizing:border-box;">
+            <div style="height:10px;background:${c2};border-radius:3px;margin-bottom:4px;width:65%;"></div>
+            <div style="height:5px;background:#cbd5e1;border-radius:2px;margin-bottom:12px;width:45%;"></div>
+            <div style="height:6px;background:${c2};border-radius:2px;margin-bottom:6px;width:40%;opacity:0.7;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:90%;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:80%;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:10px;width:85%;"></div>
+            <div style="height:6px;background:${c2};border-radius:2px;margin-bottom:6px;width:35%;opacity:0.7;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:70%;"></div>
+          </div>
+          <div style="width:35%;background:${c1};padding:14px;box-sizing:border-box;">
+            <div style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.2);margin:0 auto 10px;"></div>
+            <div style="height:6px;background:rgba(255,255,255,0.3);border-radius:3px;margin-bottom:6px;width:80%;"></div>
+            <div style="height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin-bottom:4px;width:60%;"></div>
+            <div style="height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin-bottom:10px;width:70%;"></div>
+            <div style="height:5px;background:rgba(255,255,255,0.25);border-radius:2px;margin-bottom:5px;width:50%;"></div>
+            <div style="height:3px;background:rgba(255,255,255,0.12);border-radius:2px;margin-bottom:3px;width:70%;"></div>
+          </div>
+        </div>`;
+      } else if (layout === 'header-top') {
+        previewHTML = `<div style="display:flex;flex-direction:column;height:100%;">
+          <div style="background:${c1};padding:14px;display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.2);flex-shrink:0;"></div>
+            <div style="flex:1;">
+              <div style="height:8px;background:rgba(255,255,255,0.4);border-radius:3px;margin-bottom:4px;width:50%;"></div>
+              <div style="height:4px;background:rgba(255,255,255,0.2);border-radius:2px;width:35%;"></div>
+            </div>
+          </div>
+          <div style="display:flex;flex:1;">
+            <div style="width:35%;background:rgba(0,0,0,0.02);padding:12px;box-sizing:border-box;border-right:1px solid #e2e8f0;">
+              <div style="height:5px;background:${c2};border-radius:2px;margin-bottom:5px;width:50%;opacity:0.7;"></div>
+              <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:80%;"></div>
+              <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:60%;"></div>
+            </div>
+            <div style="flex:1;background:${c3};padding:12px;box-sizing:border-box;">
+              <div style="height:5px;background:${c2};border-radius:2px;margin-bottom:5px;width:40%;opacity:0.7;"></div>
+              <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:90%;"></div>
+              <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:75%;"></div>
+              <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:8px;width:80%;"></div>
+              <div style="height:5px;background:${c2};border-radius:2px;margin-bottom:5px;width:35%;opacity:0.7;"></div>
+              <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:85%;"></div>
+            </div>
+          </div>
+        </div>`;
+      } else {
+        previewHTML = `<div style="display:flex;flex-direction:column;height:100%;">
+          <div style="background:${c1};padding:14px;text-align:center;">
+            <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.2);margin:0 auto 6px;"></div>
+            <div style="height:7px;background:rgba(255,255,255,0.4);border-radius:3px;margin:0 auto 4px;width:40%;"></div>
+            <div style="height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin:0 auto;width:30%;"></div>
+          </div>
+          <div style="flex:1;background:${c3};padding:14px;">
+            <div style="height:5px;background:${c2};border-radius:2px;margin-bottom:5px;width:40%;opacity:0.7;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:90%;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:80%;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:10px;width:85%;"></div>
+            <div style="height:5px;background:${c2};border-radius:2px;margin-bottom:5px;width:35%;opacity:0.7;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;margin-bottom:3px;width:70%;"></div>
+            <div style="height:3px;background:#e2e8f0;border-radius:2px;width:60%;"></div>
+          </div>
+        </div>`;
+      }
+      return `<div class="tpl-card" onclick="applyTemplate('${tpl.id}')">
+        <div class="tpl-card-badge ${badgeClass}">${badgeLabel}</div>
+        <div class="tpl-card-preview">${previewHTML}</div>
+        <div class="tpl-card-info">
+          <div class="tpl-card-name">${tpl.name}</div>
+          <div class="tpl-card-desc">${tpl.desc}</div>
+        </div>
+      </div>`;
+    }
+    function showTemplatePicker() {
+      const grid = document.getElementById('tplGrid');
+      grid.innerHTML = CV_TEMPLATES.map(t => buildTplPreview(t)).join('');
+      document.getElementById('tplPickerOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeTemplatePicker() {
+      document.getElementById('tplPickerOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    function applyTemplate(id) {
+      const tpl = CV_TEMPLATES.find(t => t.id === id);
+      if (!tpl) return;
+      applyAITheme(tpl.theme);
+      closeTemplatePicker();
+    }
     document.addEventListener("DOMContentLoaded", () => {
       const savedText = localStorage.getItem("cv_raw_text");
       if (savedText) document.getElementById("aiTextInput").value = savedText;

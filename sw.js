@@ -58,7 +58,7 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "06b4eb9041f569b7b11671160e794d12"
+        "revision": "c862b645843346f35a102c53d670108d"
     },
     {
         "url": "index3.html",
@@ -66,7 +66,7 @@ if (workbox) {
     },
     {
         "url": "index4.html",
-        "revision": "75a051a145bdea9b5507638615e27ef0"
+        "revision": "79070d11de4e1c459800afd7619a634c"
     },
     {
         "url": "index5.html",
@@ -98,7 +98,7 @@ if (workbox) {
     },
     {
         "url": "sw.js",
-        "revision": "d6c297d9137c47265e4ccf71edf6e23c"
+        "revision": "16760c28818c55086b86c81ebe85cfc4"
     },
     {
         "url": "test.html",

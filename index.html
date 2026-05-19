@@ -1405,6 +1405,18 @@
 </div>
 </div>
 </details>
+<div id="aiOverrideNotice" style="display:none;margin-top:14px;padding:14px 18px;background:#eef2ff;border-radius:10px;border:1px solid #c7d2fe;">
+<div style="display:flex;align-items:center;justify-content:space-between;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:16px;">🎨</span>
+<div>
+<div style="font-size:13px;font-weight:700;color:#4338ca;">Color Overrides Active</div>
+<div id="aiOverrideDetail" style="font-size:11px;color:#6366f1;margin-top:2px;"></div>
+</div>
+</div>
+<button onclick="clearAllOverrides();updateAIOverrideNotice();" style="padding:6px 14px;border-radius:6px;border:1px solid #c7d2fe;background:#fff;color:#6366f1;font-size:12px;font-weight:600;cursor:pointer;">Clear Overrides</button>
+</div>
+</div>
 </div>
 <div id="aiStepMode" style="display:none;">
 <div id="stepProgressBar" style="display:flex;align-items:center;gap:0;margin-bottom:24px;position:relative;">
@@ -1523,6 +1535,42 @@
 <div class="tpl-picker-modal">
 <h2>🎨 Choose a Template</h2>
 <div class="tpl-picker-subtitle">Pick a professional starting point. You can fully customize everything after selecting.</div>
+<details id="tplColorOverrides" style="margin-bottom:20px;">
+<summary style="cursor:pointer;font-weight:700;font-size:14px;color:#6366f1;user-select:none;padding:8px 0;display:flex;align-items:center;gap:8px;">🎨 Custom Color Overrides <span id="tplOverrideCount" style="font-size:11px;font-weight:600;background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;display:none;">0 active</span></summary>
+<div style="display:flex;flex-direction:column;gap:14px;margin-top:10px;padding:16px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
+<div style="font-size:12px;color:#64748b;line-height:1.5;margin-bottom:4px;">Set colors here to override any template or AI-generated design. These persist until you clear them.</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">
+<div>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Page Background</label>
+<div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="backgroundColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#ffffff"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('backgroundColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
+</div>
+<div>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Sidebar / Header BG</label>
+<div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="primaryAreaColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#1e293b"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('primaryAreaColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
+</div>
+<div>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Sidebar / Header Text</label>
+<div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="primaryTextColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#f8fafc"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('primaryTextColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
+</div>
+<div>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Main Text</label>
+<div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="mainTextColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#334155"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('mainTextColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
+</div>
+<div>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Muted Text</label>
+<div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="secondaryTextColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#64748b"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('secondaryTextColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
+</div>
+<div>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Accent Color</label>
+<div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="accentColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#3b82f6"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('accentColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
+</div>
+</div>
+<div style="display:flex;gap:10px;margin-top:10px;">
+<button onclick="applyOverridesNow()" style="padding:8px 18px;border-radius:8px;border:none;background:#6366f1;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Apply Colors Now</button>
+<button onclick="clearAllOverrides()" style="padding:8px 18px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:13px;font-weight:600;cursor:pointer;">Clear All Overrides</button>
+</div>
+</div>
+</details>
 <div class="tpl-grid" id="tplGrid"></div>
 <div style="display:flex;justify-content:flex-end;">
 <button onclick="closeTemplatePicker()" style="padding:12px 28px;border-radius:12px;border:none;background:#f1f5f9;color:#475569;font-size:15px;font-weight:600;cursor:pointer;">Close</button>
@@ -1878,9 +1926,110 @@
         </div>
       </div>`;
     }
+    function getColorOverrides() {
+      try { return JSON.parse(localStorage.getItem('cv_color_overrides') || '{}'); } catch(e) { return {}; }
+    }
+    function saveColorOverrides(overrides) {
+      localStorage.setItem('cv_color_overrides', JSON.stringify(overrides));
+      updateOverrideCountBadge();
+    }
+    function updateOverrideCountBadge() {
+      const ov = getColorOverrides();
+      const count = Object.keys(ov).length;
+      const badge = document.getElementById('tplOverrideCount');
+      if (badge) {
+        badge.style.display = count > 0 ? 'inline' : 'none';
+        badge.textContent = count + ' active';
+      }
+    }
+    function clearSingleOverride(key, btn) {
+      const ov = getColorOverrides();
+      delete ov[key];
+      saveColorOverrides(ov);
+      const wrapper = btn.parentElement;
+      wrapper.querySelector('.tpl-color-clear').style.display = 'none';
+      wrapper.querySelector('.tpl-color-hex').textContent = '';
+    }
+    function clearAllOverrides() {
+      localStorage.removeItem('cv_color_overrides');
+      document.querySelectorAll('.tpl-color-input').forEach(inp => {
+        const wrapper = inp.parentElement;
+        wrapper.querySelector('.tpl-color-clear').style.display = 'none';
+        wrapper.querySelector('.tpl-color-hex').textContent = '';
+      });
+      updateOverrideCountBadge();
+    }
+    function applyColorOverridesToCV() {
+      const ov = getColorOverrides();
+      if (!Object.keys(ov).length) return;
+      const cvNode = document.getElementById('cvToExport');
+      const map = {
+        backgroundColor: '--bg',
+        primaryAreaColor: '--primary-area-bg',
+        primaryTextColor: '--primary-area-text',
+        mainTextColor: '--text-main',
+        secondaryTextColor: '--text-muted',
+        accentColor: '--accent'
+      };
+      Object.entries(ov).forEach(([k, v]) => {
+        if (map[k]) cvNode.style.setProperty(map[k], v);
+      });
+    }
+    function applyOverridesNow() {
+      applyColorOverridesToCV();
+    }
+    function loadOverridesIntoUI() {
+      const ov = getColorOverrides();
+      document.querySelectorAll('.tpl-color-input').forEach(inp => {
+        const key = inp.getAttribute('data-key');
+        const wrapper = inp.parentElement;
+        const hexSpan = wrapper.querySelector('.tpl-color-hex');
+        const clearBtn = wrapper.querySelector('.tpl-color-clear');
+        if (ov[key]) {
+          inp.value = ov[key];
+          hexSpan.textContent = ov[key];
+          clearBtn.style.display = 'inline';
+        } else {
+          hexSpan.textContent = '';
+          clearBtn.style.display = 'none';
+        }
+      });
+      updateOverrideCountBadge();
+    }
+    function initColorOverrideInputs() {
+      document.querySelectorAll('.tpl-color-input').forEach(inp => {
+        inp.addEventListener('input', function() {
+          const key = this.getAttribute('data-key');
+          const val = this.value;
+          const wrapper = this.parentElement;
+          wrapper.querySelector('.tpl-color-hex').textContent = val;
+          wrapper.querySelector('.tpl-color-clear').style.display = 'inline';
+          const ov = getColorOverrides();
+          ov[key] = val;
+          saveColorOverrides(ov);
+          applyColorOverridesToCV();
+        });
+      });
+    }
+    function updateAIOverrideNotice() {
+      const ov = getColorOverrides();
+      const notice = document.getElementById('aiOverrideNotice');
+      if (!notice) return;
+      const count = Object.keys(ov).length;
+      if (count > 0) {
+        notice.style.display = 'block';
+        const names = { backgroundColor:'Background', primaryAreaColor:'Sidebar BG', primaryTextColor:'Sidebar Text', mainTextColor:'Main Text', secondaryTextColor:'Muted Text', accentColor:'Accent' };
+        const list = Object.keys(ov).map(k => names[k] || k).join(', ');
+        document.getElementById('aiOverrideDetail').textContent = 'Overriding: ' + list + '. AI will use these colors. Clear to let AI choose.';
+      } else {
+        notice.style.display = 'none';
+      }
+    }
     function showTemplatePicker() {
       const grid = document.getElementById('tplGrid');
       grid.innerHTML = CV_TEMPLATES.map(t => buildTplPreview(t)).join('');
+      loadOverridesIntoUI();
+      initColorOverrideInputs();
       document.getElementById('tplPickerOverlay').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
@@ -1904,6 +2053,7 @@
       sc.addEventListener("input", () => document.getElementById("aiSecondaryColorHex").textContent = sc.value);
       const img = document.getElementById("profileImg");
       img.onerror = () => { img.onerror = null; img.src = "safeer.png"; };
+      applyColorOverridesToCV();
     });
     function loadPhoto(event) {
       const image = document.getElementById("profileImg");
@@ -2050,12 +2200,13 @@
       if (!theme) return;
       if (theme.layoutDirection) applyLayoutStructure(theme.layoutDirection);
       const cvNode = document.getElementById("cvToExport");
-      cvNode.style.setProperty('--bg', theme.backgroundColor || '#ffffff');
-      cvNode.style.setProperty('--primary-area-bg', theme.primaryAreaColor || '#1e293b');
-      cvNode.style.setProperty('--primary-area-text', theme.primaryTextColor || '#f8fafc');
-      cvNode.style.setProperty('--text-main', theme.mainTextColor || '#334155');
-      cvNode.style.setProperty('--text-muted', theme.secondaryTextColor || '#64748b');
-      cvNode.style.setProperty('--accent', theme.accentColor || '#3b82f6');
+      const ov = getColorOverrides();
+      cvNode.style.setProperty('--bg', ov.backgroundColor || theme.backgroundColor || '#ffffff');
+      cvNode.style.setProperty('--primary-area-bg', ov.primaryAreaColor || theme.primaryAreaColor || '#1e293b');
+      cvNode.style.setProperty('--primary-area-text', ov.primaryTextColor || theme.primaryTextColor || '#f8fafc');
+      cvNode.style.setProperty('--text-main', ov.mainTextColor || theme.mainTextColor || '#334155');
+      cvNode.style.setProperty('--text-muted', ov.secondaryTextColor || theme.secondaryTextColor || '#64748b');
+      cvNode.style.setProperty('--accent', ov.accentColor || theme.accentColor || '#3b82f6');
       let radius = "50%";
       if (theme.photoShape === "square") radius = "0px";
       if (theme.photoShape === "rounded") radius = "15px";
@@ -2073,6 +2224,7 @@
       document.getElementById("aiModalOverlay").classList.add("active");
       document.getElementById("aiTextInput").focus();
       document.getElementById("aiStatus").style.display = 'none';
+      updateAIOverrideNotice();
       try {
         const qText = document.getElementById("aiQuotaText");
         const qInd = document.getElementById("aiQuotaIndicator");
@@ -2321,14 +2473,22 @@
       const forcedShape = allShapes[Math.floor(Math.random() * allShapes.length)];
       localStorage.setItem("last_cv_layout", forcedLayout);
       const isCustomColors = !(primaryColor === "#3b82f6" && secondaryColor === "#1e293b");
-      const hasCustomDetails = purpose || targetRole || stylePref || isCustomColors;
+      const colorOv = getColorOverrides();
+      const hasColorOverrides = Object.keys(colorOv).length > 0;
+      const hasCustomDetails = purpose || targetRole || stylePref || isCustomColors || hasColorOverrides;
       let optionalContextStr = "";
       if (hasCustomDetails) {
         let parts = ["OPTIONAL CONTEXT FROM USER (use this to tailor content and design):"];
         if (purpose) parts.push(`- CV Purpose: ${purpose}`);
         if (targetRole) parts.push(`- Target Role: ${targetRole}`);
         if (stylePref) parts.push(`- Style Preference: ${stylePref}`);
-        if (isCustomColors) {
+        if (hasColorOverrides) {
+          const ovNames = { backgroundColor:'backgroundColor', primaryAreaColor:'primaryAreaColor', primaryTextColor:'primaryTextColor', mainTextColor:'mainTextColor', secondaryTextColor:'secondaryTextColor', accentColor:'accentColor' };
+          Object.entries(colorOv).forEach(([k, v]) => {
+            parts.push(`- FORCED ${ovNames[k] || k}: ${v}`);
+          });
+          parts.push("For any colors listed as FORCED above, you MUST use those exact hex values in your theme output. For any colors NOT listed, generate a beautiful complementary color.");
+        } else if (isCustomColors) {
           parts.push(`- User-chosen Primary/Accent Color: ${primaryColor}`);
           parts.push(`- User-chosen Secondary/Sidebar Color: ${secondaryColor}`);
           parts.push("Make sure to strictly apply the user-chosen colors!");

@@ -58,19 +58,23 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "4f65d9393895ec38d5ee75344e7c6a17"
+        "revision": "7d7fe7ebb4ccec38f056535749436a14"
     },
     {
         "url": "index3.html",
         "revision": "6383069929b9b4a1962358bb37d620be"
     },
     {
-        "url": "index4.html",
-        "revision": "72d65a6f088aeb722d85c2187f6262d2"
+        "url": "index4Best.html",
+        "revision": "1a1847ac92f68f5cb7ced3327923933e"
     },
     {
         "url": "index5.html",
         "revision": "7a34bca71e234293ecb1ababcdcb991c"
+    },
+    {
+        "url": "indexBest.html",
+        "revision": "2b28e69076c555c3ff79acb23b3ce8d4"
     },
     {
         "url": "manifest.json",
@@ -98,11 +102,19 @@ if (workbox) {
     },
     {
         "url": "sw.js",
-        "revision": "1282cbe8e1844f8e39ed889d10ea352b"
+        "revision": "ef39c02bfda086a49bc84fb14f4dcc17"
     },
     {
         "url": "test.html",
         "revision": "41e4a698e8bdd0122a9f1dd0d27f2089"
+    },
+    {
+        "url": "_indexnew_main.js",
+        "revision": "98186d2814fbd596173af04479a7740f"
+    },
+    {
+        "url": "_index_diff.txt",
+        "revision": "99e7fe921903291b0e25dce0024d4f07"
     }
 ]);
 

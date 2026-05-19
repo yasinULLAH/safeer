@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport"/>
 <title>Interactive AI CV Builder</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -25,8 +25,8 @@
     }
 
     .toolbar {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 6px;
       justify-content: center;
       margin: 0 auto 14px auto;
@@ -53,8 +53,7 @@
     }
 
     .toolbar .btn {
-      flex: 1 1 calc(20% - 6px);
-      min-width: 150px;
+      width: 100%;
       box-sizing: border-box;
     }
 
@@ -220,12 +219,12 @@
       position: relative;
     }
 
-    .section-hover-target:hover > .section-controls .control-btn,
-    .section-hover-target:hover > .section-title > .section-controls .control-btn,
+    .section-hover-target:hover>.section-controls .control-btn,
+    .section-hover-target:hover>.section-title>.section-controls .control-btn,
     .section-hover-target:hover .section-controls .control-btn,
-    .list-item-wrapper:hover > .section-controls .control-btn,
+    .list-item-wrapper:hover>.section-controls .control-btn,
     .list-item-wrapper:hover .section-controls .control-btn,
-    .contact-item:hover > .section-controls .control-btn,
+    .contact-item:hover>.section-controls .control-btn,
     .contact-item:hover .section-controls .control-btn,
     .entry-block:hover .section-controls .control-btn {
       opacity: 1;
@@ -239,7 +238,7 @@
       border: none;
       border-radius: 4px;
       padding: 2px 6px;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     }
 
     .btn-delete {
@@ -249,7 +248,7 @@
       padding: 2px 6px;
       border-radius: 4px;
       background: #ef4444;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     }
 
     .btn-delete:hover {
@@ -264,7 +263,7 @@
       padding: 2px 6px;
       border-radius: 4px;
       background: #3b82f6;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     }
 
     .btn-duplicate:hover {
@@ -888,27 +887,22 @@
 
     @media (max-width: 820px) {
       body {
-        padding: 0 !important;
+        padding: 0 0 60px 0 !important;
         margin: 0;
         background-image: none;
-        background-color: #0f172a;
-        width: 100% !important;
-        align-items: center;
-        min-height: 100vh;
-      }
-
-      body.mobile-cv-view {
         background-color: #e2e8f0;
-        padding-bottom: 70px !important;
-        overflow: auto !important;
+        overflow-x: hidden;
+        width: 100% !important;
+        max-width: none !important;
+        align-items: center;
         -webkit-overflow-scrolling: touch;
       }
 
-      body.mobile-cv-view .cv-container {
+      .cv-container {
         touch-action: manipulation;
       }
 
-      body.mobile-cv-view .cv-container * {
+      .cv-container * {
         touch-action: manipulation;
       }
 
@@ -926,37 +920,41 @@
       }
 
       .toolbar {
-        display: none !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 14px 0;
+        width: 210mm !important;
+        max-width: 210mm !important;
+        box-sizing: border-box;
+        margin: 0 auto 20px auto;
+        position: relative;
+        background: transparent;
+        box-shadow: none;
+        align-items: center;
+        justify-items: center;
       }
 
-      #mobileActionPanel {
+      .btn {
         display: flex !important;
-      }
-
-      #mobileActionPanel.mobile-hidden {
-        display: none !important;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 100% !important;
+        box-sizing: border-box;
+        padding: 13px 10px;
+        font-size: 14px;
+        font-weight: 500;
+        min-height: 40px;
+        border-radius: 10px;
+        gap: 6px;
+        border: 1px solid #cbd5e1;
       }
 
       .cv-container {
-        display: none !important;
+        zoom: normal !important;
+        transform: none !important;
         margin: 0 auto !important;
-        min-height: auto !important;
-      }
-
-      body.mobile-cv-view .cv-container {
-        display: flex !important;
-      }
-
-      body.mobile-cv-view #mobileActionPanel {
-        display: none !important;
-      }
-
-      #mobileCvFloatingBar {
-        display: none;
-      }
-
-      body.mobile-cv-view #mobileCvFloatingBar {
-        display: flex !important;
       }
 
       .ai-modal-overlay {
@@ -971,523 +969,139 @@
         max-width: none !important;
         max-height: none !important;
         border-radius: 0 !important;
-        padding: 20px !important;
+        padding: 40px !important;
         margin: 0 !important;
         box-sizing: border-box;
-        overflow-y: auto !important;
       }
 
       .ai-modal h2 {
-        font-size: 20px !important;
-        margin-bottom: 8px !important;
-        gap: 8px !important;
-      }
-
-      .ai-subtitle {
-        font-size: 13px !important;
-        margin-bottom: 14px !important;
-        line-height: 1.5 !important;
-      }
-
-      .ai-modal textarea {
-        font-size: 14px !important;
-        min-height: 140px !important;
-        padding: 12px !important;
-        border-radius: 10px !important;
-        border-width: 2px !important;
-      }
-
-      #aiQuotaDisplay {
-        font-size: 11px !important;
-        padding: 5px 10px !important;
-        border-radius: 16px !important;
-      }
-
-      #aiQuotaIndicator {
-        width: 8px !important;
-        height: 8px !important;
-      }
-
-      #aiOptionalDetails summary {
-        font-size: 13px !important;
-        padding: 10px 0 !important;
-      }
-
-      #aiOptionalDetails>div {
-        padding: 12px !important;
-        gap: 10px !important;
-        border-radius: 10px !important;
-      }
-
-      .ai-modal label {
-        font-size: 11px !important;
-        margin-bottom: 4px !important;
-      }
-
-      .ai-modal input[type="text"] {
-        font-size: 14px !important;
-        padding: 10px 12px !important;
-        border-radius: 8px !important;
-        border-width: 2px !important;
-        height: auto !important;
-      }
-
-      .ai-modal input[type="color"] {
-        width: 40px !important;
-        height: 36px !important;
-        border-radius: 6px !important;
-        padding: 2px !important;
-      }
-
-      #aiPrimaryColorHex,
-      #aiSecondaryColorHex {
-        font-size: 12px !important;
-      }
-
-      .ai-modal-actions {
-        margin-top: 16px !important;
-        gap: 10px !important;
-      }
-
-      .btn-ai-generate,
-      .btn-ai-cancel {
-        font-size: 14px !important;
-        padding: 12px 20px !important;
-        border-radius: 10px !important;
-      }
-
-      .ai-spinner,
-      .status-spinner {
-        width: 18px !important;
-        height: 18px !important;
-        border-width: 3px !important;
-      }
-
-      .ai-status {
-        font-size: 13px !important;
-        padding: 12px !important;
-        border-radius: 10px !important;
-        margin-top: 12px !important;
-      }
-
-      #historyModalOverlay .ai-modal h2 {
-        font-size: 20px !important;
-        margin-bottom: 12px !important;
-      }
-
-      #historyModalOverlay p {
-        font-size: 13px !important;
-      }
-
-      #historyModalOverlay .btn {
-        font-size: 12px !important;
-        padding: 8px 12px !important;
-        border-radius: 8px !important;
-      }
-
-      #historyList {
-        gap: 10px !important;
-        max-height: none !important;
-      }
-
-      #historyList>div {
-        padding: 12px !important;
-        border-radius: 10px !important;
-      }
-
-      #historyList h4 {
-        font-size: 15px !important;
-        margin-bottom: 4px !important;
-      }
-
-      #historyList div>div {
-        font-size: 12px !important;
-      }
-
-      .swal2-popup {
-        width: 90vw !important;
-        max-width: 90vw !important;
-        padding: 20px !important;
-        font-size: 14px !important;
-        border-radius: 16px !important;
-        box-sizing: border-box !important;
-      }
-
-      .swal2-title {
-        font-size: 18px !important;
-      }
-
-      .swal2-html-container {
-        font-size: 13px !important;
-        max-height: 50vh !important;
-        overflow-y: auto !important;
-      }
-
-      .swal2-actions {
-        gap: 8px !important;
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-      }
-
-      .swal2-confirm,
-      .swal2-cancel,
-      .swal2-deny {
-        font-size: 13px !important;
-        padding: 10px 18px !important;
-        border-radius: 8px !important;
-      }
-
-      .swal2-input {
-        font-size: 14px !important;
-        padding: 10px !important;
-      }
-
-      body.mobile-route-normal {
-        padding: 0 0 60px 0 !important;
-        background-color: #e2e8f0 !important;
-        overflow-x: hidden !important;
-        min-height: auto !important;
-      }
-
-      body.mobile-route-normal .toolbar {
-        display: grid !important;
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-        gap: 10px !important;
-        padding: 14px 0 !important;
-        width: 210mm !important;
-        max-width: 210mm !important;
-        box-sizing: border-box !important;
-        margin: 0 auto 20px auto !important;
-        position: relative !important;
-        background: transparent !important;
-      }
-
-      body.mobile-route-normal .btn {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 100% !important;
-        min-width: 0 !important;
-        flex: none !important;
-        box-sizing: border-box !important;
-        padding: 13px 10px !important;
-        font-size: 14px !important;
-        font-weight: 500 !important;
-        min-height: 40px !important;
-        border-radius: 10px !important;
-      }
-
-      body.mobile-route-normal #mobileActionPanel,
-      body.mobile-route-normal #mobileCvFloatingBar {
-        display: none !important;
-      }
-
-      body.mobile-route-normal .cv-container {
-        display: flex !important;
-        margin: 0 auto !important;
-        min-height: 297mm !important;
-      }
-
-      body.mobile-route-normal .ai-modal {
-        padding: 40px !important;
-      }
-
-      body.mobile-route-normal .ai-modal h2 {
         font-size: 40px !important;
         margin-bottom: 20px !important;
       }
 
-      body.mobile-route-normal .ai-subtitle {
+      .ai-subtitle {
         font-size: 26px !important;
         margin-bottom: 30px !important;
+        line-height: 1.5 !important;
       }
 
-      body.mobile-route-normal .ai-modal textarea {
+      .ai-modal textarea {
         font-size: 26px !important;
         min-height: 250px !important;
         padding: 20px !important;
         border-radius: 16px !important;
+        border-width: 3px !important;
       }
-    }
 
-    #mobileRouteChooser {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(2, 6, 23, 0.9);
-      z-index: 12000;
-      padding: 22px;
-      box-sizing: border-box;
-    }
+      #aiQuotaDisplay {
+        font-size: 22px !important;
+        padding: 10px 20px !important;
+        border-radius: 30px !important;
+        border-width: 2px !important;
+      }
 
-    #mobileRouteChooser.active {
-      display: flex;
-    }
+      #aiQuotaIndicator {
+        width: 16px !important;
+        height: 16px !important;
+      }
 
-    .route-picker-card {
-      width: 100%;
-      max-width: 480px;
-      border-radius: 18px;
-      background: #ffffff;
-      padding: 20px;
-      box-sizing: border-box;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
+      #aiOptionalDetails summary {
+        font-size: 26px !important;
+        padding: 20px 0 !important;
+      }
 
-    .route-picker-title {
-      font-size: 20px;
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 6px;
-    }
+      #aiOptionalDetails>div {
+        padding: 20px !important;
+        gap: 20px !important;
+        border-radius: 16px !important;
+      }
 
-    .route-picker-subtitle {
-      font-size: 13px;
-      color: #64748b;
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
+      .ai-modal label {
+        font-size: 20px !important;
+        margin-bottom: 10px !important;
+      }
 
-    .route-picker-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
+      .ai-modal input[type="text"] {
+        font-size: 26px !important;
+        padding: 20px !important;
+        border-radius: 12px !important;
+        border-width: 3px !important;
+        height: auto !important;
+      }
 
-    .route-option-btn {
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 12px;
-      text-align: left;
-      background: #f8fafc;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }
+      .ai-modal input[type="color"] {
+        width: 80px !important;
+        height: 70px !important;
+        border-radius: 12px !important;
+        padding: 4px !important;
+      }
 
-    .route-option-btn:hover {
-      border-color: #3b82f6;
-      background: #eff6ff;
-    }
+      #aiPrimaryColorHex,
+      #aiSecondaryColorHex {
+        font-size: 24px !important;
+      }
 
-    .route-option-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 3px;
-    }
+      .ai-modal-actions {
+        margin-top: 40px !important;
+        gap: 20px !important;
+      }
 
-    .route-option-desc {
-      font-size: 12px;
-      color: #64748b;
-      line-height: 1.45;
-    }
+      .btn-ai-generate,
+      .btn-ai-cancel {
+        font-size: 28px !important;
+        padding: 20px 40px !important;
+        border-radius: 16px !important;
+      }
 
-    #mobileActionPanel {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      width: 100%;
-      padding: 40px 24px;
-      box-sizing: border-box;
-      gap: 0;
-    }
+      .ai-spinner,
+      .status-spinner {
+        width: 36px !important;
+        height: 36px !important;
+        border-width: 5px !important;
+      }
 
-    .mobile-panel-logo {
-      font-size: 56px;
-      margin-bottom: 8px;
-      animation: mobileLogoPulse 3s ease-in-out infinite;
-    }
+      .ai-status {
+        font-size: 26px !important;
+        padding: 24px !important;
+        border-radius: 16px !important;
+        margin-top: 30px !important;
+      }
 
-    @keyframes mobileLogoPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
+      #historyModalOverlay .ai-modal h2 {
+        font-size: 40px !important;
+        margin-bottom: 30px !important;
+      }
 
-    .mobile-panel-title {
-      font-size: 28px;
-      font-weight: 800;
-      color: #f8fafc;
-      margin-bottom: 4px;
-      letter-spacing: -0.5px;
-    }
+      #historyModalOverlay p {
+        font-size: 24px !important;
+      }
 
-    .mobile-panel-subtitle {
-      font-size: 14px;
-      color: #64748b;
-      margin-bottom: 36px;
-      font-weight: 500;
-    }
+      #historyModalOverlay .btn {
+        font-size: 22px !important;
+        padding: 16px 24px !important;
+        border-radius: 12px !important;
+        border-width: 2px !important;
+      }
 
-    .mobile-action-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      width: 100%;
-      max-width: 400px;
-      margin-bottom: 24px;
-    }
+      #historyList {
+        gap: 20px !important;
+        max-height: none !important;
+      }
 
-    .mobile-action-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 22px 12px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      cursor: pointer;
-      transition: all 0.25s ease;
-      font-family: inherit;
-    }
+      #historyList>div {
+        padding: 24px !important;
+        border-radius: 16px !important;
+        border-width: 2px !important;
+      }
 
-    .mobile-action-btn:active {
-      transform: scale(0.95);
-      background: rgba(255,255,255,0.1);
-    }
+      #historyList h4 {
+        font-size: 30px !important;
+        margin-bottom: 10px !important;
+      }
 
-    .mobile-action-btn .ma-icon {
-      font-size: 32px;
-      line-height: 1;
-    }
-
-    .mobile-action-btn .ma-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #e2e8f0;
-      text-align: center;
-      line-height: 1.2;
-    }
-
-    .mobile-action-btn.ma-primary {
-      grid-column: 1 / -1;
-      flex-direction: row;
-      gap: 12px;
-      padding: 20px 24px;
-      background: linear-gradient(135deg, rgba(236,72,153,0.2) 0%, rgba(139,92,246,0.2) 100%);
-      border-color: rgba(236,72,153,0.3);
-    }
-
-    .mobile-action-btn.ma-primary .ma-label {
-      font-size: 16px;
-      color: #f9a8d4;
-    }
-
-    .mobile-action-btn.ma-view-cv {
-      grid-column: 1 / -1;
-      flex-direction: row;
-      gap: 12px;
-      padding: 20px 24px;
-      background: linear-gradient(135deg, rgba(59,130,246,0.15) 0%, rgba(6,182,212,0.15) 100%);
-      border-color: rgba(59,130,246,0.3);
-    }
-
-    .mobile-action-btn.ma-view-cv .ma-label {
-      font-size: 16px;
-      color: #93c5fd;
-    }
-
-    #mobileCvFloatingBar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: none;
-      flex-direction: column;
-      z-index: 9999;
-      width: 810px;
-      box-sizing: border-box;
-    }
-
-    .float-bar-toggle {
-      align-self: center;
-      width: 100px;
-      height: 44px;
-      border: none;
-      background: rgba(15,23,42,0.96);
-      color: #94a3b8;
-      font-size: 24px;
-      border-radius: 16px 16px 0 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-bottom: none;
-      font-family: inherit;
-      padding: 0;
-      line-height: 1;
-    }
-
-    .float-bar-icons {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 14px;
-      padding: 20px 24px;
-      background: rgba(15,23,42,0.96);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(255,255,255,0.08);
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      flex-wrap: nowrap;
-      scrollbar-width: none;
-    }
-
-    .float-bar-icons::-webkit-scrollbar {
-      display: none;
-    }
-
-    .float-bar-icons.collapsed {
-      display: none;
-    }
-
-    .float-icon-btn {
-      min-width: 100px;
-      height: 100px;
-      border-radius: 22px;
-      border: none;
-      background: rgba(255,255,255,0.07);
-      color: #e2e8f0;
-      font-size: 48px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
-      font-family: inherit;
-      padding: 0;
-      flex-shrink: 0;
-    }
-
-    .float-icon-btn:active {
-      transform: scale(0.85);
-      background: rgba(255,255,255,0.18);
-    }
-
-    .float-icon-btn.float-back {
-      background: rgba(239,68,68,0.15);
-      color: #fca5a5;
-    }
-
-    .float-divider {
-      width: 2px;
-      height: 56px;
-      background: rgba(255,255,255,0.1);
-      margin: 0 4px;
-      flex-shrink: 0;
+      #historyList div>div {
+        font-size: 22px !important;
+      }
     }
 
     .hide-on-export,
@@ -1501,7 +1115,10 @@
 
     .tpl-picker-overlay {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(15, 23, 42, 0.85);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -1773,7 +1390,7 @@
         padding: 10px 0 !important;
       }
 
-      #tplColorOverrides > div {
+      #tplColorOverrides>div {
         padding: 14px !important;
       }
 
@@ -1823,7 +1440,7 @@
         padding: 10px 12px !important;
       }
 
-      .tpl-picker-modal > div:last-child button {
+      .tpl-picker-modal>div:last-child button {
         width: 100% !important;
         padding: 14px !important;
         font-size: 16px !important;
@@ -1839,6 +1456,7 @@
         text-align: left !important;
       }
     }
+
     .step-textarea {
       width: 100%;
       min-height: 180px;
@@ -1872,6 +1490,7 @@
         opacity: 0;
         transform: translateX(30px);
       }
+
       to {
         opacity: 1;
         transform: translateX(0);
@@ -1888,46 +1507,48 @@
       box-shadow: 0 8px 20px rgba(236, 72, 153, 0.4);
     }
 
-    #tabPasteGo:hover, #tabStepByStep:hover {
+    #tabPasteGo:hover,
+    #tabStepByStep:hover {
       background: #fdf2f8;
     }
 
     @media (max-width: 820px) {
       .step-textarea {
-        font-size: 14px !important;
-        min-height: 120px !important;
-        padding: 12px !important;
-        border-radius: 10px !important;
-        border-width: 2px !important;
+        font-size: 24px !important;
+        min-height: 200px !important;
+        padding: 20px !important;
+        border-radius: 16px !important;
+        border-width: 3px !important;
       }
 
       #aiModeTabs button {
-        font-size: 13px !important;
-        padding: 10px 0 !important;
+        font-size: 24px !important;
+        padding: 18px 0 !important;
       }
 
-      .wizard-step > div:first-child > span {
-        width: 30px !important;
-        height: 30px !important;
-        font-size: 14px !important;
+      .wizard-step>div:first-child>span {
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 22px !important;
       }
 
-      .wizard-step > div:first-child > div > div:first-child {
-        font-size: 15px !important;
+      .wizard-step>div:first-child>div>div:first-child {
+        font-size: 26px !important;
       }
 
-      .wizard-step > div:first-child > div > div:last-child {
-        font-size: 12px !important;
+      .wizard-step>div:first-child>div>div:last-child {
+        font-size: 20px !important;
       }
 
-      #stepPrevBtn, #stepNextBtn {
-        font-size: 13px !important;
-        padding: 10px 20px !important;
-        border-radius: 10px !important;
+      #stepPrevBtn,
+      #stepNextBtn {
+        font-size: 24px !important;
+        padding: 18px 36px !important;
+        border-radius: 16px !important;
       }
 
       #stepCounter {
-        font-size: 12px !important;
+        font-size: 20px !important;
       }
     }
 
@@ -1985,78 +1606,9 @@
 <button class="btn btn-random" onclick="generateRandomCV()">🎲 Random CV</button>
 <button class="btn btn-save" onclick="saveCurrentCV()">💾 Save CV</button>
 <button class="btn btn-history" onclick="openHistoryModal()">📚 History</button>
-<button class="btn" onclick="openRouteChooser(true)" style="border-color:#0f766e;color:#0f766e;">📱 Route</button>
 <button class="btn btn-download" onclick="downloadHighResImage()">🖼️ Export Image</button>
 <button class="btn btn-pdf" onclick="downloadPDF()">📄 Export PDF</button>
 <button class="btn btn-word" onclick="downloadWord()">📝 Export Word</button>
-</div>
-<div data-html2canvas-ignore="true" id="mobileRouteChooser" onclick="routeChooserOverlayClick(event)">
-<div class="route-picker-card">
-<div class="route-picker-title">Choose Mobile Route</div>
-<div class="route-picker-subtitle" id="routePickerSubtitle">Pick how you want to use the CV builder on mobile. You can change this anytime.</div>
-<div class="route-picker-grid">
-<button class="route-option-btn" onclick="selectMobileRoute('normal')">
-<div class="route-option-name">Normal Route</div>
-<div class="route-option-desc">Classic view like <code>index.html</code> with CV + toolbar directly visible.</div>
-</button>
-<button class="route-option-btn" onclick="selectMobileRoute('mobile-optimized')">
-<div class="route-option-name">Mobile Optimized Route</div>
-<div class="route-option-desc">Optimized mobile flow like <code>index4.html</code> with action hub and floating bar.</div>
-</button>
-</div>
-</div>
-</div>
-<div data-html2canvas-ignore="true" id="mobileActionPanel">
-<div class="mobile-panel-logo">📄</div>
-<div class="mobile-panel-title">CV Builder</div>
-<div class="mobile-panel-subtitle">AI-Powered Professional Resume Maker</div>
-<div class="mobile-action-grid">
-<button class="mobile-action-btn ma-primary" onclick="openAIModal()">
-<span class="ma-icon">✨</span>
-<span class="ma-label">AI Design &amp; Build</span>
-</button>
-<button class="mobile-action-btn" onclick="showTemplatePicker()">
-<span class="ma-icon">🎨</span>
-<span class="ma-label">Templates</span>
-</button>
-<button class="mobile-action-btn" onclick="generateRandomCV()">
-<span class="ma-icon">🎲</span>
-<span class="ma-label">Random CV</span>
-</button>
-<button class="mobile-action-btn" onclick="saveCurrentCV()">
-<span class="ma-icon">💾</span>
-<span class="ma-label">Save CV</span>
-</button>
-<button class="mobile-action-btn" onclick="openHistoryModal()">
-<span class="ma-icon">📚</span>
-<span class="ma-label">History</span>
-</button>
-<button class="mobile-action-btn" onclick="openRouteChooser(true)">
-<span class="ma-icon">📱</span>
-<span class="ma-label">Change Route</span>
-</button>
-<button class="mobile-action-btn ma-view-cv" onclick="mobileShowCV()">
-<span class="ma-icon">👁️</span>
-<span class="ma-label">View &amp; Edit My CV</span>
-</button>
-</div>
-</div>
-<div data-html2canvas-ignore="true" id="mobileCvFloatingBar">
-<button class="float-bar-toggle" id="floatBarToggle" onclick="toggleFloatBar()">▲</button>
-<div class="float-bar-icons" id="floatBarIcons">
-<button class="float-icon-btn float-back" onclick="mobileShowActions()" title="Back">←</button>
-<div class="float-divider"></div>
-<button class="float-icon-btn" onclick="showTemplatePicker()" title="Templates">🎨</button>
-<button class="float-icon-btn" onclick="openAIModal()" title="AI Design">✨</button>
-<button class="float-icon-btn" onclick="generateRandomCV()" title="Random CV">🎲</button>
-<button class="float-icon-btn" onclick="saveCurrentCV()" title="Save CV">💾</button>
-<button class="float-icon-btn" onclick="openHistoryModal()" title="History">📚</button>
-<button class="float-icon-btn" onclick="openRouteChooser(true)" title="Change Route">📱</button>
-<div class="float-divider"></div>
-<button class="float-icon-btn" onclick="downloadHighResImage()" title="Export Image">🖼️</button>
-<button class="float-icon-btn" onclick="downloadPDF()" title="Export PDF">📄</button>
-<button class="float-icon-btn" onclick="downloadWord()" title="Export Word">📝</button>
-</div>
 </div>
 <div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
 <div class="ai-modal">
@@ -2068,15 +1620,18 @@
 </div>
 </div>
 <div id="aiModeTabs" style="display:flex;gap:0;margin-bottom:22px;border-bottom:2px solid #e2e8f0;">
-<button id="tabPasteGo" onclick="switchAIMode('paste')" style="flex:1;padding:13px 0;font-size:15px;font-weight:700;border:none;background:none;cursor:pointer;color:#ec4899;border-bottom:3px solid #ec4899;transition:all 0.25s;">📋 Paste &amp; Go</button>
-<button id="tabStepByStep" onclick="switchAIMode('step')" style="flex:1;padding:13px 0;font-size:15px;font-weight:700;border:none;background:none;cursor:pointer;color:#94a3b8;border-bottom:3px solid transparent;transition:all 0.25s;">🪜 Step-by-Step Guide</button>
+<button id="tabPasteGo" onclick="switchAIMode('paste')" style="flex:1;padding:13px 0;font-size:15px;font-weight:700;border:none;background:none;cursor:pointer;color:#ec4899;border-bottom:3px solid #ec4899;transition:all 0.25s;">📋
+          Paste &amp; Go</button>
+<button id="tabStepByStep" onclick="switchAIMode('step')" style="flex:1;padding:13px 0;font-size:15px;font-weight:700;border:none;background:none;cursor:pointer;color:#94a3b8;border-bottom:3px solid transparent;transition:all 0.25s;">🪜
+          Step-by-Step Guide</button>
 </div>
 <div id="aiPasteMode">
 <p class="ai-subtitle">The AI will evaluate your profile and guarantee a <b>completely unique structural
             layout</b>, color palette, typography, and content flow on every single click.</p>
 <textarea id="aiTextInput" placeholder="Paste your resume, LinkedIn profile, or rough notes here..."></textarea>
 <details id="aiOptionalDetails" style="margin-top:18px;">
-<summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">⚙️
+<summary style="cursor:pointer;font-weight:700;font-size:15px;color:#8b5cf6;user-select:none;padding:10px 0;">
+            ⚙️
             Optional Details (click to expand)</summary>
 <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;padding:18px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
 <div>
@@ -2115,7 +1670,7 @@
 </div>
 </details>
 <div id="aiOverrideNotice" style="display:none;margin-top:14px;padding:14px 18px;background:#eef2ff;border-radius:10px;border:1px solid #c7d2fe;">
-<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+<div style="display:flex;align-items:center;justify-content:space-between;">
 <div style="display:flex;align-items:center;gap:8px;">
 <span style="font-size:16px;">🎨</span>
 <div>
@@ -2123,14 +1678,17 @@
 <div id="aiOverrideDetail" style="font-size:11px;color:#6366f1;margin-top:2px;"></div>
 </div>
 </div>
-<button onclick="clearAllOverrides();updateAIOverrideNotice();" style="padding:6px 14px;border-radius:6px;border:1px solid #c7d2fe;background:#fff;color:#6366f1;font-size:12px;font-weight:600;cursor:pointer;">Clear Overrides</button>
+<button onclick="clearAllOverrides();updateAIOverrideNotice();" style="padding:6px 14px;border-radius:6px;border:1px solid #c7d2fe;background:#fff;color:#6366f1;font-size:12px;font-weight:600;cursor:pointer;">Clear
+              Overrides</button>
 </div>
 </div>
 </div>
 <div id="aiStepMode" style="display:none;">
 <div id="stepProgressBar" style="display:flex;align-items:center;gap:0;margin-bottom:24px;position:relative;">
-<div id="stepProgressTrack" style="position:absolute;top:50%;left:24px;right:24px;height:4px;background:#e2e8f0;border-radius:2px;transform:translateY(-50%);z-index:0;"></div>
-<div id="stepProgressFill" style="position:absolute;top:50%;left:24px;height:4px;background:linear-gradient(90deg,#ec4899,#8b5cf6);border-radius:2px;transform:translateY(-50%);z-index:1;width:0%;transition:width 0.4s ease;"></div>
+<div id="stepProgressTrack" style="position:absolute;top:50%;left:24px;right:24px;height:4px;background:#e2e8f0;border-radius:2px;transform:translateY(-50%);z-index:0;">
+</div>
+<div id="stepProgressFill" style="position:absolute;top:50%;left:24px;height:4px;background:linear-gradient(90deg,#ec4899,#8b5cf6);border-radius:2px;transform:translateY(-50%);z-index:1;width:0%;transition:width 0.4s ease;">
+</div>
 </div>
 <div id="stepContainer">
 <div class="wizard-step" data-step="1">
@@ -2168,7 +1726,8 @@
 <span style="background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;">4</span>
 <div>
 <div style="font-size:18px;font-weight:800;color:#1e293b;">🛠️ Skills &amp; Tools</div>
-<div style="font-size:13px;color:#64748b;">What are you good at? Technologies, soft skills, anything!</div>
+<div style="font-size:13px;color:#64748b;">What are you good at? Technologies, soft skills, anything!
+                </div>
 </div>
 </div>
 <textarea class="step-textarea" id="stepSkills" placeholder="Example: I'm really good at Python and JavaScript. I also know React, Node.js, and PostgreSQL. I'm great at problem solving and teamwork. I can also use Figma for design and I'm familiar with AWS and Docker."></textarea>
@@ -2178,7 +1737,8 @@
 <span style="background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;">5</span>
 <div>
 <div style="font-size:18px;font-weight:800;color:#1e293b;">🏆 Achievements &amp; Extras</div>
-<div style="font-size:13px;color:#64748b;">Awards, certifications, hobbies, volunteer work — anything extra!</div>
+<div style="font-size:13px;color:#64748b;">Awards, certifications, hobbies, volunteer work — anything
+                  extra!</div>
 </div>
 </div>
 <textarea class="step-textarea" id="stepAchievements" placeholder="Example: I won the Dean's List award twice in college. I volunteer at a local coding bootcamp teaching kids on weekends. I have an AWS Certified Solutions Architect certification. My hobbies are hiking and photography."></textarea>
@@ -2187,17 +1747,22 @@
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
 <span style="background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;">6</span>
 <div>
-<div style="font-size:18px;font-weight:800;color:#1e293b;">🎯 CV Purpose <span style="font-size:12px;font-weight:500;color:#f59e0b;background:#fffbeb;padding:2px 10px;border-radius:20px;margin-left:8px;">Optional</span></div>
-<div style="font-size:13px;color:#64748b;">What is this CV for? This helps AI tailor your CV perfectly.</div>
+<div style="font-size:18px;font-weight:800;color:#1e293b;">🎯 CV Purpose <span style="font-size:12px;font-weight:500;color:#f59e0b;background:#fffbeb;padding:2px 10px;border-radius:20px;margin-left:8px;">Optional</span>
+</div>
+<div style="font-size:13px;color:#64748b;">What is this CV for? This helps AI tailor your CV perfectly.
+                </div>
 </div>
 </div>
 <textarea class="step-textarea" id="stepPurpose" placeholder="Example: I'm applying for a Senior Frontend Developer position at Google. I want the CV to highlight my React and JavaScript skills. Make it look modern and professional, maybe with a dark sidebar design."></textarea>
 </div>
 </div>
 <div id="stepNavigation" style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">
-<button id="stepPrevBtn" onclick="wizardNav(-1)" style="padding:12px 28px;border-radius:12px;border:2px solid #e2e8f0;background:#f8fafc;color:#475569;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;display:none;">← Back</button>
-<div id="stepCounter" style="flex:1;text-align:center;font-size:13px;font-weight:600;color:#94a3b8;">Step 1 of 6</div>
-<button id="stepNextBtn" onclick="wizardNav(1)" style="padding:12px 28px;border-radius:12px;border:none;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 15px rgba(236,72,153,0.3);">Next →</button>
+<button id="stepPrevBtn" onclick="wizardNav(-1)" style="padding:12px 28px;border-radius:12px;border:2px solid #e2e8f0;background:#f8fafc;color:#475569;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;display:none;">←
+            Back</button>
+<div id="stepCounter" style="flex:1;text-align:center;font-size:13px;font-weight:600;color:#94a3b8;">Step 1 of
+            6</div>
+<button id="stepNextBtn" onclick="wizardNav(1)" style="padding:12px 28px;border-radius:12px;border:none;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 15px rgba(236,72,153,0.3);">Next
+            →</button>
 </div>
 </div>
 <div class="ai-status" id="aiStatus"></div>
@@ -2217,7 +1782,7 @@
 <p style="margin:0; color:#64748b; font-size:14px;">Click a CV below to load it.</p>
 <div style="display:flex; gap:10px;">
 <button class="btn" onclick="document.getElementById('historyFilters').style.display = document.getElementById('historyFilters').style.display === 'none' ? 'block' : 'none'" style="display:inline-flex; border-color:#cbd5e1; color:#475569;" title="Filter &amp; Search">🔍</button>
-<button class="btn" onclick="exportBackup()" style="display:inline-flex; border-color:#3b82f6; color:#2563eb;">📦 Backup All</button>
+<button class="btn" onclick="exportBackup()" style="display:inline-flex; border-color:#3b82f6; color:#2563eb;">📦 Backup</button>
 <button class="btn" onclick="document.getElementById('importBackupInput').click()" style="display:inline-flex; border-color:#10b981; color:#059669;">📥 Restore</button>
 <input accept=".json" id="importBackupInput" onchange="importBackup(event)" style="display:none" type="file"/>
 </div>
@@ -2243,40 +1808,52 @@
 <div class="tpl-picker-overlay" id="tplPickerOverlay" onclick="if(event.target===this)closeTemplatePicker()">
 <div class="tpl-picker-modal">
 <h2>🎨 Choose a Template</h2>
-<div class="tpl-picker-subtitle">Pick a professional starting point. You can fully customize everything after selecting.</div>
+<div class="tpl-picker-subtitle">Pick a professional starting point. You can fully customize everything after
+        selecting.</div>
 <details id="tplColorOverrides" style="margin-bottom:20px;">
-<summary style="cursor:pointer;font-weight:700;font-size:14px;color:#6366f1;user-select:none;padding:8px 0;display:flex;align-items:center;gap:8px;">🎨 Custom Color Overrides <span id="tplOverrideCount" style="font-size:11px;font-weight:600;background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;display:none;">0 active</span></summary>
+<summary style="cursor:pointer;font-weight:700;font-size:14px;color:#6366f1;user-select:none;padding:8px 0;display:flex;align-items:center;gap:8px;">
+          🎨 Custom Color Overrides <span id="tplOverrideCount" style="font-size:11px;font-weight:600;background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;display:none;">0
+            active</span></summary>
 <div style="display:flex;flex-direction:column;gap:14px;margin-top:10px;padding:16px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;">
-<div style="font-size:12px;color:#64748b;line-height:1.5;margin-bottom:4px;">Set colors here to override any template or AI-generated design. These persist until you clear them.</div>
+<div style="font-size:12px;color:#64748b;line-height:1.5;margin-bottom:4px;">Set colors here to override any
+            template or AI-generated design. These persist until you clear them.</div>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Page Background</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Page
+                Background</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="backgroundColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#ffffff"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('backgroundColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Sidebar / Header BG</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Sidebar
+                / Header BG</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="primaryAreaColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#1e293b"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('primaryAreaColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Sidebar / Header Text</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Sidebar
+                / Header Text</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="primaryTextColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#f8fafc"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('primaryTextColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Main Text</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Main
+                Text</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="mainTextColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#334155"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('mainTextColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Muted Text</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Muted
+                Text</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="secondaryTextColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#64748b"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('secondaryTextColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 <div>
-<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Accent Color</label>
+<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#64748b;display:block;margin-bottom:4px;">Accent
+                Color</label>
 <div style="display:flex;align-items:center;gap:6px;"><input class="tpl-color-input" data-key="accentColor" style="width:36px;height:30px;border:none;border-radius:6px;cursor:pointer;padding:1px;" type="color" value="#3b82f6"/><span class="tpl-color-hex" style="font-size:12px;color:#475569;font-family:monospace;"></span><span class="tpl-color-clear" onclick="clearSingleOverride('accentColor',this)" style="cursor:pointer;font-size:14px;color:#94a3b8;display:none;" title="Clear">×</span></div>
 </div>
 </div>
 <div style="display:flex;gap:10px;margin-top:10px;">
-<button onclick="applyOverridesNow()" style="padding:8px 18px;border-radius:8px;border:none;background:#6366f1;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Apply Colors Now</button>
-<button onclick="clearAllOverrides()" style="padding:8px 18px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:13px;font-weight:600;cursor:pointer;">Clear All Overrides</button>
+<button onclick="applyOverridesNow()" style="padding:8px 18px;border-radius:8px;border:none;background:#6366f1;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Apply
+              Colors Now</button>
+<button onclick="clearAllOverrides()" style="padding:8px 18px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:13px;font-weight:600;cursor:pointer;">Clear
+              All Overrides</button>
 </div>
 </div>
 </details>
@@ -2404,7 +1981,10 @@
 <div class="section-controls" style="top:50%; transform:translateY(-50%);"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </div>
 <p class="summary-text" contenteditable="true">
-        Versatile Full-Stack Developer and Software Engineer with hands-on experience building production-grade web applications, SaaS platforms, mobile apps, and AI-integrated tools. Skilled in PHP, JavaScript, Python, and modern frameworks. Passionate about creating scalable, user-centric solutions and turning complex ideas into polished products.
+        Versatile Full-Stack Developer and Software Engineer with hands-on experience building production-grade web
+        applications, SaaS platforms, mobile apps, and AI-integrated tools. Skilled in PHP, JavaScript, Python, and
+        modern frameworks. Passionate about creating scalable, user-centric solutions and turning complex ideas into
+        polished products.
       </p>
 </div>
 <div class="section-hover-target" data-zone="sidebar" id="skillsBlock">
@@ -2456,13 +2036,16 @@
 <span class="date-location" contenteditable="true">2021 – Present</span>
 <div class="job-desc">
 <ul>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Built and deployed multi-tenant SaaS platforms including SchoolSaaS and FleetCommand from the ground up.</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Built and deployed multi-tenant SaaS platforms including SchoolSaaS and
+                FleetCommand from the ground up.</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Integrated AI APIs (Puter, Gemini) into web apps for intelligent CV generation, analytics, and automation.</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Integrated AI APIs (Puter, Gemini) into web apps for intelligent CV generation,
+                analytics, and automation.</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Developed cross-platform mobile apps using web-to-app conversion with native Android bridges.</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Developed cross-platform mobile apps using web-to-app conversion with native
+                Android bridges.</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
 </ul>
@@ -2475,7 +2058,8 @@
 <span class="date-location" contenteditable="true">2019 – 2021</span>
 <div class="job-desc">
 <ul>
-<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Designed and developed responsive websites and dashboards using HTML, CSS, JavaScript, and PHP.</span>
+<li class="list-item-wrapper" style="position:relative; padding-right:50px;"><span contenteditable="true">Designed and developed responsive websites and dashboards using HTML, CSS,
+                JavaScript, and PHP.</span>
 <div class="section-controls"><span class="btn-duplicate control-btn" onclick="duplicateItem(this)">⧉</span><span class="btn-delete control-btn" onclick="deleteItem(this)">×</span></div>
 </li>
 </ul>
@@ -2492,7 +2076,8 @@
 <div class="job-title" contenteditable="true">Bachelor of Science in Computer Science</div>
 <div class="company-name" contenteditable="true">University</div>
 <span class="date-location" contenteditable="true">2017 – 2021</span>
-<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Software Engineering, Web Technologies, and Database Systems.</p>
+<p class="summary-text" contenteditable="true" style="margin-top: 5px; font-size: 14px">Focus on Software
+          Engineering, Web Technologies, and Database Systems.</p>
 </div>
 </div>
 </div>
@@ -2516,7 +2101,7 @@
           headingFont: 'Playfair Display',
           bodyFont: 'Source Sans 3'
         },
-        previewColors: ['#0f172a','#f59e0b','#ffffff']
+        previewColors: ['#0f172a', '#f59e0b', '#ffffff']
       },
       {
         id: 'modern-vibrant',
@@ -2536,7 +2121,7 @@
           headingFont: 'Outfit',
           bodyFont: 'Inter'
         },
-        previewColors: ['#0d9488','#14b8a6','#ffffff']
+        previewColors: ['#0d9488', '#14b8a6', '#ffffff']
       },
       {
         id: 'minimal-elegant',
@@ -2556,7 +2141,7 @@
           headingFont: 'DM Serif Display',
           bodyFont: 'DM Sans'
         },
-        previewColors: ['#44403c','#be123c','#fffbf5']
+        previewColors: ['#44403c', '#be123c', '#fffbf5']
       },
       {
         id: 'europass-classic',
@@ -2576,7 +2161,7 @@
           headingFont: 'Roboto',
           bodyFont: 'Roboto'
         },
-        previewColors: ['#003399','#003399','#ffffff']
+        previewColors: ['#003399', '#003399', '#ffffff']
       },
       {
         id: 'europass-modern',
@@ -2596,7 +2181,7 @@
           headingFont: 'Nunito Sans',
           bodyFont: 'Open Sans'
         },
-        previewColors: ['#1e3a5f','#2563eb','#f8fafc']
+        previewColors: ['#1e3a5f', '#2563eb', '#f8fafc']
       }
     ];
     function buildTplPreview(tpl) {
@@ -2706,7 +2291,7 @@
       </div>`;
     }
     function getColorOverrides() {
-      try { return JSON.parse(localStorage.getItem('cv_color_overrides') || '{}'); } catch(e) { return {}; }
+      try { return JSON.parse(localStorage.getItem('cv_color_overrides') || '{}'); } catch (e) { return {}; }
     }
     function saveColorOverrides(overrides) {
       localStorage.setItem('cv_color_overrides', JSON.stringify(overrides));
@@ -2977,7 +2562,7 @@
       document.querySelectorAll('.tpl-color-input').forEach(inp => {
         if (inp.dataset.boundColorOverride === '1') return;
         inp.dataset.boundColorOverride = '1';
-        inp.addEventListener('input', function() {
+        inp.addEventListener('input', function () {
           const key = this.getAttribute('data-key');
           const val = this.value;
           const wrapper = this.parentElement;
@@ -3002,7 +2587,7 @@
       const count = Object.keys(ov).length;
       if (count > 0) {
         notice.style.display = 'block';
-        const names = { backgroundColor:'Background', primaryAreaColor:'Sidebar BG', primaryTextColor:'Sidebar Text', mainTextColor:'Main Text', secondaryTextColor:'Muted Text', accentColor:'Accent' };
+        const names = { backgroundColor: 'Background', primaryAreaColor: 'Sidebar BG', primaryTextColor: 'Sidebar Text', mainTextColor: 'Main Text', secondaryTextColor: 'Muted Text', accentColor: 'Accent' };
         const list = Object.keys(ov).map(k => names[k] || k).join(', ');
         document.getElementById('aiOverrideDetail').textContent = 'Overriding: ' + list + '. AI will use these colors. Clear to let AI choose.';
       } else {
@@ -3030,7 +2615,6 @@
       applyAITheme(tpl.theme);
       saveCVState(tpl.theme);
       closeTemplatePicker();
-      if (window.matchMedia('(max-width: 820px)').matches) showMobileViewAfterAction();
     }
     function saveCVState(theme) {
       try {
@@ -3047,7 +2631,7 @@
         localStorage.setItem('cv_saved_layout', cvNode.getAttribute('data-layout') || 'sidebar-left');
         const classes = [...cvNode.classList].filter(c => c.startsWith('style-'));
         if (classes.length) localStorage.setItem('cv_saved_style', classes[0]);
-      } catch(e) { console.warn('Could not save CV state', e); }
+      } catch (e) { console.warn('Could not save CV state', e); }
     }
     function restoreProfilePhoto() {
       const savedPhoto = localStorage.getItem('cv_profile_photo');
@@ -3116,12 +2700,6 @@
         _autoSaveTimer = setTimeout(() => saveCVState(), 1000);
       });
       _mo.observe(cvEl, { childList: true, subtree: true });
-      initializeMobileRoute();
-      window.addEventListener('resize', () => {
-        if (!isMobileViewport()) return;
-        const chooser = document.getElementById('mobileRouteChooser');
-        if (!getMobileRoute() && chooser && !chooser.classList.contains('active')) openRouteChooser(false);
-      });
     });
     function _scaleSwalFullscreen() {
       const popup = Swal.getPopup();
@@ -3560,7 +3138,7 @@
         if (s.val) {
           reviewHTML += `<div style="margin-bottom:16px;padding:14px;background:#f8fafc;border-radius:10px;border-left:4px solid ${s.optional ? '#f59e0b' : '#ec4899'};">`;
           reviewHTML += `<div style="font-weight:700;color:#1e293b;margin-bottom:6px;">${s.icon} ${s.title}</div>`;
-          reviewHTML += `<div style="color:#475569;white-space:pre-wrap;">${s.val.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+          reviewHTML += `<div style="color:#475569;white-space:pre-wrap;">${s.val.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`;
           reviewHTML += '</div>';
         } else if (!s.optional) {
           reviewHTML += `<div style="margin-bottom:16px;padding:14px;background:#fef2f2;border-radius:10px;border-left:4px solid #ef4444;">`;
@@ -3692,7 +3270,7 @@
         if (targetRole) parts.push(`- Target Role: ${targetRole}`);
         if (stylePref) parts.push(`- Style Preference: ${stylePref}`);
         if (hasColorOverrides) {
-          const ovNames = { backgroundColor:'backgroundColor', primaryAreaColor:'primaryAreaColor', primaryTextColor:'primaryTextColor', mainTextColor:'mainTextColor', secondaryTextColor:'secondaryTextColor', accentColor:'accentColor' };
+          const ovNames = { backgroundColor: 'backgroundColor', primaryAreaColor: 'primaryAreaColor', primaryTextColor: 'primaryTextColor', mainTextColor: 'mainTextColor', secondaryTextColor: 'secondaryTextColor', accentColor: 'accentColor' };
           Object.entries(colorOv).forEach(([k, v]) => {
             parts.push(`- FORCED ${ovNames[k] || k}: ${v}`);
           });
@@ -3763,7 +3341,7 @@ Return a raw JSON object ONLY, NO markdown:
           quotaData = { date: new Date().toLocaleDateString(), used: 1 };
         }
         localStorage.setItem("ai_daily_quota", JSON.stringify(quotaData));
-        setTimeout(() => { closeAIModal(); if (window.matchMedia('(max-width: 820px)').matches) showMobileViewAfterAction(); }, 2000);
+        setTimeout(() => closeAIModal(), 2000);
       } catch (error) {
         console.error(error); setAIStatus("error", "❌ Failed to parse AI response. Please try again.");
       } finally {
@@ -4074,7 +3652,7 @@ Return a raw JSON object ONLY, NO markdown:
       Swal.fire({
         icon: 'warning',
         title: 'CV Saved Locally!',
-        html: '<div style="text-align:left; font-size:14px;"><p>Your CV has been saved to this browser.</p><p style="color:#e11d48; font-weight:bold;">CRITICAL REMINDER:</p><p>Please make sure to use the <b>Backup All</b> button in the History menu frequently. If you clear your browser cache/data without an external backup, your saved CVs will be <b>permanently lost</b> and we cannot be held responsible.</p></div>',
+        html: '<div style="text-align:left; font-size:14px;"><p>Your CV has been saved to this browser.</p><p style="color:#e11d48; font-weight:bold;">CRITICAL REMINDER:</p><p>Please make sure to use the <b>Backup</b> button in the History menu frequently. If you clear your browser cache/data without an external backup, your saved CVs will be <b>permanently lost</b> and we cannot be held responsible.</p></div>',
         confirmButtonText: 'I understand',
         confirmButtonColor: '#3b82f6'
       }).then(() => {
@@ -4097,7 +3675,6 @@ Return a raw JSON object ONLY, NO markdown:
       cvNode.style.cssText = cvData.cssText;
       cvNode.setAttribute("data-layout", cvData.layout || "sidebar-left");
       closeHistoryModal();
-      if (window.matchMedia('(max-width: 820px)').matches) showMobileViewAfterAction();
     }
     async function renderHistory() {
       const list = document.getElementById("historyList");
@@ -4192,82 +3769,6 @@ Return a raw JSON object ONLY, NO markdown:
       reader.readAsText(file);
       event.target.value = '';
     }
-    const MOBILE_ROUTE_KEY = 'cv_mobile_route';
-    function isMobileViewport() {
-      return window.matchMedia('(max-width: 820px)').matches;
-    }
-    function getMobileRoute() {
-      const route = localStorage.getItem(MOBILE_ROUTE_KEY);
-      if (route === 'normal' || route === 'mobile-optimized') return route;
-      return null;
-    }
-    function shouldUseMobileOptimizedRoute() {
-      return getMobileRoute() === 'mobile-optimized';
-    }
-    function closeRouteChooser() {
-      const chooser = document.getElementById('mobileRouteChooser');
-      if (chooser) chooser.classList.remove('active');
-    }
-    function openRouteChooser(isChangeMode) {
-      if (!isMobileViewport()) return;
-      const chooser = document.getElementById('mobileRouteChooser');
-      if (!chooser) return;
-      const subtitle = document.getElementById('routePickerSubtitle');
-      if (subtitle) {
-        subtitle.textContent = isChangeMode
-          ? 'Switch between Normal and Mobile Optimized routes. Your choice is saved.'
-          : 'Pick how you want to use the CV builder on mobile. You can change this anytime.';
-      }
-      chooser.classList.add('active');
-    }
-    function routeChooserOverlayClick(event) {
-      if (event.target !== event.currentTarget) return;
-      if (getMobileRoute()) closeRouteChooser();
-    }
-    function selectMobileRoute(route) {
-      if (route !== 'normal' && route !== 'mobile-optimized') return;
-      localStorage.setItem(MOBILE_ROUTE_KEY, route);
-      applyMobileRoute(route);
-      closeRouteChooser();
-    }
-    function applyMobileRoute(route) {
-      document.body.classList.remove('mobile-route-normal', 'mobile-route-optimized', 'mobile-cv-view');
-      if (!isMobileViewport()) return;
-      if (route === 'mobile-optimized') {
-        document.body.classList.add('mobile-route-optimized');
-        mobileShowActions();
-      } else {
-        document.body.classList.add('mobile-route-normal');
-        mobileShowCVNormal();
-      }
-    }
-    function initializeMobileRoute() {
-      if (!isMobileViewport()) {
-        document.body.classList.remove('mobile-route-normal', 'mobile-route-optimized', 'mobile-cv-view');
-        closeRouteChooser();
-        return;
-      }
-      const route = getMobileRoute();
-      if (!route) {
-        openRouteChooser(false);
-        return;
-      }
-      applyMobileRoute(route);
-    }
-    function showMobileViewAfterAction() {
-      if (!isMobileViewport()) return;
-      if (shouldUseMobileOptimizedRoute()) {
-        mobileShowCV();
-      } else {
-        mobileShowCVNormal();
-      }
-    }
-    function mobileShowCVNormal() {
-      document.body.classList.add('mobile-route-normal');
-      document.body.classList.remove('mobile-route-optimized', 'mobile-cv-view');
-      document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0');
-      _initMobileTouchFix();
-    }
     var _mobileScrolling = false;
     var _mobileTouchStartX = 0;
     var _mobileTouchStartY = 0;
@@ -4276,7 +3777,7 @@ Return a raw JSON object ONLY, NO markdown:
       var cv = document.getElementById('cvToExport');
       if (!cv || cv._touchFixDone) return;
       cv._touchFixDone = true;
-      cv.addEventListener('touchstart', function(e) {
+      cv.addEventListener('touchstart', function (e) {
         _mobileTouchStartX = e.touches[0].clientX;
         _mobileTouchStartY = e.touches[0].clientY;
         _mobileScrolling = false;
@@ -4301,7 +3802,7 @@ Return a raw JSON object ONLY, NO markdown:
           t = t.parentElement;
         }
       }, { passive: true });
-      cv.addEventListener('touchmove', function(e) {
+      cv.addEventListener('touchmove', function (e) {
         if (!_mobileScrolling) {
           var dx = Math.abs(e.touches[0].clientX - _mobileTouchStartX);
           var dy = Math.abs(e.touches[0].clientY - _mobileTouchStartY);
@@ -4310,7 +3811,7 @@ Return a raw JSON object ONLY, NO markdown:
           }
         }
       }, { passive: true });
-      cv.addEventListener('touchend', function(e) {
+      cv.addEventListener('touchend', function (e) {
         if (_mobileTouchTarget) {
           _mobileTouchTarget.setAttribute('contenteditable', 'true');
           if (!_mobileScrolling) {
@@ -4321,43 +3822,8 @@ Return a raw JSON object ONLY, NO markdown:
         _mobileScrolling = false;
       }, { passive: true });
     }
-    function mobileShowCV() {
-      if (!shouldUseMobileOptimizedRoute()) {
-        mobileShowCVNormal();
-        return;
-      }
-      document.body.classList.remove('mobile-route-normal');
-      document.body.classList.add('mobile-route-optimized');
-      document.body.classList.add('mobile-cv-view');
-      document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=810, user-scalable=yes');
-      _initMobileTouchFix();
-      var saved = localStorage.getItem('floatbar_collapsed');
-      var icons = document.getElementById('floatBarIcons');
-      var toggle = document.getElementById('floatBarToggle');
-      if (saved === 'true') {
-        icons.classList.add('collapsed');
-        toggle.textContent = '▲';
-      } else {
-        icons.classList.remove('collapsed');
-        toggle.textContent = '▼';
-      }
-    }
-    function mobileShowActions() {
-      if (!shouldUseMobileOptimizedRoute()) {
-        mobileShowCVNormal();
-        return;
-      }
-      document.body.classList.remove('mobile-route-normal');
-      document.body.classList.add('mobile-route-optimized');
-      document.body.classList.remove('mobile-cv-view');
-      document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=yes');
-    }
-    function toggleFloatBar() {
-      var icons = document.getElementById('floatBarIcons');
-      var toggle = document.getElementById('floatBarToggle');
-      var isCollapsed = icons.classList.toggle('collapsed');
-      toggle.textContent = isCollapsed ? '▲' : '▼';
-      localStorage.setItem('floatbar_collapsed', isCollapsed);
+    if (window.matchMedia('(max-width: 820px)').matches) {
+      document.addEventListener('DOMContentLoaded', _initMobileTouchFix);
     }
   </script>
 <script src="./pwa-register.js" type="module"></script></body>

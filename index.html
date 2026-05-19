@@ -2190,7 +2190,7 @@
 <div class="ai-modal-overlay" id="aiModalOverlay" onclick="if (event.target === this) closeAIModal();">
 <div class="ai-modal">
 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-<h2>✨ AI</h2>
+<h2>✨</h2>
 <div id="aiQuotaDisplay" style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: nowrap;">
 <span id="aiQuotaIndicator" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
 <span id="aiQuotaText">Loading Quota...</span>
@@ -3618,7 +3618,7 @@
         const diffMs = tomorrow - now;
         const diffHrs = Math.floor(diffMs / 3600000);
         const diffMins = Math.floor((diffMs % 3600000) / 60000);
-        qText.textContent = `Daily Premium Quota: ${percent}% Remaining (Resets in ${diffHrs}h ${diffMins}m)`;
+        qText.textContent = `Quota: ${percent}% Remaining (Resets in ${diffHrs}h ${diffMins}m)`;
         if (percent > 50) qInd.style.background = "#10b981";
         else if (percent > 20) qInd.style.background = "#f59e0b";
         else qInd.style.background = "#ef4444";

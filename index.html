@@ -2629,7 +2629,7 @@
     const CV_TEMPLATES = [
       {
         id: 'executive-dark',
-        name: 'Executive Dark',
+        name: 'Executive Dark(Default)',
         desc: 'Bold dark sidebar with gold accents. Perfect for senior professionals and executives.',
         badge: 'exec',
         theme: {
@@ -3842,6 +3842,7 @@
         return "The AI request timed out. Please try again.";
       }
       if (msg.includes("cancel") || msg.includes("popup") || msg.includes("closed")) {
+        if (isApkView) return "Token flow was cancelled. Re-run Generate, open token page, copy token, and paste it.";
         return "Puter sign-in was not completed. Please complete authentication and try again.";
       }
       if (raw) return raw;
@@ -3875,6 +3876,67 @@
       }
     }
     const PUTER_AUTH_TOKEN_KEY = "puter_auth_token_manual";
+    const PUTER_TOKEN_PAGE_URL = "https://puter.com/dashboard#account";
+    function _openExternalUrlForToken(url) {
+      const targetUrl = url || PUTER_TOKEN_PAGE_URL;
+      let opened = false;
+      try {
+        const bridge = window.NativeBridge || window.Android || null;
+        if (bridge) {
+          const methods = [
+            "openUrl", "openURL", "openExternalUrl", "openExternalURL",
+            "openExternalLink", "openLink", "openBrowser", "launchUrl", "launchURL"
+          ];
+          for (let i = 0; i < methods.length; i += 1) {
+            const fn = methods[i];
+            if (typeof bridge[fn] === "function") {
+              bridge[fn](targetUrl);
+              opened = true;
+              break;
+            }
+          }
+        }
+      } catch (e) {}
+      if (!opened) {
+        try {
+          const w = window.open(targetUrl, "_blank", "noopener,noreferrer");
+          opened = !!w;
+        } catch (e) {}
+      }
+      if (!opened) {
+        try {
+          location.href = targetUrl;
+          opened = true;
+        } catch (e) {}
+      }
+      return opened;
+    }
+    async function _showApkTokenInstructionsAndOpenPage() {
+      while (true) {
+        _openExternalUrlForToken(PUTER_TOKEN_PAGE_URL);
+        const result = await Swal.fire({
+          title: "APK Token Mode",
+          html:
+            "<div style='text-align:left;font-size:14px;line-height:1.6;'>" +
+            "<p><b>AI in APK uses token mode only.</b></p>" +
+            "<p>1. Token page was opened automatically.</p>" +
+            "<p>2. Log in on that page if needed.</p>" +
+            "<p>3. Copy <b>Auth Token</b> from Account section.</p>" +
+            "<p>4. Return here and paste token.</p>" +
+            "<p style='margin-top:10px;color:#64748b;'>If page did not open, tap this:</p>" +
+            "<p><a href='" + PUTER_TOKEN_PAGE_URL + "' target='_blank' rel='noopener noreferrer'>" + PUTER_TOKEN_PAGE_URL + "</a></p>" +
+            "</div>",
+          confirmButtonText: "I Copied Token",
+          showCancelButton: true,
+          cancelButtonText: "Open Token Page Again",
+          confirmButtonColor: "#2563eb",
+          cancelButtonColor: "#0f766e",
+          allowOutsideClick: false,
+          allowEscapeKey: true
+        });
+        if (result.isConfirmed) return;
+      }
+    }
     function _getStoredPuterAuthToken() {
       const token = localStorage.getItem(PUTER_AUTH_TOKEN_KEY) || "";
       return token.trim();
@@ -3883,8 +3945,8 @@
       const result = await Swal.fire({
         title: "Puter Auth Token Required",
         html: "<div style='text-align:left;font-size:14px;line-height:1.5;'>" +
-              "<p>APK WebView cannot complete popup login on this device.</p>" +
-              "<p>Paste your Puter Auth Token from puter.com/dashboard#account.</p>" +
+              "<p>Paste your Puter Auth Token for APK AI mode.</p>" +
+              "<p>This is saved locally in this app only.</p>" +
               "</div>",
         input: "password",
         inputPlaceholder: "Paste PUTER_AUTH_TOKEN",
@@ -3966,6 +4028,14 @@
       const colorOv = getColorOverrides();
       const hasColorOverrides = Object.keys(colorOv).length > 0;
       const hasCustomDetails = purpose || targetRole || stylePref || isCustomColors || hasColorOverrides;
+      const strictContrastRules = [
+        "STRICT COLOR CONTRAST RULES (MANDATORY):",
+        "- mainTextColor must have at least 7:1 contrast against backgroundColor.",
+        "- primaryTextColor must have at least 7:1 contrast against primaryAreaColor.",
+        "- secondaryTextColor must have at least 4.5:1 contrast against backgroundColor.",
+        "- Never output low-contrast or hard-to-read text/background pairs.",
+        "- If your first palette fails these rules, regenerate colors until all rules pass."
+      ].join('\n');
       let optionalContextStr = "";
       if (hasCustomDetails) {
         let parts = ["OPTIONAL CONTEXT FROM USER (use this to tailor content and design):"];
@@ -3985,13 +4055,15 @@
         } else {
           parts.push("- Generate a COMPLETELY NEW, visually striking and professional color palette.");
         }
+        parts.push(strictContrastRules);
         optionalContextStr = parts.join('\n');
       } else {
         optionalContextStr = `NO OPTIONAL DETAILS PROVIDED. You have FULL CREATIVE FREEDOM!
 - Generate a STUNNING, UNIQUE, ADVANCED, AND HIGHLY PROFESSIONAL CV.
 - Create a completely new, visually striking color palette (use rich, modern colors like sleek dark modes, vibrant gradients, or sophisticated corporate tones).
 - Pick modern Google Fonts for headings and body that pair beautifully.
-- Do NOT just use generic blues and grays. Surprise the user with a premium design!`;
+- Do NOT just use generic blues and grays. Surprise the user with a premium design!
+${strictContrastRules}`;
       }
       const systemPrompt = `You are a world-class Resume parser AND an Expert UI/UX Architect.
 Do TWO things:
@@ -4001,6 +4073,11 @@ CRITICAL REQUIREMENT: Use these exact values in your JSON output:
 - "layoutDirection": "${forcedLayout}"
 - "headerStyle": "${forcedHeader}"
 - "photoShape": "${forcedShape}"
+ALWAYS respect strict readability contrast:
+- mainTextColor vs backgroundColor >= 7:1
+- primaryTextColor vs primaryAreaColor >= 7:1
+- secondaryTextColor vs backgroundColor >= 4.5:1
+- If any fail, regenerate only the colors until all pass
 ${optionalContextStr}
 Return a raw JSON object ONLY, NO markdown:
 {
@@ -4028,25 +4105,27 @@ Return a raw JSON object ONLY, NO markdown:
 }`;
       try {
         let content = "";
-        try {
+        if (isApkView) {
+          let token = _getStoredPuterAuthToken();
+          if (!token) {
+            await _showApkTokenInstructionsAndOpenPage();
+            token = await _promptForPuterAuthToken();
+          }
+          if (!token) throw new Error("Token entry cancelled.");
+          setAIStatus("processing", "Generating CV using APK token mode...");
+          content = await _callPuterOpenAICompat(
+            systemPrompt + "\n\nUSER TEXT:\n" + rawText,
+            "gemini-2.5-flash-lite",
+            token,
+            isApkView
+          );
+        } else {
           await _ensurePuterAuthForAI(isApkView);
           setAIStatus("processing", "AI is generating your CV architecture...");
           content = await _withTimeout(
             puter.ai.chat(systemPrompt + "\n\nUSER TEXT:\n" + rawText, { model: 'gemini-2.5-flash-lite' }),
             isApkView ? 70000 : 90000,
             "AI request timed out."
-          );
-        } catch (sdkError) {
-          if (!isApkView) throw sdkError;
-          setAIStatus("processing", "Trying APK fallback mode...");
-          let token = _getStoredPuterAuthToken();
-          if (!token) token = await _promptForPuterAuthToken();
-          if (!token) throw new Error("Token entry cancelled.");
-          content = await _callPuterOpenAICompat(
-            systemPrompt + "\n\nUSER TEXT:\n" + rawText,
-            "gemini-2.5-flash-lite",
-            token,
-            isApkView
           );
         }
         if (typeof content !== 'string') content = content?.text || content?.message?.content || "";

@@ -58,11 +58,7 @@ if (workbox) {
     },
     {
         "url": "index.html",
-        "revision": "7a34bca71e234293ecb1ababcdcb991c"
-    },
-    {
-        "url": "index2.html",
-        "revision": "8f3208ede7a2e41e96025c6a531ef779"
+        "revision": "06b4eb9041f569b7b11671160e794d12"
     },
     {
         "url": "index3.html",
@@ -70,11 +66,15 @@ if (workbox) {
     },
     {
         "url": "index4.html",
-        "revision": "f9eddd991e6021534cddaa03c4fb237f"
+        "revision": "75a051a145bdea9b5507638615e27ef0"
+    },
+    {
+        "url": "index5.html",
+        "revision": "7a34bca71e234293ecb1ababcdcb991c"
     },
     {
         "url": "manifest.json",
-        "revision": "f4b5cb077d97067586fcefa067345a8e"
+        "revision": "d5fdf318e01e29220eca36f33f88ab55"
     },
     {
         "url": "offline.html",
@@ -98,7 +98,7 @@ if (workbox) {
     },
     {
         "url": "sw.js",
-        "revision": "6192041c16f0b4d790435ac6c54831f9"
+        "revision": "d6c297d9137c47265e4ccf71edf6e23c"
     },
     {
         "url": "test.html",

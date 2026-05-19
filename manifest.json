@@ -1,6 +1,6 @@
 {
-  "name": "Interactive CV Builder - Safeer Ullah",
-  "short_name": "Interactive CV Builder - Safeer Ullah",
+  "name": "Interactive AI CV Builder",
+  "short_name": "Interactive AI CV Builder",
   "description": "A description of the web application.",
   "start_url": "index.html",
   "display": "standalone",

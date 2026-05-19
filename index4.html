@@ -878,6 +878,16 @@
       body.mobile-cv-view {
         background-color: #e2e8f0;
         padding-bottom: 70px !important;
+        overflow: auto !important;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      body.mobile-cv-view .cv-container {
+        touch-action: manipulation;
+      }
+
+      body.mobile-cv-view .cv-container * {
+        touch-action: manipulation;
       }
 
       .control-btn {
@@ -2689,9 +2699,63 @@ Return a raw JSON object ONLY, NO markdown:
       };
       reader.readAsText(file);
     }
+    var _mobileScrolling = false;
+    var _mobileTouchStartX = 0;
+    var _mobileTouchStartY = 0;
+    var _mobileTouchTarget = null;
+    function _initMobileTouchFix() {
+      var cv = document.getElementById('cvToExport');
+      if (!cv || cv._touchFixDone) return;
+      cv._touchFixDone = true;
+      cv.addEventListener('touchstart', function(e) {
+        _mobileTouchStartX = e.touches[0].clientX;
+        _mobileTouchStartY = e.touches[0].clientY;
+        _mobileScrolling = false;
+        _mobileTouchTarget = null;
+        if (document.activeElement && document.activeElement !== document.body) {
+          document.activeElement.blur();
+        }
+        var t = e.target;
+        while (t && t !== cv) {
+          if (t.isContentEditable || (t.getAttribute && t.getAttribute('contenteditable') === 'true')) {
+            var ce = t;
+            while (ce && ce !== cv) {
+              if (ce.getAttribute && ce.getAttribute('contenteditable') === 'true') {
+                _mobileTouchTarget = ce;
+                ce.setAttribute('contenteditable', 'false');
+                break;
+              }
+              ce = ce.parentElement;
+            }
+            break;
+          }
+          t = t.parentElement;
+        }
+      }, { passive: true });
+      cv.addEventListener('touchmove', function(e) {
+        if (!_mobileScrolling) {
+          var dx = Math.abs(e.touches[0].clientX - _mobileTouchStartX);
+          var dy = Math.abs(e.touches[0].clientY - _mobileTouchStartY);
+          if (dx > 6 || dy > 6) {
+            _mobileScrolling = true;
+          }
+        }
+      }, { passive: true });
+      cv.addEventListener('touchend', function(e) {
+        if (_mobileTouchTarget) {
+          _mobileTouchTarget.setAttribute('contenteditable', 'true');
+          if (!_mobileScrolling) {
+            _mobileTouchTarget.focus();
+          }
+          _mobileTouchTarget = null;
+        }
+        _mobileScrolling = false;
+      }, { passive: true });
+    }
     function mobileShowCV() {
       document.body.classList.add('mobile-cv-view');
       document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=810, user-scalable=yes');
+      _initMobileTouchFix();
       var saved = localStorage.getItem('floatbar_collapsed');
       var icons = document.getElementById('floatBarIcons');
       var toggle = document.getElementById('floatBarToggle');

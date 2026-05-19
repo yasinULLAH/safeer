@@ -17,7 +17,7 @@
       background-color: #e2e8f0;
       background-image: radial-gradient(circle at 50% 0%, #f8fafc 0%, #cbd5e1 100%);
       margin: 0;
-      padding: 40px 20px 60px 20px;
+      padding: 20px 20px 40px 20px;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -25,26 +25,33 @@
     }
 
     .toolbar {
-      display: flex;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
       justify-content: center;
-      margin-bottom: 30px;
-      padding: 10px;
+      margin: 0 auto 14px auto;
+      padding: 8px 0;
+      width: 210mm;
+      max-width: 210mm;
+      box-sizing: border-box;
     }
 
     .btn {
-      padding: 8px 16px;
+      padding: 7px 10px;
       border: 1px solid #cbd5e1;
       border-radius: 6px;
       font-weight: 500;
-      font-size: 13px;
+      font-size: 12px;
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 5px;
       background: white;
       color: #334155;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .btn:hover {
@@ -192,6 +199,8 @@
       transition: opacity 0.2s;
       user-select: none;
       font-family: sans-serif;
+      position: relative;
+      z-index: 10;
     }
 
     .section-controls {
@@ -207,46 +216,55 @@
       position: relative;
     }
 
-    .section-hover-target:hover>.section-controls .control-btn,
-    .section-hover-target:hover>.section-title>.section-controls .control-btn,
-    .list-item-wrapper:hover>.section-controls .control-btn,
-    .contact-item:hover>.section-controls .control-btn {
+    .section-hover-target:hover > .section-controls .control-btn,
+    .section-hover-target:hover > .section-title > .section-controls .control-btn,
+    .section-hover-target:hover .section-controls .control-btn,
+    .list-item-wrapper:hover > .section-controls .control-btn,
+    .list-item-wrapper:hover .section-controls .control-btn,
+    .contact-item:hover > .section-controls .control-btn,
+    .contact-item:hover .section-controls .control-btn,
+    .entry-block:hover .section-controls .control-btn {
       opacity: 1;
     }
 
     .btn-add {
-      color: #10b981;
+      color: #fff;
       font-size: 18px;
       margin-left: 10px;
-      background: none;
+      background: #10b981;
       border: none;
+      border-radius: 4px;
+      padding: 2px 6px;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
     }
 
     .btn-delete {
-      color: #ef4444;
+      color: #fff;
       font-size: 14px;
       margin-left: 10px;
       padding: 2px 6px;
       border-radius: 4px;
-      background: rgba(239, 68, 68, 0.1);
+      background: #ef4444;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
     }
 
     .btn-delete:hover {
-      background: #ef4444;
+      background: #dc2626;
       color: white;
     }
 
     .btn-duplicate {
-      color: #3b82f6;
+      color: #fff;
       font-size: 14px;
       margin-left: 5px;
       padding: 2px 6px;
       border-radius: 4px;
-      background: rgba(59, 130, 246, 0.1);
+      background: #3b82f6;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.2);
     }
 
     .btn-duplicate:hover {
-      background: #3b82f6;
+      background: #2563eb;
       color: white;
     }
 
@@ -894,7 +912,6 @@
         display: inline-block !important;
         padding: 4px 8px !important;
         margin-left: 4px !important;
-        background: rgba(0, 0, 0, 0.08) !important;
         border-radius: 4px !important;
         font-size: 14px !important;
         opacity: 1 !important;

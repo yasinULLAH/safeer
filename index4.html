@@ -909,12 +909,16 @@
       }
 
       .control-btn {
-        display: inline-block !important;
-        padding: 4px 8px !important;
-        margin-left: 4px !important;
-        border-radius: 4px !important;
-        font-size: 14px !important;
+        display: inline-flex !important;
+        padding: 2px 5px !important;
+        margin-left: 3px !important;
+        border-radius: 3px !important;
+        font-size: 10px !important;
         opacity: 1 !important;
+        min-width: 18px;
+        min-height: 18px;
+        align-items: center;
+        justify-content: center;
       }
 
       .toolbar {
@@ -1474,15 +1478,58 @@
     }
 
     @media (max-width: 820px) {
+      .tpl-picker-overlay {
+        align-items: stretch !important;
+      }
+
       .tpl-picker-modal {
         width: 100% !important;
         height: 100% !important;
         max-width: none !important;
         max-height: none !important;
         border-radius: 0 !important;
-        padding: 20px !important;
+        padding: 20px 16px !important;
         margin: 0 !important;
         box-sizing: border-box;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .tpl-picker-modal h2 {
+        font-size: 22px !important;
+        margin-bottom: 6px !important;
+      }
+
+      .tpl-picker-subtitle {
+        font-size: 14px !important;
+        margin-bottom: 16px !important;
+      }
+
+      #tplColorOverrides summary {
+        font-size: 15px !important;
+        padding: 10px 0 !important;
+      }
+
+      #tplColorOverrides > div {
+        padding: 14px !important;
+      }
+
+      #tplColorOverrides label {
+        font-size: 12px !important;
+      }
+
+      #tplColorOverrides .tpl-color-input {
+        width: 40px !important;
+        height: 34px !important;
+      }
+
+      #tplColorOverrides .tpl-color-hex {
+        font-size: 13px !important;
+      }
+
+      #tplColorOverrides button {
+        padding: 10px 20px !important;
+        font-size: 14px !important;
       }
 
       .tpl-grid {
@@ -1491,24 +1538,33 @@
       }
 
       .tpl-card-preview {
-        height: 120px !important;
+        height: 130px !important;
       }
 
       .tpl-card-name {
-        font-size: 12px !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
       }
 
       .tpl-card-desc {
-        font-size: 10px !important;
+        font-size: 11px !important;
+        line-height: 1.4 !important;
       }
 
       .tpl-card-badge {
-        font-size: 8px !important;
-        padding: 2px 6px !important;
+        font-size: 9px !important;
+        padding: 3px 7px !important;
       }
 
       .tpl-card-info {
         padding: 10px 12px !important;
+      }
+
+      .tpl-picker-modal > div:last-child button {
+        width: 100% !important;
+        padding: 14px !important;
+        font-size: 16px !important;
+        border-radius: 10px !important;
       }
     }
     .step-textarea {

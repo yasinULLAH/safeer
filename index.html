@@ -1742,7 +1742,7 @@
 <div class="main-content"></div>
 </div>
 <div id="repo" style="display:none;">
-<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="if(!event.target.classList.contains('control-btn')) pickPhoto()">
+<div class="profile-photo-container section-hover-target" data-zone="sidebar" id="photoBlock" onclick="if(!event.target.classList.contains('control-btn') &amp;&amp; event.target.tagName !== 'INPUT') pickPhoto()">
 <div style="position:absolute; top:5px; right:5px; z-index:10;"><span class="btn-delete control-btn" onclick="deleteItem(this)" style="background:rgba(255,0,0,0.5); color:white;">×</span></div>
 <input accept="image/*" id="photoInput" onchange="loadPhoto(event)" type="file"/>
 <input accept="image/*" capture="environment" id="photoCameraInput" onchange="loadPhoto(event)" style="display:none;" type="file"/>
@@ -2280,7 +2280,7 @@
       restoreProfilePhoto();
       const pb = document.getElementById('cvToExport').querySelector('#photoBlock');
       if (pb) {
-        pb.setAttribute('onclick', "if(!event.target.classList.contains('control-btn')) pickPhoto()");
+        pb.setAttribute('onclick', "if(!event.target.classList.contains('control-btn') && event.target.tagName !== 'INPUT') pickPhoto()");
         if (!pb.querySelector('#photoCameraInput')) {
           const ci = document.createElement('input');
           ci.type = 'file'; ci.accept = 'image/*'; ci.capture = 'environment';
@@ -2326,11 +2326,23 @@
       const titleEl = popup.querySelector('.swal2-title');
       if (titleEl) titleEl.style.cssText = 'font-size:' + (7 * scale) + 'vw!important;padding:0!important;margin:0 0 ' + (2 * scale) + 'vw 0!important;';
       const htmlEl = popup.querySelector('.swal2-html-container');
-      if (htmlEl) htmlEl.style.cssText = 'font-size:' + (4.5 * scale) + 'vw!important;flex:1!important;display:flex!important;align-items:center!important;justify-content:center!important;margin:0!important;overflow:hidden!important;';
+      if (htmlEl) htmlEl.style.cssText = 'font-size:' + (4.5 * scale) + 'vw!important;flex:1!important;display:flex!important;align-items:center!important;justify-content:center!important;margin:0!important;overflow:hidden!important;width:100%!important;';
       const actionsEl = popup.querySelector('.swal2-actions');
       if (actionsEl) actionsEl.style.cssText = 'width:100%!important;gap:' + (3 * scale) + 'vw!important;margin:' + (2 * scale) + 'vw 0 0 0!important;flex-wrap:nowrap!important;';
       popup.querySelectorAll('.swal2-actions button').forEach(el => {
         el.style.cssText = 'font-size:' + (5 * scale) + 'vw!important;padding:' + (3.5 * scale) + 'vw ' + (4 * scale) + 'vw!important;border-radius:' + (3 * scale) + 'vw!important;flex:1!important;min-height:0!important;';
+      });
+      popup.querySelectorAll('.swal2-html-container button').forEach(el => {
+        el.style.fontSize = (5 * scale) + 'vw';
+        el.style.padding = (4 * scale) + 'vw';
+        el.style.borderRadius = (3 * scale) + 'vw';
+      });
+      popup.querySelectorAll('.swal2-html-container p').forEach(el => {
+        el.style.fontSize = (4.5 * scale) + 'vw';
+        el.style.marginBottom = (5 * scale) + 'vw';
+      });
+      popup.querySelectorAll('.swal2-html-container > div').forEach(el => {
+        el.style.gap = (4 * scale) + 'vw';
       });
     }
     function pickPhoto() {
@@ -2341,23 +2353,22 @@
       }
       Swal.fire({
         title: 'Upload Photo',
-        html: '<p>Choose how you\'d like to add your photo</p>',
-        showCancelButton: true,
-        showDenyButton: true,
-        confirmButtonText: '📷 Camera',
-        denyButtonText: '🖼️ Gallery',
-        cancelButtonText: 'Cancel',
-        confirmButtonColor: '#3b82f6',
-        denyButtonColor: '#8b5cf6',
+        html: '<p style="margin-bottom:20px;">Choose how you\'d like to add your photo</p><div style="display:flex;flex-direction:column;gap:16px;width:100%;"><button id="swalCamBtn" style="width:100%;padding:16px;font-size:18px;border:none;border-radius:12px;background:#3b82f6;color:#fff;cursor:pointer;font-weight:600;">📷 Camera</button><button id="swalGalBtn" style="width:100%;padding:16px;font-size:18px;border:none;border-radius:12px;background:#8b5cf6;color:#fff;cursor:pointer;font-weight:600;">🖼️ Gallery</button><button id="swalCanBtn" style="width:100%;padding:14px;font-size:16px;border:2px solid #e2e8f0;border-radius:12px;background:#fff;color:#64748b;cursor:pointer;font-weight:500;">Cancel</button></div>',
+        showConfirmButton: false,
+        showCancelButton: false,
         customClass: { container: 'swal2-fullscreen-mobile' },
-        didOpen: _scaleSwalFullscreen,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          openCameraCapture();
-        } else if (result.isDenied) {
-          const inp = document.getElementById('cvToExport').querySelector('#photoInput') || document.getElementById('photoInput');
-          if (inp) inp.click();
-        }
+        didOpen: () => {
+          _scaleSwalFullscreen();
+          document.getElementById('swalCamBtn').addEventListener('click', () => { Swal.close(); setTimeout(() => openCameraCapture(), 300); });
+          document.getElementById('swalGalBtn').addEventListener('click', () => {
+            Swal.close();
+            setTimeout(() => {
+              const inp = document.getElementById('cvToExport').querySelector('#photoInput') || document.getElementById('photoInput');
+              if (inp) inp.click();
+            }, 300);
+          });
+          document.getElementById('swalCanBtn').addEventListener('click', () => Swal.close());
+        },
       });
     }
     function openCameraCapture() {

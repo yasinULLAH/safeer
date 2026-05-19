@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover" name="viewport"/>
 <title>Interactive AI CV Builder</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -893,7 +893,10 @@
       }
 
       body {
-        padding: 0 !important;
+        --mobile-safe-top: 0px;
+        --mobile-safe-top: env(safe-area-inset-top);
+        --mobile-safe-top-offset: calc(var(--mobile-safe-top) + 10px);
+        padding: var(--mobile-safe-top-offset) 0 0 0 !important;
         margin: 0;
         background-image: none;
         background-color: #0f172a;
@@ -904,6 +907,7 @@
 
       body.mobile-cv-view {
         background-color: #e2e8f0;
+        padding-top: var(--mobile-safe-top-offset) !important;
         padding-bottom: 70px !important;
         overflow: auto !important;
         -webkit-overflow-scrolling: touch;
@@ -1159,7 +1163,7 @@
       }
 
       body.mobile-route-normal {
-        padding: 0 0 60px 0 !important;
+        padding: var(--mobile-safe-top-offset) 0 60px 0 !important;
         background-color: #e2e8f0 !important;
         overflow-x: hidden !important;
         min-height: auto !important;
@@ -4356,10 +4360,10 @@ Return a raw JSON object ONLY, NO markdown:
     }
     function _getCVViewportContent() {
       const fitScale = _getMobileFitScale();
-      return `width=810, initial-scale=${fitScale}, minimum-scale=${fitScale}, maximum-scale=5, user-scalable=yes`;
+      return `width=810, initial-scale=${fitScale}, minimum-scale=${fitScale}, maximum-scale=5, user-scalable=yes, viewport-fit=cover`;
     }
     function _getDeviceViewportContent() {
-      return 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5, user-scalable=yes';
+      return 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5, user-scalable=yes, viewport-fit=cover';
     }
     function _applyViewportForCurrentMobileMode() {
       if (!isMobileViewport()) {

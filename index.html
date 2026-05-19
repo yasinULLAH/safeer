@@ -3031,11 +3031,16 @@
       loadFontOverridesIntoUI();
       initFontOverrideInputs();
       updateFontPreview();
-      document.getElementById('tplPickerOverlay').classList.add('active');
+      const overlay = document.getElementById('tplPickerOverlay');
+      if (!overlay.classList.contains('active')) _lockMobileSwalViewport();
+      overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
     function closeTemplatePicker() {
-      document.getElementById('tplPickerOverlay').classList.remove('active');
+      const overlay = document.getElementById('tplPickerOverlay');
+      const wasActive = overlay.classList.contains('active');
+      overlay.classList.remove('active');
+      if (wasActive) _unlockMobileSwalViewport();
       document.body.style.overflow = '';
     }
     function applyTemplate(id) {
@@ -3462,7 +3467,9 @@
     }
     async function openAIModal() {
       document.body.style.overflow = "hidden";
-      document.getElementById("aiModalOverlay").classList.add("active");
+      const overlay = document.getElementById("aiModalOverlay");
+      if (!overlay.classList.contains('active')) _lockMobileSwalViewport();
+      overlay.classList.add("active");
       document.getElementById("aiTextInput").focus();
       document.getElementById("aiStatus").style.display = 'none';
       updateAIOverrideNotice();
@@ -3493,7 +3500,10 @@
     }
     function closeAIModal() {
       document.body.style.overflow = "";
-      document.getElementById("aiModalOverlay").classList.remove("active");
+      const overlay = document.getElementById("aiModalOverlay");
+      const wasActive = overlay.classList.contains('active');
+      overlay.classList.remove("active");
+      if (wasActive) _unlockMobileSwalViewport();
     }
     let _currentAIMode = 'paste';
     let _wizardStep = 1;
@@ -4166,11 +4176,16 @@ Return a raw JSON object ONLY, NO markdown:
     function openHistoryModal() {
       document.body.style.overflow = "hidden";
       renderHistory();
-      document.getElementById("historyModalOverlay").classList.add("active");
+      const overlay = document.getElementById("historyModalOverlay");
+      if (!overlay.classList.contains('active')) _lockMobileSwalViewport();
+      overlay.classList.add("active");
     }
     function closeHistoryModal() {
       document.body.style.overflow = "";
-      document.getElementById("historyModalOverlay").classList.remove("active");
+      const overlay = document.getElementById("historyModalOverlay");
+      const wasActive = overlay.classList.contains('active');
+      overlay.classList.remove("active");
+      if (wasActive) _unlockMobileSwalViewport();
     }
     async function exportBackup() {
       const cvs = await getAllFromDB();
@@ -4295,7 +4310,10 @@ Return a raw JSON object ONLY, NO markdown:
     }
     function closeRouteChooser() {
       const chooser = document.getElementById('mobileRouteChooser');
-      if (chooser) chooser.classList.remove('active');
+      if (!chooser) return;
+      const wasActive = chooser.classList.contains('active');
+      chooser.classList.remove('active');
+      if (wasActive) _unlockMobileSwalViewport();
     }
     function openRouteChooser(isChangeMode) {
       if (!isMobileViewport()) return;
@@ -4307,6 +4325,7 @@ Return a raw JSON object ONLY, NO markdown:
           ? 'Switch between Normal and Mobile Optimized routes. Your choice is saved.'
           : 'Pick how you want to use the CV builder on mobile. You can change this anytime.';
       }
+      if (!chooser.classList.contains('active')) _lockMobileSwalViewport();
       chooser.classList.add('active');
     }
     function routeChooserOverlayClick(event) {

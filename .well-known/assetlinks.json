@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.yasinullah.twa",
+        "sha256_cert_fingerprints": ["73:46:91:20:44:E1:22:BA:71:30:59:45:9A:3D:78:55:51:81:41:93:74:29:C6:F7:FB:DD:8F:39:94:2A:DC:ED"]
+      }
+    }]

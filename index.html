@@ -1129,11 +1129,11 @@
       }
 
       .swal2-title {
-        font-size: clamp(18px, 5.5vw, 32px) !important;
+        font-size: clamp(22px, 6.2vw, 34px) !important;
       }
 
       .swal2-html-container {
-        font-size: clamp(14px, 4.2vw, 24px) !important;
+        font-size: clamp(16px, 4.9vw, 25px) !important;
         flex: 1 !important;
         max-height: none !important;
         overflow-y: auto !important;
@@ -1148,14 +1148,14 @@
       .swal2-confirm,
       .swal2-cancel,
       .swal2-deny {
-        font-size: clamp(14px, 4vw, 22px) !important;
-        padding: clamp(10px, 3.2vw, 16px) clamp(16px, 5vw, 26px) !important;
-        border-radius: 10px !important;
+        font-size: clamp(16px, 4.8vw, 23px) !important;
+        padding: clamp(12px, 3.8vw, 17px) clamp(18px, 5.2vw, 28px) !important;
+        border-radius: 12px !important;
       }
 
       .swal2-input {
-        font-size: clamp(15px, 4.3vw, 24px) !important;
-        padding: clamp(10px, 3vw, 15px) !important;
+        font-size: clamp(16px, 4.7vw, 24px) !important;
+        padding: clamp(12px, 3.5vw, 16px) !important;
       }
 
       body.mobile-route-normal {
@@ -1301,6 +1301,55 @@
       line-height: 1.45;
     }
 
+    @media (max-width: 820px) {
+      #mobileRouteChooser {
+        align-items: stretch !important;
+        justify-content: stretch !important;
+        padding: 0 !important;
+      }
+
+      .route-picker-card {
+        width: 100% !important;
+        max-width: none !important;
+        height: 100% !important;
+        border-radius: 0 !important;
+        padding: 26px 18px !important;
+        box-shadow: none !important;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .route-picker-title {
+        font-size: clamp(24px, 7vw, 36px) !important;
+        margin-bottom: 10px !important;
+      }
+
+      .route-picker-subtitle {
+        font-size: clamp(16px, 4.7vw, 22px) !important;
+        line-height: 1.5 !important;
+        margin-bottom: 20px !important;
+      }
+
+      .route-picker-grid {
+        gap: 14px !important;
+      }
+
+      .route-option-btn {
+        border-radius: 14px !important;
+        padding: 16px !important;
+      }
+
+      .route-option-name {
+        font-size: clamp(17px, 4.8vw, 24px) !important;
+        margin-bottom: 6px !important;
+      }
+
+      .route-option-desc {
+        font-size: clamp(14px, 4.1vw, 20px) !important;
+        line-height: 1.5 !important;
+      }
+    }
+
     #mobileActionPanel {
       display: none;
       flex-direction: column;
@@ -1421,6 +1470,18 @@
       z-index: 9999;
       width: 810px;
       box-sizing: border-box;
+    }
+
+    body.mobile-modal-open #mobileCvFloatingBar,
+    body.mobile-modal-open #mobileActionPanel,
+    body.mobile-modal-open .toolbar {
+      display: none !important;
+    }
+
+    body.swal2-shown #mobileCvFloatingBar,
+    body.swal2-shown #mobileActionPanel,
+    body.swal2-shown .toolbar {
+      display: none !important;
     }
 
     .float-bar-toggle {
@@ -4249,6 +4310,38 @@ Return a raw JSON object ONLY, NO markdown:
     function isMobileViewport() {
       return window.matchMedia('(max-width: 820px)').matches;
     }
+    function _setViewportContent(content) {
+      const viewportMeta = document.querySelector('meta[name="viewport"]');
+      if (!viewportMeta) return;
+      if (viewportMeta.getAttribute('content') !== content) viewportMeta.setAttribute('content', content);
+    }
+    function _getMobileFitScale() {
+      const viewportWidth = window.innerWidth || (window.screen && window.screen.width) || 390;
+      const scale = Math.max(0.35, Math.min(1, viewportWidth / 810));
+      return Number(scale.toFixed(3));
+    }
+    function _getCVViewportContent() {
+      const fitScale = _getMobileFitScale();
+      return `width=810, initial-scale=${fitScale}, minimum-scale=${fitScale}, maximum-scale=5, user-scalable=yes`;
+    }
+    function _getDeviceViewportContent() {
+      return 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5, user-scalable=yes';
+    }
+    function _applyViewportForCurrentMobileMode() {
+      if (!isMobileViewport()) {
+        _setViewportContent(_getDeviceViewportContent());
+        return;
+      }
+      const body = document.body;
+      const showFullCV =
+        body.classList.contains('mobile-route-normal') ||
+        body.classList.contains('mobile-cv-view');
+      if (showFullCV) {
+        _setViewportContent(_getCVViewportContent());
+      } else {
+        _setViewportContent(_getDeviceViewportContent());
+      }
+    }
     const _swalFireOriginal = Swal.fire.bind(Swal);
     let _mobileSwalViewportLockCount = 0;
     function _lockMobileSwalViewport() {
@@ -4256,6 +4349,7 @@ Return a raw JSON object ONLY, NO markdown:
       if (_mobileSwalViewportLockCount === 0) {
         document.documentElement.classList.add('mobile-modal-open');
         document.body.classList.add('mobile-modal-open');
+        _setViewportContent(_getDeviceViewportContent());
       }
       _mobileSwalViewportLockCount += 1;
     }
@@ -4265,6 +4359,7 @@ Return a raw JSON object ONLY, NO markdown:
       if (_mobileSwalViewportLockCount > 0) return;
       document.documentElement.classList.remove('mobile-modal-open');
       document.body.classList.remove('mobile-modal-open');
+      _applyViewportForCurrentMobileMode();
     }
     Swal.fire = function() {
       const args = Array.from(arguments);
@@ -4374,7 +4469,7 @@ Return a raw JSON object ONLY, NO markdown:
     function mobileShowCVNormal() {
       document.body.classList.add('mobile-route-normal');
       document.body.classList.remove('mobile-route-optimized', 'mobile-cv-view');
-      document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=810, user-scalable=yes');
+      _applyViewportForCurrentMobileMode();
       _initMobileTouchFix();
     }
     var _mobileScrolling = false;
@@ -4438,7 +4533,7 @@ Return a raw JSON object ONLY, NO markdown:
       document.body.classList.remove('mobile-route-normal');
       document.body.classList.add('mobile-route-optimized');
       document.body.classList.add('mobile-cv-view');
-      document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=810, user-scalable=yes');
+      _applyViewportForCurrentMobileMode();
       _initMobileTouchFix();
       var saved = localStorage.getItem('floatbar_collapsed');
       var icons = document.getElementById('floatBarIcons');
@@ -4459,7 +4554,7 @@ Return a raw JSON object ONLY, NO markdown:
       document.body.classList.remove('mobile-route-normal');
       document.body.classList.add('mobile-route-optimized');
       document.body.classList.remove('mobile-cv-view');
-      document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=yes');
+      _applyViewportForCurrentMobileMode();
     }
     function toggleFloatBar() {
       var icons = document.getElementById('floatBarIcons');

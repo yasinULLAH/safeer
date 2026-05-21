@@ -53,8 +53,8 @@ if (workbox) {
         "revision": "05bdb783ee6514c8c072e47680af8ff7"
     },
     {
-        "url": "assetlinks.json",
-        "revision": "318623e200923d8084008ec69dfe209a"
+        "url": ".nojekyll",
+        "revision": "d41d8cd98f00b204e9800998ecf8427e"
     },
     {
         "url": "build pwa make html app offline and installable yasin best working re-run this for updates best for html only.pyw",
@@ -86,15 +86,15 @@ if (workbox) {
     },
     {
         "url": "Interactive AI CV Builder.aab",
-        "revision": "3e8ec7eb483c57439453364044c0e6d9"
+        "revision": "bc85cf26f105fcbadcc3146836df2ddb"
     },
     {
         "url": "Interactive AI CV Builder.apk",
-        "revision": "2d17b38c9eb07283d543c27081376690"
+        "revision": "9ad279329ddee8ef63079ce023b161dd"
     },
     {
         "url": "manifest.json",
-        "revision": "4a1f851bdabf98152d27970bbbec57d6"
+        "revision": "d5fdf318e01e29220eca36f33f88ab55"
     },
     {
         "url": "offline.html",
@@ -122,15 +122,15 @@ if (workbox) {
     },
     {
         "url": "signing-key-info.txt",
-        "revision": "5a82ecc18225690b993c81261a85c5af"
+        "revision": "01e752bdc75b92d4c6f3e67946c5181b"
     },
     {
         "url": "signing.keystore",
-        "revision": "61abd2b9d20047c1ec78bf89816015fc"
+        "revision": "6c2b560027a3e3ff28916133ba8412ef"
     },
     {
         "url": "sw.js",
-        "revision": "8dc8dffd1344e98fe6e31cf95b32291b"
+        "revision": "5f8374b6313608e5a7966da96b21e81f"
     },
     {
         "url": "test.html",

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll Amendment Form</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 10mm;
+        }
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 11px;
+            margin: 0;
+            padding: 20px;
+            background: #fff;
+            color: #000;
+        }
+        .toolbar {
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: right;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        .btn:hover { background: #45a049; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { padding: 0; }
+            * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .header-left { width: 30%; }
+        .header-center { width: 40%; text-align: center; text-decoration: underline; font-weight: bold; font-size: 12px; }
+        .header-right { width: 30%; text-align: right; line-height: 1.5; }
+        
+        .code-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .code-label {
+            width: 80px;
+            font-size: 10px;
+        }
+        .box-grid {
+            display: inline-flex;
+            border-top: 1px solid #000;
+            border-left: 1px solid #000;
+        }
+        .box-cell {
+            width: 16px;
+            height: 16px;
+            border-right: 1px solid #000;
+            border-bottom: 1px solid #000;
+            text-align: center;
+            line-height: 16px;
+            text-transform: uppercase;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .box-cell:focus { outline: 2px solid blue; background: #eef; }
+
+        .function-code-container {
+            text-align: center;
+            margin: -20px 0 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 2px 4px;
+            vertical-align: middle;
+            overflow: hidden;
+        }
+        th { font-weight: normal; font-size: 10px; text-align: center; background: #fafafa; }
+        
+        .col-left { width: 22%; }
+        .col-name { width: 12%; }
+        .col-field { width: 5%; text-align: center; }
+        .col-contents { width: 32%; padding: 0 !important; }
+        .col-date { width: 9%; padding: 0 !important; }
+        .col-remarks { width: 20%; font-size: 10px; vertical-align: top; }
+
+        .inner-table { width: 100%; border-collapse: collapse; height: 100%; }
+        .inner-table td { border: none; border-right: 1px solid #ccc; text-align: center; font-family: monospace; padding: 0; width: 5%; height: 18px;}
+        .inner-table td:last-child { border-right: none; }
+        
+        .left-split { display: flex; justify-content: space-between; border-bottom: 1px solid #ccc; }
+        .left-split:last-child { border-bottom: none; }
+        .left-label { padding-right: 10px; }
+        .left-value { text-align: right; }
+
+        .editable-area:focus { background: #eef; outline: none; }
+        
+        .footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+        .sig-line {
+            display: inline-block;
+            border-bottom: 1px solid #000;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar no-print">
+        <span style="float: left; line-height: 32px;">Editable Payroll Form - Click any text or box to edit. Click 'Export to PDF' for high-resolution output.</span>
+        <button class="btn" onclick="window.print()">🖨️ Export to PDF / Print</button>
+    </div>
+
+    <div class="header-section">
+        <div class="header-left">
+            <div style="width: 40px; height: 40px; border: 1px solid #000; text-align: center; line-height: 40px; margin-bottom: 10px; font-size: 8px;">[LOGO]</div>
+            <div style="font-size: 10px; font-weight: bold;">PAYROLL SYSTEM</div>
+            <div style="font-size: 9px;">(AMENDMENT FORM (GENERAL DATE)</div>
+            <br>
+            <div class="code-row">
+                <div class="code-label">DDO<br>Code</div>
+                <div class="box-grid">
+                    <div class="box-cell editable-area" contenteditable="true">B</div>
+                    <div class="box-cell editable-area" contenteditable="true">U</div>
+                    <div class="box-cell editable-area" contenteditable="true"></div>
+                    <div class="box-cell editable-area" contenteditable="true"></div>
+                    <div class="box-cell editable-area" contenteditable="true"></div>
+                </div>
+            </div>
+            <div class="code-row">
+                <div class="code-label">Sub-DDO<br>Code</div>
+                <div class="box-grid">
+                    <div class="box-cell editable-area" contenteditable="true">0</div>
+                    <div class="box-cell editable-area" contenteditable="true">0</div>
+                    <div class="box-cell editable-area" contenteditable="true">0</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header-center editable-area" contenteditable="true">
+            OFFICE OF THE PRINCIPAL GOVT: DEGREE COLLEGE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BANNU
+        </div>
+        
+        <div class="header-right">
+            <div style="font-weight: bold; font-size: 10px;">FORM PAY FO 2</div>
+            <div style="font-size: 10px; margin-top: 5px;">DATE: <span class="editable-area" contenteditable="true">___/___/2018</span></div>
+            <div style="font-size: 10px;">Page <span class="editable-area" contenteditable="true">______</span></div>
+        </div>
+    </div>
+
+    <div class="function-code-container">
+        <div style="font-size: 10px; margin-right: 10px; text-align: left;">Detailed Dept:<br>Function Code:</div>
+        <div class="box-grid">
+            <div class="box-cell editable-area" contenteditable="true">0</div>
+            <div class="box-cell editable-area" contenteditable="true">9</div>
+            <div class="box-cell editable-area" contenteditable="true">3</div>
+            <div class="box-cell editable-area" contenteditable="true">1</div>
+            <div class="box-cell editable-area" contenteditable="true">0</div>
+            <div class="box-cell editable-area" contenteditable="true">1</div>
+            <div class="box-cell editable-area" contenteditable="true"></div>
+            <div class="box-cell editable-area" contenteditable="true"></div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="col-left">National ID Card Number /<br>Personal Number</th>
+                <th class="col-name">Name</th>
+                <th class="col-field">Field<br>Id</th>
+                <th class="col-contents">New Contents</th>
+                <th class="col-date">Effective Date</th>
+                <th class="col-remarks">Remarks</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Row 1: ID -->
+            <tr>
+                <td style="padding:0">
+                    <table class="inner-table"><tr>
+                        <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td style="border-right:1px solid #000; border-left:1px solid #000;">-</td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td style="border-right:1px solid #000; border-left:1px solid #000;">-</td>
+                        <td contenteditable="true"></td>
+                    </tr></table>
+                </td>
+                <td class="editable-area" contenteditable="true" style="font-weight:bold;">Safeer Ullah</td>
+                <td class="editable-area" contenteditable="true"></td>
+                <td class="editable-area" contenteditable="true" style="text-align: center; font-weight: bold;">Adjustment</td>
+                <td style="padding:0">
+                    <table class="inner-table" style="border-left:1px solid #000; border-right:1px solid #000; font-weight:bold;"><tr>
+                        <td contenteditable="true">0</td><td contenteditable="true">1</td><td contenteditable="true">0</td><td contenteditable="true">6</td>
+                        <td contenteditable="true">2</td><td contenteditable="true">0</td><td contenteditable="true">2</td><td contenteditable="true">6</td>
+                    </tr></table>
+                </td>
+                <td rowspan="16" class="col-remarks editable-area" contenteditable="true">
+                    Appointed as Junior Clerk in BPS-11 Office Order No . CA-VII/Est: Section /ETEA Recruitment 2026/Posting 8044-128 dated 12/05/2026 S/Book Charge Report and Medical Attached .
+                </td>
+            </tr>
+            <!-- Row 2: Personal No -->
+            <tr>
+                <td class="editable-area" contenteditable="true"><b>Personal No.</b></td>
+                <td class="editable-area" contenteditable="true"><b>Junior Clerk</b></td>
+                <td class="editable-area center" contenteditable="true">0001</td>
+                <td style="padding:0">
+                    <table class="inner-table"><tr>
+                        <td contenteditable="true">P</td><td contenteditable="true">A</td><td contenteditable="true">Y</td><td contenteditable="true">-</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true">2</td><td contenteditable="true">5</td><td contenteditable="true">2</td><td contenteditable="true">6</td><td contenteditable="true">8</td><td contenteditable="true">/</td><td contenteditable="true">-</td>
+                    </tr></table>
+                </td>
+                <td style="padding:0"><table class="inner-table"><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table></td>
+            </tr>
+            <!-- Rows 3-15 generated via JS for compactness in source, or hardcoded. Let's hardcode a few for exact match -->
+            <script>
+                const rowData = [
+                    ["<b>Regular Pay fixed in BPS-11</b>", "", "1550", "S,P,A,-,-,-,-,-,-,-,-,-,-,-,/,-"],
+                    ["Pay <span style='float:right'>Rs. 18650</span>", "", "1001", "H,R,A,-,-,-,-,-,3,7,6,4,/,-"],
+                    ["SPA <span style='float:right'>Rs. 0000</span>", "", "1210", "C,A,-,-,-,-,-,-,3,8,6,9,/,-"],
+                    ["HRA <span style='float:right'>Rs. 2778</span>", "", "1518", "E,N,T,E,R,:,A,-,-,-,-,-,-,/,-"],
+                    ["C.A <span style='float:right'>Rs. 2856</span>", "", "1997", "M,A,-,-,-,-,-,-,2,0,3,2,/,-"],
+                    ["M.A <span style='float:right'>Rs. 1500</span>", "", "1505", "C,H,:,A,L,L,-,-,-,-,-,-,/,-"],
+                    ["Entertainment <span style='float:right'>Rs. 00</span>", "", "2148", "A,R,-,1,3,-,-,-,-,-,-,-,/,-"],
+                    ["M.Phil <span style='float:right'>Rs. 00</span>", "", "2199", "A,R,-,1,5,-,-,-,-,-,-,-,/,-"],
+                    ["Ar-13 <span style='float:right'>Rs. 00</span>", "", "2316", "S,P,L,A,L,L,O,W,-,-,4,7,4,2,/,-"],
+                    ["Ar-15 <span style='float:right'>Rs. 00</span>", "", "2347", "A,R,-,2,2,-,-,-,-,2,5,5,5,/,-"],
+                    ["Spl: Allow: <span style='float:right'>Rs. 3500</span>", "", "2341", "D,R,A,-,2,2,-,-,-,2,5,5,5,/,-"],
+                    ["Ar-22 <span style='float:right'>Rs. 1886</span>", "", "2379", "A,R,-,2,3,-,-,-,-,8,8,4,4,/,-"],
+                    ["DRA-22 <span style='float:right'>Rs. 1886</span>", "", "2394", "A,R,-,2,4,-,-,-,-,6,3,1,6,/,-"],
+                    ["Ar-23 <span style='float:right'>Rs. 6528</span>", "", "2419", "A,R,-,2,5,-,-,-,-,2,5,2,7,/,-"],
+                    ["Ar-24 <span style='float:right'>Rs. 4662</span>", "", "2431", "D,R,A,-,2,5,-,-,-,3,7,8,9,/,-"],
+                    ["Ar-25 <span style='float:right'>Rs. 1865</span>", "", "", "T,O,T,A,L,-,-,-,6,6,2,6,1,/,-"],
+                    ["DRA-25 <span style='float:right'>Rs. 2797</span>", "", "", ""],
+                    ["<b>Total:-</b> <span style='float:right'><b>Rs. 48908/-</b></span>", "", "", ""]
+                ];
+
+                const tbody = document.getElementById('table-body');
+                rowData.forEach(data => {
+                    let tr = document.createElement('tr');
+                    
+                    let td1 = document.createElement('td');
+                    td1.className = 'editable-area';
+                    td1.contentEditable = true;
+                    td1.innerHTML = data[0];
+                    tr.appendChild(td1);
+
+                    let td2 = document.createElement('td');
+                    td2.className = 'editable-area';
+                    td2.contentEditable = true;
+                    td2.innerHTML = data[1];
+                    tr.appendChild(td2);
+
+                    let td3 = document.createElement('td');
+                    td3.className = 'editable-area center';
+                    td3.contentEditable = true;
+                    td3.innerHTML = data[2];
+                    tr.appendChild(td3);
+
+                    let td4 = document.createElement('td');
+                    td4.style.padding = '0';
+                    let chars = data[3].split(',');
+                    let innerHtml = '<table class="inner-table"><tr>';
+                    for(let i=0; i<16; i++) {
+                        let c = chars[i] ? chars[i] : '';
+                        innerHtml += `<td contenteditable="true">${c}</td>`;
+                    }
+                    innerHtml += '</tr></table>';
+                    td4.innerHTML = innerHtml;
+                    tr.appendChild(td4);
+
+                    let td5 = document.createElement('td');
+                    td5.style.padding = '0';
+                    td5.innerHTML = '<table class="inner-table"><tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td></tr></table>';
+                    tr.appendChild(td5);
+
+                    tbody.appendChild(tr);
+                });
+            </script>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <div>Prepared by <span class="sig-line editable-area" contenteditable="true"></span></div>
+        <div style="text-align: center;">Page Totals:-<br>Audited /Checked by <span class="sig-line editable-area" contenteditable="true"></span></div>
+        <div>Entered/Verified by <span class="sig-line editable-area" contenteditable="true"></span></div>
+    </div>
+
+</body>
+</html>

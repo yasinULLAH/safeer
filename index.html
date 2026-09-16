@@ -3997,6 +3997,55 @@
       }
       return content;
     }
+    function hexToLuminance(hex) {
+      const r = parseInt(hex.slice(1,3), 16) / 255;
+      const g = parseInt(hex.slice(3,5), 16) / 255;
+      const b = parseInt(hex.slice(5,7), 16) / 255;
+      const srgb = c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+      return 0.2126 * srgb(r) + 0.7152 * srgb(g) + 0.0722 * srgb(b);
+    }
+    function contrastRatio(l1, l2) {
+      const lighter = Math.max(l1, l2);
+      const darker = Math.min(l1, l2);
+      return (lighter + 0.05) / (darker + 0.05);
+    }
+    function validateContrast(theme) {
+      const results = [];
+      const bg = hexToLuminance(theme.backgroundColor);
+      const pabg = hexToLuminance(theme.primaryAreaColor);
+      const mainText = hexToLuminance(theme.mainTextColor);
+      const primaryText = hexToLuminance(theme.primaryTextColor);
+      const secondaryText = hexToLuminance(theme.secondaryTextColor);
+      const mtBg = contrastRatio(mainText, bg);
+      if (mtBg < 6.5) results.push({ rule:"mainTextColor vs backgroundColor", ratio:mtBg, required:6.5 });
+      const ptPa = contrastRatio(primaryText, pabg);
+      if (ptPa < 6.5) results.push({ rule:"primaryTextColor vs primaryAreaColor", ratio:ptPa, required:6.5 });
+      const stBg = contrastRatio(secondaryText, bg);
+      if (stBg < 4.5) results.push({ rule:"secondaryTextColor vs backgroundColor", ratio:stBg, required:4.5 });
+      return results;
+    }
+    const AI_FALLBACK_PALETTES = {
+      "warm-terracotta": { backgroundColor:"#fdf8f3", primaryAreaColor:"#8b3a2a", primaryTextColor:"#fdf8f3", mainTextColor:"#2d1b14", secondaryTextColor:"#7a5c4f", accentColor:"#c45a3c" },
+      "cool-teal": { backgroundColor:"#f4f9fb", primaryAreaColor:"#0f5c6b", primaryTextColor:"#f4f9fb", mainTextColor:"#1a2e35", secondaryTextColor:"#5a7d8a", accentColor:"#0ea5b8" },
+      "forest-verdant": { backgroundColor:"#f6faf4", primaryAreaColor:"#2d6a3f", primaryTextColor:"#f6faf4", mainTextColor:"#1a2e1a", secondaryTextColor:"#5a7a5a", accentColor:"#4caf50" },
+      "jewel-sapphire": { backgroundColor:"#f8f6fc", primaryAreaColor:"#1a237e", primaryTextColor:"#f8f6fc", mainTextColor:"#1a1a2e", secondaryTextColor:"#6a6a8a", accentColor:"#ffb300" },
+      "mono-charcoal": { backgroundColor:"#fafafa", primaryAreaColor:"#2d2d2d", primaryTextColor:"#fafafa", mainTextColor:"#1a1a1a", secondaryTextColor:"#7a7a7a", accentColor:"#ff6b6b" },
+      "sunset-coral": { backgroundColor:"#fef9f7", primaryAreaColor:"#1b3a5c", primaryTextColor:"#fef9f7", mainTextColor:"#2a1a1a", secondaryTextColor:"#7a5a5a", accentColor:"#ff6f61" },
+      "ocean-deep": { backgroundColor:"#f4f9fd", primaryAreaColor:"#0a2942", primaryTextColor:"#f4f9fd", mainTextColor:"#1a2a3a", secondaryTextColor:"#5a7a8a", accentColor:"#0891b2" },
+      "wine-burgundy": { backgroundColor:"#fdf6f2", primaryAreaColor:"#5c1a2e", primaryTextColor:"#fdf6f2", mainTextColor:"#2a1a1e", secondaryTextColor:"#7a5a5a", accentColor:"#c9a96e" },
+      "mocha-espresso": { backgroundColor:"#faf5f0", primaryAreaColor:"#3e2723", primaryTextColor:"#faf5f0", mainTextColor:"#2a1e1a", secondaryTextColor:"#7a6a5a", accentColor:"#a67c52" },
+      "arctic-frost": { backgroundColor:"#f8fbfd", primaryAreaColor:"#1a3a4a", primaryTextColor:"#f8fbfd", mainTextColor:"#1a2e3a", secondaryTextColor:"#6a8a9a", accentColor:"#5dade2" },
+      "violet-dream": { backgroundColor:"#f8f6fb", primaryAreaColor:"#3d1a6e", primaryTextColor:"#f8f6fb", mainTextColor:"#2a1a3a", secondaryTextColor:"#7a5a8a", accentColor:"#9b59b6" },
+      "desert-sand": { backgroundColor:"#fbf7f0", primaryAreaColor:"#7a5a2a", primaryTextColor:"#fbf7f0", mainTextColor:"#2e2a1a", secondaryTextColor:"#7a7a5a", accentColor:"#c97d3a" },
+      "emerald-city": { backgroundColor:"#f4faf6", primaryAreaColor:"#0a3d2a", primaryTextColor:"#f4faf6", mainTextColor:"#1a2e1a", secondaryTextColor:"#5a7a6a", accentColor:"#00b894" },
+      "blush-rose": { backgroundColor:"#fdf8f8", primaryAreaColor:"#6b2a3a", primaryTextColor:"#fdf8f8", mainTextColor:"#2e1a1e", secondaryTextColor:"#7a5a6a", accentColor:"#e84393" },
+      "midnight-ocean": { backgroundColor:"#f4f6f8", primaryAreaColor:"#0a0e1a", primaryTextColor:"#f4f6f8", mainTextColor:"#1a1e2a", secondaryTextColor:"#5a6a7a", accentColor:"#00d4ff" },
+      "golden-hour": { backgroundColor:"#fdf8f0", primaryAreaColor:"#3a2a1a", primaryTextColor:"#fdf8f0", mainTextColor:"#2a221a", secondaryTextColor:"#7a6a5a", accentColor:"#e6a817" },
+      "sage-green": { backgroundColor:"#f6f8f4", primaryAreaColor:"#4a6a4a", primaryTextColor:"#f6f8f4", mainTextColor:"#1e2a1e", secondaryTextColor:"#6a7a6a", accentColor:"#7cb342" },
+      "plum-perfect": { backgroundColor:"#faf6f8", primaryAreaColor:"#3d1a3a", primaryTextColor:"#faf6f8", mainTextColor:"#2a1e2a", secondaryTextColor:"#7a5a7a", accentColor:"#d4a5c9" },
+      "steel-blue": { backgroundColor:"#f8fafc", primaryAreaColor:"#2a4a6a", primaryTextColor:"#f8fafc", mainTextColor:"#1e2e3a", secondaryTextColor:"#6a7a8a", accentColor:"#4a7db0" },
+      "matte-black": { backgroundColor:"#f5f5f5", primaryAreaColor:"#1a1a1a", primaryTextColor:"#f5f5f5", mainTextColor:"#1a1a1a", secondaryTextColor:"#6a6a6a", accentColor:"#76ff03" }
+    };
     async function generateCVFromAI() {
       const rawText = document.getElementById("aiTextInput").value.trim();
       if (!rawText) return setAIStatus("error", "⚠️ Please paste your resume info first.");
@@ -4013,6 +4062,43 @@
       btn.disabled = true; btnText.textContent = "Architecting Layout..."; spinner.style.display = "block";
       cvNode.classList.add("cv-scanning");
       setAIStatus("processing", "AI is writing your content & building a dynamic CSS/DOM Architecture...");
+      const AI_COLOR_PALETTES = [
+        { id:"warm-terracotta", name:"Warm Terracotta", dir:"WARM TONES — terracotta, cream, warm brown, soft amber accents. Earthy, cozy, inviting." },
+        { id:"cool-teal", name:"Cool Teal", dir:"COOL TONES — deep teal, slate gray, icy blue, silver. Clean, modern, corporate." },
+        { id:"forest-verdant", name:"Forest Verdant", dir:"NATURE TONES — deep forest green, warm sand, moss, amber. Organic, grounded, fresh." },
+        { id:"jewel-sapphire", name:"Jewel Sapphire", dir:"JEWEL TONES — rich sapphire blue, gold, deep purple, pearl. Luxurious, premium, bold." },
+        { id:"mono-charcoal", name:"Monochrome Charcoal", dir:"MONOCHROME — charcoal gray, pure white, slate, a single vibrant coral accent. Sleek, minimalist, modern." },
+        { id:"sunset-coral", name:"Sunset Coral", dir:"WARM BOLD — vibrant coral, navy blue, soft peach, cream. Energetic, creative, youthful." },
+        { id:"ocean-deep", name:"Ocean Deep", dir:"COOL DEEP — navy blue, turquoise, white, light aqua. Trustworthy, calm, professional." },
+        { id:"wine-burgundy", name:"Wine Burgundy", dir:"RICH DARK — burgundy wine, warm beige, gold, ivory. Elegant, sophisticated, European." },
+        { id:"mocha-espresso", name:"Mocha Espresso", dir:"EARTHY DARK — espresso brown, warm latte, caramel, cream. Cozy, premium, approachable." },
+        { id:"arctic-frost", name:"Arctic Frost", dir:"COOL LIGHT — ice blue, silver, white, deep navy accents. Clean, clinical, crisp." },
+        { id:"violet-dream", name:"Violet Dream", dir:"PURPLE TONES — deep violet, soft lavender, warm gray, magenta accent. Creative, artistic, unique." },
+        { id:"desert-sand", name:"Desert Sand", dir:"WARM NEUTRAL — sand beige, rust orange, olive green, cream. Natural, warm, understated." },
+        { id:"emerald-city", name:"Emerald City", dir:"GREEN BOLD — vivid emerald, charcoal, white, lime accent. Confident, fresh, striking." },
+        { id:"blush-rose", name:"Blush Rose", dir:"SOFT ROMANTIC — blush pink, dusty rose, warm taupe, deep maroon. Soft, elegant, refined." },
+        { id:"midnight-ocean", name:"Midnight Ocean", dir:"DARK BOLD — almost-black navy, bright cyan, white, electric blue. Dramatic, high-tech, premium." },
+        { id:"golden-hour", name:"Golden Hour", dir:"WARM GOLD — deep amber, warm charcoal, cream, mustard. Luxurious, warm, memorable." },
+        { id:"sage-green", name:"Sage Green", dir:"SOFT GREEN — sage green, warm ivory, dusty blue, clay. Calm, natural, contemporary." },
+        { id:"plum-perfect", name:"Plum Perfect", dir:"PURPLE WARM — deep plum, warm beige, rose gold, cream. Rich, warm, sophisticated." },
+        { id:"steel-blue", name:"Steel Blue", dir:"COOL CORPORATE — steel blue, light gray, white, navy. Traditional, trustworthy, clean." },
+        { id:"matte-black", name:"Matte Black", dir:"DARK MINIMAL — matte black, dark gray, white, neon lime (subtle). Ultra-modern, edgy, tech." }
+      ];
+      const COLOR_HISTORY_KEY = 'ai_color_history';
+      function getColorHistory() { try { return JSON.parse(localStorage.getItem(COLOR_HISTORY_KEY) || '[]'); } catch(e) { return []; } }
+      function addColorHistory(id) {
+        const h = getColorHistory().filter(i => i !== id).slice(-4);
+        h.push(id);
+        localStorage.setItem(COLOR_HISTORY_KEY, JSON.stringify(h));
+      }
+      function pickDiversePalette() {
+        const history = getColorHistory();
+        const available = AI_COLOR_PALETTES.filter(p => !history.includes(p.id));
+        const pool = available.length > 0 ? available : AI_COLOR_PALETTES;
+        const picked = pool[Math.floor(Math.random() * pool.length)];
+        addColorHistory(picked.id);
+        return picked;
+      }
       const allLayouts = ["sidebar-left", "sidebar-right", "header-top", "single-column"];
       const allHeaders = ["solid-box", "underline", "clean-text"];
       const allShapes = ["circle", "square", "rounded"];
@@ -4023,6 +4109,7 @@
       const forcedHeader = allHeaders[Math.floor(Math.random() * allHeaders.length)];
       const forcedShape = allShapes[Math.floor(Math.random() * allShapes.length)];
       localStorage.setItem("last_cv_layout", forcedLayout);
+      const chosenPalette = pickDiversePalette();
       const isApkView = document.body.classList.contains('apk-view') || _isLikelyApkView();
       const isCustomColors = !(primaryColor === "#3b82f6" && secondaryColor === "#1e293b");
       const colorOv = getColorOverrides();
@@ -4053,14 +4140,16 @@
           parts.push(`- User-chosen Secondary/Sidebar Color: ${secondaryColor}`);
           parts.push("Make sure to strictly apply the user-chosen colors!");
         } else {
-          parts.push("- Generate a COMPLETELY NEW, visually striking and professional color palette.");
+          parts.push(`- COLOR DIRECTION (follow this mood): ${chosenPalette.dir}`);
+          parts.push("- Generate a COMPLETELY NEW palette fitting this direction. Do NOT reuse colors from your last response.");
         }
         parts.push(strictContrastRules);
         optionalContextStr = parts.join('\n');
       } else {
         optionalContextStr = `NO OPTIONAL DETAILS PROVIDED. You have FULL CREATIVE FREEDOM!
 - Generate a STUNNING, UNIQUE, ADVANCED, AND HIGHLY PROFESSIONAL CV.
-- Create a completely new, visually striking color palette (use rich, modern colors like sleek dark modes, vibrant gradients, or sophisticated corporate tones).
+- COLOR DIRECTION (must follow this mood): ${chosenPalette.dir}
+- Create a completely new color palette fitting this direction. Do NOT repeat palettes from previous generations.
 - Pick modern Google Fonts for headings and body that pair beautifully.
 - Do NOT just use generic blues and grays. Surprise the user with a premium design!
 ${strictContrastRules}`;
@@ -4134,7 +4223,16 @@ Return a raw JSON object ONLY, NO markdown:
         if (jsonStart !== -1 && jsonEnd !== -1) content = content.substring(jsonStart, jsonEnd + 1);
         const parsed = JSON.parse(content);
         if (parsed.data) populateCV(parsed.data);
-        if (parsed.theme) applyAITheme(parsed.theme);
+        if (parsed.theme) {
+          const failures = validateContrast(parsed.theme);
+          if (failures.length > 0 && !hasColorOverrides) {
+            const fallback = AI_FALLBACK_PALETTES[chosenPalette.id];
+            if (fallback) {
+              Object.assign(parsed.theme, fallback);
+            }
+          }
+          applyAITheme(parsed.theme);
+        }
         setAIStatus("success", "✅ New Structure, Colors & Content fully generated!");
         saveCVState(parsed.theme);
         let quotaData = JSON.parse(localStorage.getItem("ai_daily_quota") || '{"used": 0, "date": ""}');
